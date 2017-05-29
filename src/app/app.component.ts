@@ -3,11 +3,11 @@ import { Platform, Nav } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-import { Page4Page } from '../pages/page4/page4';
-import { Page6Page } from '../pages/page6/page6';
+import { PersonOnePage } from '../pages/person-one/person-one';
+import { PersonTwoPage } from '../pages/person-two/person-two';
 
 
-import { Page1Page } from '../pages/page1/page1';
+import { RolodexPage } from '../pages/rolodex/rolodex';
 
 
 
@@ -16,7 +16,7 @@ import { Page1Page } from '../pages/page1/page1';
 })
 export class MyApp {
   @ViewChild(Nav) navCtrl: Nav;
-    rootPage:any = Page1Page;
+    rootPage:any = RolodexPage;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {
@@ -26,14 +26,14 @@ export class MyApp {
       splashScreen.hide();
     });
   }
-  goToPage1(params){
+  goToRolodex(params){
     if (!params) params = {};
-    this.navCtrl.setRoot(Page1Page);
-  }goToPage4(params){
+    this.navCtrl.setRoot(RolodexPage);
+  }goToPersonOne(params){
     if (!params) params = {};
-    this.navCtrl.setRoot(Page4Page);
-  }goToPage6(params){
+    this.navCtrl.setRoot(PersonOnePage);
+  }goToPersonTwo(params){
     if (!params) params = {};
-    this.navCtrl.setRoot(Page6Page);
+    this.navCtrl.setRoot(PersonTwoPage);
   }
 }

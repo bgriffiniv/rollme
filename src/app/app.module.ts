@@ -2,10 +2,10 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
-import { Page1Page } from '../pages/page1/page1';
+import { RolodexPage } from '../pages/rolodex/rolodex';
 import { ContactPage } from '../pages/contact/contact';
-import { Page4Page } from '../pages/page4/page4';
-import { Page6Page } from '../pages/page6/page6';
+import { PersonOnePage } from '../pages/person-one/person-one';
+import { PersonTwoPage } from '../pages/person-two/person-two';
 
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -14,10 +14,10 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 @NgModule({
   declarations: [
     MyApp,
-    Page1Page,
+    RolodexPage,
     ContactPage,
-    Page4Page,
-    Page6Page
+    PersonOnePage,
+    PersonTwoPage
   ],
   imports: [
     BrowserModule,
@@ -26,10 +26,10 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    Page1Page,
+    RolodexPage,
     ContactPage,
-    Page4Page,
-    Page6Page
+    PersonOnePage,
+    PersonTwoPage
   ],
   providers: [
     StatusBar,
