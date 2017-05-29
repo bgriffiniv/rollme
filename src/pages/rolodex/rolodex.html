@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+      Rolodex
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only solid>
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content padding id="page1">
+  <ion-list id="rolodex-list13">
+    <ion-item-sliding>
+      <ion-item color="none" on-click="goToPersonOne()" id="rolodex-list-item61" class="Contact">
+        <ion-avatar item-left>
+          <img />
+        </ion-avatar>
+        <h2>
+          Person One
+        </h2>
+      </ion-item>
+      <ion-item-options side="left">
+        <button ion-button color="light">
+          Delete
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+    <ion-item-sliding>
+      <ion-item color="none" on-click="goToPersonTwo()" id="rolodex-list-item62" class="Contact">
+        <ion-avatar item-left>
+          <img />
+        </ion-avatar>
+        <h2>
+          Person Two
+        </h2>
+      </ion-item>
+      <ion-item-options side="left">
+        <button ion-button color="light">
+          Delete
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>
