@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { RolodexPage } from '../pages/rolodex/rolodex';
-import { ContactPage } from '../pages/contact/contact';
 import { PersonOnePage } from '../pages/person-one/person-one';
 import { PersonTwoPage } from '../pages/person-two/person-two';
 
@@ -15,7 +14,6 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   declarations: [
     MyApp,
     RolodexPage,
-    ContactPage,
     PersonOnePage,
     PersonTwoPage
   ],
@@ -27,7 +25,6 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   entryComponents: [
     MyApp,
     RolodexPage,
-    ContactPage,
     PersonOnePage,
     PersonTwoPage
   ],
