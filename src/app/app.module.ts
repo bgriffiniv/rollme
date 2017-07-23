@@ -1,21 +1,16 @@
-import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
-import { MyApp } from './app.component';
-import { RolodexPage } from '../pages/rolodex/rolodex';
-import { PersonOnePage } from '../pages/person-one/person-one';
-import { PersonTwoPage } from '../pages/person-two/person-two';
-
-
-import { StatusBar } from '@ionic-native/status-bar';
+import { ErrorHandler, NgModule } from '@angular/core';
+import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { StatusBar } from '@ionic-native/status-bar';
+
+import { MyApp } from './app.component';
+import { HomePage } from '../pages/home/home';
 
 @NgModule({
   declarations: [
     MyApp,
-    RolodexPage,
-    PersonOnePage,
-    PersonTwoPage
+    HomePage
   ],
   imports: [
     BrowserModule,
@@ -24,9 +19,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    RolodexPage,
-    PersonOnePage,
-    PersonTwoPage
+    HomePage
   ],
   providers: [
     StatusBar,

@@ -1,22 +1,14 @@
-import { Component, ViewChild } from '@angular/core';
-import { Platform, Nav } from 'ionic-angular';
+import { Component } from '@angular/core';
+import { Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-import { PersonOnePage } from '../pages/person-one/person-one';
-import { PersonTwoPage } from '../pages/person-two/person-two';
-
-
-import { RolodexPage } from '../pages/rolodex/rolodex';
-
-
-
+import { HomePage } from '../pages/home/home';
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-  @ViewChild(Nav) navCtrl: Nav;
-    rootPage:any = RolodexPage;
+  rootPage:any = HomePage;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {
@@ -26,14 +18,5 @@ export class MyApp {
       splashScreen.hide();
     });
   }
-  goToRolodex(params){
-    if (!params) params = {};
-    this.navCtrl.setRoot(RolodexPage);
-  }goToPersonOne(params){
-    if (!params) params = {};
-    this.navCtrl.setRoot(PersonOnePage);
-  }goToPersonTwo(params){
-    if (!params) params = {};
-    this.navCtrl.setRoot(PersonTwoPage);
-  }
 }
+

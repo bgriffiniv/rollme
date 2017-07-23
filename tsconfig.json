@@ -22,9 +22,5 @@
   "compileOnSave": false,
   "atom": {
     "rewriteTsconfig": false
-  },
-  "files": [
-    "src/app/main.ts",
-    "typings/index.d.ts"
-  ]
+  }
 }
