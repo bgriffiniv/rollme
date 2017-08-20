@@ -1,14 +1,18 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Ionic Blank
+      Rollme
     </ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+<ion-content class="card-background-page" padding>
+
+  <ion-list [virtualScroll]="cards">
+    <ion-item *virtualItem="let card">
+      <div class="card-title">{{ card.title }}</div>
+      <div class="card-subtitle">{{ card.subtitle }}</div>
+    </ion-item>
+  </ion-list>
+
 </ion-content>

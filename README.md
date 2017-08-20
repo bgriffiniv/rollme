@@ -1,3 +1,28 @@
+TODO:
+- general layout on home
+  - image bug in a card element
+  - css issues
+- user card
+  - fetching data from firebase
+  - CRUD methods
+- rolodex (scrolling from bottom back to top)
+- TDD; unit tests
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 This is a starter template for [Ionic](http://ionicframework.com/docs/) projects.
 
 ## How to use this template
