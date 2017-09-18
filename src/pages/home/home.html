@@ -8,11 +8,15 @@
 
 <ion-content class="card-background-page" padding>
 
-  <ion-list [virtualScroll]="cards">
-    <ion-item *virtualItem="let card">
-      <div class="card-title">{{ card.title }}</div>
-      <div class="card-subtitle">{{ card.subtitle }}</div>
-    </ion-item>
-  </ion-list>
+   <ion-list class="_posts" [virtualScroll]="cards" [approxItemHeight]="'200px'" no-border no-margin>
+      <ion-card *virtualItem="let card">
 
+        <ion-img [src]="card.src"></ion-img>
+
+        <div class="card-title">{{card.title}}</div>
+        <div class="card-subtitle">{{card.subtitle}}</div>
+
+      </ion-card>
+
+    </ion-list>
 </ion-content>
