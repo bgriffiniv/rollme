@@ -9,6 +9,7 @@ import { NavController } from 'ionic-angular';
 export class HomePage {
   cards: any;
   name: any;
+  users; any;
   //aboutPage = AboutPage;
 
   constructor(public navCtrl: NavController){

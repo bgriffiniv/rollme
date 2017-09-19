@@ -6,9 +6,11 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content class="card-background-page" padding>
+<ion-content class="center" padding>
 
-   <ion-list class="_posts" [virtualScroll]="cards" [approxItemHeight]="'200px'" no-border no-margin>
+  {{users}}
+
+   <ion-list [virtualScroll]="cards" [approxItemHeight]="'200px'" >
       <ion-card *virtualItem="let card">
 
         <ion-img [src]="card.src"></ion-img>
