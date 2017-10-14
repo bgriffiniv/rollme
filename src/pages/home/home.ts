@@ -7,77 +7,33 @@ import { NavController } from 'ionic-angular';
   templateUrl: 'home.html'
 })
 export class HomePage {
-  cards: any;
   name: any;
-  users; any;
+  users: any;
   //aboutPage = AboutPage;
 
   constructor(public navCtrl: NavController){
     this.name = {first:'Burnest', last:'Griffin IV'};
-    this.cards = [
-          {
-            src: "assets/img/card-saopaolo.png",
-            title: "São Paulo",
-            subtitle: "41 Listings"
-          },{
-            src: "assets/img/card-amsterdam.png",
-            title: "Amsterdam",
-            subtitle: "64 Listings"
-          },{
-            src: "assets/img/card-sf.png",
-            title: "San Francisco",
-            subtitle: "72 Listings"
-          },{
-            src: "assets/img/card-madison.png",
-            title: "Madison",
-            subtitle: "28 Listings"
-          },{
-            src: "assets/img/card-portland.png",
-            title: "Portland",
-            subtitle: "34 Listings"
-          },
-          {
-            src: "assets/img/card-saopaolo.png",
-            title: "São Paulo",
-            subtitle: "41 Listings"
-          },{
-            src: "assets/img/card-amsterdam.png",
-            title: "Amsterdam",
-            subtitle: "64 Listings"
-          },{
-            src: "assets/img/card-sf.png",
-            title: "San Francisco",
-            subtitle: "72 Listings"
-          },{
-            src: "assets/img/card-madison.png",
-            title: "Madison",
-            subtitle: "28 Listings"
-          },{
-            src: "assets/img/card-portland.png",
-            title: "Portland",
-            subtitle: "34 Listings"
-          },
-          {
-            src: "assets/img/card-saopaolo.png",
-            title: "São Paulo",
-            subtitle: "41 Listings"
-          },{
-            src: "assets/img/card-amsterdam.png",
-            title: "Amsterdam",
-            subtitle: "64 Listings"
-          },{
-            src: "assets/img/card-sf.png",
-            title: "San Francisco",
-            subtitle: "72 Listings"
-          },{
-            src: "assets/img/card-madison.png",
-            title: "Madison",
-            subtitle: "28 Listings"
-          },{
-            src: "assets/img/card-portland.png",
-            title: "Portland",
-            subtitle: "34 Listings"
-          }
+    this.users = [
+      {
+        name: "Emily Smith",
+        company: "Company A",
+        role: "Sales"
+      },
+      {
+        name: "Rachel Strong",
+        company: "Company B",
+        role: "CTO"
+      },
+      {
+        name: "Sam Maple",
+        company: "Company A",
+        role: "Vice President"
+      },
+      {
+        name: "Gary Jones",
+        company: "Company C",
+        role: "Director"
+      }
     ];
   }
 }

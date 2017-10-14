@@ -3,7 +3,7 @@ page-home {
   ion-card {
     position: relative;
     text-align: center;
-    width: 200px;
+    width: 256px;
     height: 130px;
   }
 
@@ -18,7 +18,7 @@ page-home {
     font-size: 2.0em;
     width: 100%;
     font-weight: bold;
-    color: #fff;
+    color: #000;
   }
 
   .card-subtitle {
@@ -26,7 +26,7 @@ page-home {
     position: absolute;
     top: 52%;
     width: 100%;
-    color: #fff;
+    color: #000;
   }
 
   .center{
