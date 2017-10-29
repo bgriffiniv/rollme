@@ -15,12 +15,12 @@
 <ion-content class="center" padding>
 
    <ion-list [virtualScroll]="users" [approxItemHeight]="'200px'" >
-      <ion-card *virtualItem="let user">
+      <div class="card" *virtualItem="let user">
 
         <div class="name">{{user.name}}</div>
         <div class="info">{{user.company}}</div>
         <div class="info">{{user.role}}</div>
-      </ion-card>
+      </div>
 
     </ion-list>
 </ion-content>

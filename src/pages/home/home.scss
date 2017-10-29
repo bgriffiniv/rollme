@@ -5,11 +5,23 @@ page-home {
     text-align: center;
     width: 256px;
     height: 130px;
+
   }
 
   ion-img {
     width:256px;
     height: 130px;
+  }
+
+  .card {
+    width: 100%;
+    height: 130px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    border: 8px;
+    border-radius: 8px;
+    padding: 8px;
+    margin: 8px;
   }
 
   .name {
