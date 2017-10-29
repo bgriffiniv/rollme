@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 //import {AboutPage} from '../about/about';
+import {ProfilePage} from '../profile/profile';
 
 @Component({
   selector: 'page-home',
@@ -36,30 +37,15 @@ export class HomePage {
       }
     ];
   }
-  goToOtherPage(user) {
+  goToProfile(user) {
     //push another page onto the history stack
     //causing the nav controller to animate the new page in
-    this.navCtrl.push(OtherPage, {user: user});
+    this.navCtrl.push(ProfilePage, {user: user});
   }
-}
 
-import { NavParams } from 'ionic-angular';
-
-@Component({
-  template: `
-  <ion-header>
-    <ion-navbar>
-      <ion-title>Other Page</ion-title>
-    </ion-navbar>
-  </ion-header>
-
-  <ion-content>{{user.name}}</ion-content>`
-})
-export class OtherPage {
-  user: { name: String, company: String, role: String };
-    constructor(private navParams: NavParams){
-      this.user = navParams.get('user');
+    ionViewDidLoad() {
+      console.log('ionViewDidLoad HomePage');
     }
 
-
 }
+
