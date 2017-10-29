@@ -6,6 +6,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
+import { OtherPage } from '../pages/home/home';
 import {AboutPage} from '../pages/about/about';
 //import { FIREBASE_PROVIDERS, defaultFirebase, AngularFire, AuthMethods, AuthProviders, firebaseAuthConfig } from 'angularfire2';
 
@@ -14,7 +15,8 @@ import {AboutPage} from '../pages/about/about';
   declarations: [
     MyApp,
     HomePage,
-    AboutPage
+    AboutPage,
+    OtherPage
   ],
   imports: [
     BrowserModule,
@@ -24,7 +26,8 @@ import {AboutPage} from '../pages/about/about';
   entryComponents: [
     MyApp,
     HomePage,
-    AboutPage
+    AboutPage,
+    OtherPage
   ],
   providers: [
     StatusBar,

@@ -15,7 +15,7 @@
 <ion-content class="center" padding>
 
    <ion-list [virtualScroll]="users" [approxItemHeight]="'200px'" >
-      <div class="card" *virtualItem="let user">
+      <div class="card" *virtualItem="let user" (click)="goToOtherPage()">
 
         <div class="name">{{user.name}}</div>
         <div class="info">{{user.role}} @ {{user.company}}</div>
