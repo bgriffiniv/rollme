@@ -17,9 +17,9 @@
    <ion-list [virtualScroll]="users" [approxItemHeight]="'200px'" >
       <ion-card *virtualItem="let user">
 
-        <bold>{{user.name}}</bold>
-        <p>{{user.company}}</p>
-        <p>{{user.role}}</p>
+        {{user.name}}
+        {{user.company}}
+        {{user.role}}
       </ion-card>
 
     </ion-list>
