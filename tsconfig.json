@@ -16,8 +16,13 @@
   "include": [
     "src/**/*.ts"
   ],
+  "files": [
+    "node_modules/angularfire2/firebase3.d.ts"
+  ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "typings/global",
+    "typings/global.d.ts"
   ],
   "compileOnSave": false,
   "atom": {

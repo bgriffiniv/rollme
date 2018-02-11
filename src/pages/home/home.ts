@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 //import {AboutPage} from '../about/about';
 import {ProfilePage} from '../profile/profile';
+import { AddContactPage } from '../add-contact/add-contact';
+
 
 @Component({
   selector: 'page-home',
@@ -37,6 +39,18 @@ export class HomePage {
       }
     ];
   }
+  /*
+  contactList: FirebaseListObservable<any>;
+
+  constructor(public navCtrl: NavController, public af: AngularFire) {
+    this.contactList = af.database.list('/contacts');
+  }
+*/
+  addContact(){
+    this.navCtrl.push(AddContactPage);
+  }
+
+
   goToProfile(user) {
     //push another page onto the history stack
     //causing the nav controller to animate the new page in
