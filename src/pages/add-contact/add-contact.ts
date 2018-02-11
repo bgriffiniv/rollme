@@ -10,10 +10,10 @@ import { NavController } from 'ionic-angular';
 
 export class AddContactPage {
   //contactList: FirebaseListObservable<any>;
-  contactList: List<{ name: String, company: String, role: String }>;
+  contactList: Array<{ name: String, company: String, role: String }>;
   constructor(public navCtrl: NavController, /*public af: AngularFire*/) {
     //this.contactList = af.database.list('/contacts');
-    this.contactList = [{name:"Hello"}, {name:"Bye"}];
+    this.contactList = [{name:"Hello", company:"Blah1", role:"Role1"}, {name:"Bye", company:"Blah2", role:"Role2"}];
   }
 
   addContact(name, address, phone, city) {
