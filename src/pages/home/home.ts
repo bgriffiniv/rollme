@@ -45,7 +45,8 @@ export class HomePage {
   constructor(public navCtrl: NavController, public af: AngularFire) {
     this.contactList = af.database.list('/contacts');
   }
-*/
+  */
+
   addContact(){
     this.navCtrl.push(AddContactPage);
   }
