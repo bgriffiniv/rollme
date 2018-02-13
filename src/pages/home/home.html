@@ -1,40 +1,14 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Rollme
+      Ionic Blank
     </ion-title>
-
-    <ion-buttons end>
-      <button ion-button icon-only>
-        <ion-icon name="search"></ion-icon>
-      </button>
-      <button (click)="addContact()">
-        <ion-icon name="add"></ion-icon>
-      </button>
-
-    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
-<ion-content class="center" padding>
-
-  <!--
-   <ion-list [virtualScroll]="users" [approxItemHeight]="'200px'" >
-      <div class="card" *virtualItem="let user" (click)="goToProfile(user)">
-
-        <div class="name">{{user.name}}</div>
-        <div class="info">{{user.role}} @ {{user.company}}</div>
-      </div>
-    </ion-list>
-    -->
-  <ion-list>
-    <ion-list-header>My Contacts</ion-list-header>
-    <ion-item *ngFor="let contact of contactList | async">
-      <ion-icon name="book" danger item-left></ion-icon>
-      <h2>{{contact.name}}</h2>
-      <h3>Address: {{contact.address}}, {{contact.city}}</h3>
-      <p>Phone: {{contact.phone}}</p>
-    </ion-item>
-  </ion-list>
-
+<ion-content padding>
+  The world is your oyster.
+  <p>
+    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
+  </p>
 </ion-content>
