@@ -5,16 +5,16 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { TabsPage } from '../pages/tabs/tabs';
 
-import { DataServiceProvider } from '../providers/data-service/data-service';
+import { DataProvider } from '../providers/data/data';
 
 @Component({
   templateUrl: 'app.html',
-  providers: [DataServiceProvider]
+  providers: [DataProvider]
 })
 export class MyApp {
-  rootPage: any = TabsPage;
+  rootPage: any;
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, data: DataServiceProvider) {
+  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, data: DataProvider) {
     data.init();
 
     platform.ready().then(() => {
@@ -23,6 +23,8 @@ export class MyApp {
       statusBar.styleDefault();
       splashScreen.hide();
 
+      // pick the starting page based on login status
+      this.rootPage = TabsPage;
     });
   }
 }

@@ -1,25 +1,31 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 
-/**
- * Generated class for the LoginPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { DataProvider } from '../../providers/data/data';
 
-@IonicPage()
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html',
+  providers: [DataProvider]
 })
 export class LoginPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  userEmail: string;
+  userPassword: string;
+  //myData: DataProvider;
+  user: any;
+
+  constructor(public navCtrl: NavController, data: DataProvider) {
+    data.init();
+    //this.myData = data;
+    this.user = data.auth().currentUser;
+    console.log(JSON.stringify(this.user));
+    this.login = function () {
+      data.login(this.userEmail, this.userPassword)
+      .then(data => console.log('Login Success!'), err => console.log('Login Failure!'));
+    }
+
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad LoginPage');
-  }
 
 }

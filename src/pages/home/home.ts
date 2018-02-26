@@ -1,18 +1,18 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
-import { DataServiceProvider } from '../../providers/data-service/data-service';
+import { DataProvider } from '../../providers/data/data';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html',
-  providers: [DataServiceProvider]
+  providers: [DataProvider]
 })
 export class HomePage {
 
   public contacts: {id: string, name: string, company: string}[];
 
-  constructor(public navCtrl: NavController, data: DataServiceProvider) {
+  constructor(public navCtrl: NavController, data: DataProvider) {
     console.log('Hello Home Page');
 
     // connect to db
@@ -23,7 +23,7 @@ export class HomePage {
     // pull contacts for user
 
     this.contacts = [];
-    data.users.once('value', data => {
+    data.root.child('users').once('value', data => {
       let values = data.val();
       let keys = Object.keys(values);
       for (let i = 0; i < keys.length; i++) {

@@ -2,26 +2,16 @@ import { Injectable } from '@angular/core';
 import firebase from 'firebase';
 
 @Injectable()
-export class DataServiceProvider {
+export class DataProvider {
 
-//  public events: any;
-//  public units: any;
-//  public tasks: any;
-//  public parts: any;
-  public users: any;
+  public root: any;
   public auth: any;
 
-  constructor(/*public http: HttpClient*/) {
-    console.log('Hello DataServiceProvider Provider');
-//    this.events = firebase.database().ref('/events/');
-//    this.units = firebase.database().ref('/units/');
-//    this.tasks = firebase.database().ref('/tasks/');
-//    this.parts = firebase.database().ref('/tasks/parts/');
+  constructor() {
+    console.log('Hello DataProvider');
   }
 
   init() {
-    // Initialize Firebase
-
     try {
       firebase.initializeApp({
         apiKey: "AIzaSyCOwTEY-c9hziBS5gqZoFjEQkn9R_Qmc7g",
@@ -39,7 +29,19 @@ export class DataServiceProvider {
       }
     }
 
-    this.users = firebase.database().ref('/users');
+    this.root = firebase.database().ref('/');
     this.auth = firebase.auth();
   }
+
+  login(userEmail: string, userPassword: string) {
+    return new Promise((resolve, reject) => {
+      this.auth.signInWithEmailAndPassword(userEmail, userPassword)
+        .then(data => resolve(data), err => reject(err));
+    });
+  }
+
+  logout() {
+      return this.auth.signOut();
+  }
+
 }

@@ -5,18 +5,20 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
 import { MyApp } from './app.component';
+import { LoginPage } from '../pages/login/login';
 import { HomePage } from '../pages/home/home';
 import { ExpensesPage } from '../pages/expenses/expenses';
 import { TabsPage } from '../pages/tabs/tabs';
-import { DataServiceProvider } from '../providers/data-service/data-service';
-//import { AfProvider } from "../providers/af/af";
+
+import { DataProvider } from '../providers/data/data';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     ExpensesPage,
-    TabsPage
+    TabsPage,
+    LoginPage
   ],
   imports: [
     BrowserModule,
@@ -27,14 +29,14 @@ import { DataServiceProvider } from '../providers/data-service/data-service';
     MyApp,
     HomePage,
     ExpensesPage,
-    TabsPage
+    TabsPage,
+    LoginPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    DataServiceProvider,
-    //AfProvider
+    DataProvider,
   ]
 })
 export class AppModule {}
