@@ -6,15 +6,18 @@
 -->
 <ion-header>
   <ion-navbar>
-    <ion-title>
+    <ion-title *ngIf="!hasUser()">
       Login
+    </ion-title>
+    <ion-title *ngIf="hasUser()">
+      Leave
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 
 <ion-content padding>
-  <form (ngSubmit)="login()">
+  <form (ngSubmit)="login()" *ngIf="!hasUser()">
     <ion-list>
       <ion-item>
         <ion-label stacked>Email</ion-label>
@@ -27,7 +30,9 @@
                    type="password" name="userPassword"></ion-input>
       </ion-item>
       <hr/>
-      <button type="submit" ion-button>Sign In</button>
+      <button type="submit" ion-button>Enter</button>
     </ion-list>
   </form>
+  <button type="submit" ion-button (click)="logout()" *ngIf="hasUser()">Leave</button>
+
 </ion-content>

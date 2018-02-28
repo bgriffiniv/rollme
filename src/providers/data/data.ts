@@ -29,7 +29,7 @@ export class DataProvider {
       }
     }
 
-    this.root = firebase.database().ref('/');
+    this.root = firebase.database().ref();
     this.auth = firebase.auth();
   }
 
@@ -42,6 +42,10 @@ export class DataProvider {
 
   logout() {
       return this.auth.signOut();
+  }
+
+  hasUser() {
+    return this.auth.currentUser != null;
   }
 
 }

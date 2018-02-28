@@ -3,19 +3,27 @@ import { LoginPage } from '../login/login';
 import { HomePage } from '../home/home';
 import { ExpensesPage } from '../expenses/expenses';
 
+import { DataProvider } from '../../providers/data/data';
+
 @Component({
-  templateUrl: 'tabs.html'
+  templateUrl: 'tabs.html',
+  providers: [DataProvider]
 })
 export class TabsPage {
   // this tells the tabs component which Pages
   // should be each tab's root Page
-  tab0Root: any;
-  tab1Root: any;
-  tab2Root: any;
+  homeTab: any;
+  enterTab: any;
+  expensesTab: any;
+  joinTab: any;
 
-  constructor() {
-    this.tab0Root = LoginPage;
-    this.tab1Root = HomePage;
-    this.tab2Root = ExpensesPage;
+  constructor(data: DataProvider) {
+    this.joinTab = LoginPage;
+    this.enterTab = LoginPage;
+    this.homeTab = HomePage;
+    this.expensesTab = ExpensesPage;
+
+    data.init();
+    console.log(data.auth.currentUser);
   }
 }

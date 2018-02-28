@@ -23,7 +23,7 @@ export class HomePage {
     // pull contacts for user
 
     this.contacts = [];
-    data.root.child('users').once('value', data => {
+    data.root.child('/static/users').once('value', data => {
       let values = data.val();
       let keys = Object.keys(values);
       for (let i = 0; i < keys.length; i++) {

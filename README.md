@@ -1,3 +1,13 @@
+FLOW:
+- anon account (contact list under `/static/users`)
+- side menu
+- login/logout
+- user data
+- add users button (adds entry under `/users`)
+- user account (personal contact list)
+
+
+
 TODO:
 - general layout on home
   - image bug in a card element

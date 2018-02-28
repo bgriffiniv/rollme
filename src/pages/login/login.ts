@@ -12,20 +12,45 @@ export class LoginPage {
 
   userEmail: string;
   userPassword: string;
-  //myData: DataProvider;
+  myData: any;
   user: any;
 
   constructor(public navCtrl: NavController, data: DataProvider) {
     data.init();
-    //this.myData = data;
-    this.user = data.auth().currentUser;
+    this.user = data.auth.currentUser;
     console.log(JSON.stringify(this.user));
-    this.login = function () {
-      data.login(this.userEmail, this.userPassword)
-      .then(data => console.log('Login Success!'), err => console.log('Login Failure!'));
-    }
+
+    this.myData = data;
 
   }
 
+  login() {
+    this.myData.login(this.userEmail, this.userPassword)
+    .then(
+      data => {
+        console.log('Login Success!');
+        this.user = data;
+      },
+      err => {
+        console.log('Login Failure!');
+      }
+    );
+  }
 
+  logout() {
+    this.myData.logout()
+    .then(
+      data => {
+        console.log('Logout Success!');
+        this.user = null;
+      },
+      err => {
+        console.log('Logout Failure!');
+      }
+    );
+  }
+
+  hasUser() {
+    return this.myData.hasUser();
+  }
 }
