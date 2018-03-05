@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { Nav, MenuController, NavParams } from 'ionic-angular';
 
 import { DataProvider } from '../../providers/data/data';
 
@@ -10,31 +10,60 @@ import { DataProvider } from '../../providers/data/data';
 })
 export class HomePage {
 
-  public contacts: {id: string, name: string, company: string}[];
+  @ViewChild(Nav) nav: Nav;
+  contacts: {name: string, company: string}[];
+  email: any;
+  userData: any;
 
-  constructor(public navCtrl: NavController, data: DataProvider) {
+  constructor(menuCtrl: MenuController, data: DataProvider, navParams: NavParams) {
     console.log('Hello Home Page');
-
-    // connect to db
     data.init();
+    menuCtrl.enable(true);
+    this.contacts = [{name: 'foo', company: 'bar'}];
+    this.userData = null;
+    data.root.child('/static/contacts')
+    .once('value', (data) => {
+      console.log('getting contacts');
+      if ( data == null ) {
+        console.log('no contacts');
+      } else {
+        console.log('adding contacts');
+        data.forEach(function(childData) {
+          let value = childData.val();
+          try {
+          this.contacts.push({
+            name: value.name,
+            company: value.company
+          });
 
-    // user auth
-
-    // pull contacts for user
-
-    this.contacts = [];
-    data.root.child('/static/users').once('value', data => {
-      let values = data.val();
-      let keys = Object.keys(values);
-      for (let i = 0; i < keys.length; i++) {
-        let key = keys[i];
-        let value = values[key];
-        this.contacts.push({
-          id: key,
-          name: value.name,
-          company: value.company
+          } catch (err) { console.log(err.message); }
         });
       }
-    });
+    }, this.handleContactError);
+
+    data.root.child('/users/' + data.auth.currentUser.uid)
+    .once('value', (data) => {
+      console.log('getting user data');
+      if ( data == null ) {
+        console.log('no user data');
+        data.root.child('/users/' + data.auth.currentUser.uid).set({
+            company: 'Company Z',
+            name: data.auth.currentUser.email,
+            contacts:[]
+          });
+      } else {
+        console.log('adding user data');
+        try {
+          this.userData = JSON.stringify(data);
+        } catch (err) { console.log(err.message); }
+      }
+    }, this.handleContactError);
+
+    this.email = data.auth.currentUser.email;
+    console.log('Home finished loading');
+  }
+
+  handleContactError(err) {
+    console.log("The read failed: " + err.message);
   }
 }

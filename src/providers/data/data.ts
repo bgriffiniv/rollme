@@ -8,7 +8,7 @@ export class DataProvider {
   public auth: any;
 
   constructor() {
-    console.log('Hello DataProvider');
+    console.log('Hello Data Provider');
   }
 
   init() {
@@ -21,31 +21,32 @@ export class DataProvider {
         storageBucket: "rollme-4308a.appspot.com",
         messagingSenderId: "768651667072"
       });
-    } catch(err) {
+      console.log('Firebase initialized');
+
+    } catch( err ) {
       if ( !err.message.includes('already exists') ) {
         console.error('Firebase initialization error', err.stack)
       } else {
-        console.log('Ignoring duplicate Firebase error...');
+        console.log('Ignoring duplicate Firebase initialization error...');
       }
     }
+    if ( this.root==null || this.auth==null ) {
+      this.root = firebase.database().ref();
+      this.auth = firebase.auth();
+      console.log('Firebase root and auth saved');
+    }
+  }
 
-    this.root = firebase.database().ref();
-    this.auth = firebase.auth();
+  register(userEmail: string, userPassword: string) {
+    return this.auth.createUserWithEmailAndPassword(userEmail, userPassword);
   }
 
   login(userEmail: string, userPassword: string) {
-    return new Promise((resolve, reject) => {
-      this.auth.signInWithEmailAndPassword(userEmail, userPassword)
-        .then(data => resolve(data), err => reject(err));
-    });
+    return this.auth.signInWithEmailAndPassword(userEmail, userPassword);
   }
 
   logout() {
-      return this.auth.signOut();
-  }
-
-  hasUser() {
-    return this.auth.currentUser != null;
+    return this.auth.signOut();
   }
 
 }

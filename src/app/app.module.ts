@@ -8,16 +8,16 @@ import { MyApp } from './app.component';
 import { LoginPage } from '../pages/login/login';
 import { HomePage } from '../pages/home/home';
 import { ExpensesPage } from '../pages/expenses/expenses';
-import { TabsPage } from '../pages/tabs/tabs';
 
 import { DataProvider } from '../providers/data/data';
+import { WindowProvider } from '../providers/window/window';
+
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     ExpensesPage,
-    TabsPage,
     LoginPage
   ],
   imports: [
@@ -29,7 +29,6 @@ import { DataProvider } from '../providers/data/data';
     MyApp,
     HomePage,
     ExpensesPage,
-    TabsPage,
     LoginPage
   ],
   providers: [
@@ -37,6 +36,7 @@ import { DataProvider } from '../providers/data/data';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     DataProvider,
+    WindowProvider
   ]
 })
 export class AppModule {}

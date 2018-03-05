@@ -23,7 +23,5 @@ export class TabsPage {
     this.homeTab = HomePage;
     this.expensesTab = ExpensesPage;
 
-    data.init();
-    console.log(data.auth.currentUser);
   }
 }

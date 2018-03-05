@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { Component/*, ViewChild*/ } from '@angular/core';
+import { NavController, MenuController  } from 'ionic-angular';
 
 import { DataProvider } from '../../providers/data/data';
+
+//import { HomePage } from '../home/home';
 
 @Component({
   selector: 'page-login',
@@ -12,45 +14,33 @@ export class LoginPage {
 
   userEmail: string;
   userPassword: string;
-  myData: any;
-  user: any;
+  data: any;
+  menuCtrl: any;
+  navCtrl: any;
 
-  constructor(public navCtrl: NavController, data: DataProvider) {
+  constructor(navCtrl: NavController, menuCtrl: MenuController, data: DataProvider) {
+    console.log('Hello Login Page');
     data.init();
-    this.user = data.auth.currentUser;
-    console.log(JSON.stringify(this.user));
+    this.data = data;
 
-    this.myData = data;
+    menuCtrl.enable(false);
+    this.menuCtrl = menuCtrl;
+    this.navCtrl = navCtrl;
 
+    this.userEmail = '';
+    this.userPassword = '';
   }
 
   login() {
-    this.myData.login(this.userEmail, this.userPassword)
-    .then(
-      data => {
-        console.log('Login Success!');
-        this.user = data;
-      },
-      err => {
-        console.log('Login Failure!');
-      }
-    );
-  }
-
-  logout() {
-    this.myData.logout()
-    .then(
-      data => {
-        console.log('Logout Success!');
-        this.user = null;
-      },
-      err => {
-        console.log('Logout Failure!');
-      }
-    );
-  }
-
-  hasUser() {
-    return this.myData.hasUser();
+    this.userEmail += '';
+    this.userPassword += '';
+    this.data.login(this.userEmail, this.userPassword)
+    .then((data) => {
+      console.log('Login');
+      this.menuCtrl.enable(true);
+      //this.navCtrl.setRoot(HomePage);
+    }).catch(err => {
+      console.error('Login error: ', err.message);
+    });
   }
 }
