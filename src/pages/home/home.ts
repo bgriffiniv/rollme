@@ -11,59 +11,62 @@ import { DataProvider } from '../../providers/data/data';
 export class HomePage {
 
   @ViewChild(Nav) nav: Nav;
-  contacts: {name: string, company: string}[];
-  email: any;
-  userData: any;
+  contacts: {name: string, company: string}[] = [];
+  userData: any = '';
 
   constructor(menuCtrl: MenuController, data: DataProvider, navParams: NavParams) {
     console.log('Hello Home Page');
-    data.init();
     menuCtrl.enable(true);
-    this.contacts = [{name: 'foo', company: 'bar'}];
-    this.userData = null;
-    data.root.child('/static/contacts')
-    .once('value', (data) => {
-      console.log('getting contacts');
-      if ( data == null ) {
-        console.log('no contacts');
-      } else {
-        console.log('adding contacts');
-        data.forEach(function(childData) {
-          let value = childData.val();
-          try {
-          this.contacts.push({
-            name: value.name,
-            company: value.company
-          });
 
-          } catch (err) { console.log(err.message); }
+    data.init();
+
+    // if no uid, for any reason, show static users
+    data.root.child('/static/contacts')
+    .on('value', (staticContacts) => {
+      console.log('getting static contacts');
+
+      if ( staticContacts.exists() ) {
+        console.log('adding static contacts');
+        staticContacts.forEach((staticContact) => {
+          let staticContactValue = staticContact.val();
+          this.contacts.push({
+            name: staticContactValue.name,
+            company: staticContactValue.company
+          });
+        });
+      } else {
+        console.log('no static contacts');
+        data.root.child('/static/contacts/su00').set({
+          company: 'Static Company 00',
+          name: 'Static User 00',
         });
       }
-    }, this.handleContactError);
+    }, this.handleError);
 
-    data.root.child('/users/' + data.auth.currentUser.uid)
-    .once('value', (data) => {
-      console.log('getting user data');
-      if ( data == null ) {
-        console.log('no user data');
-        data.root.child('/users/' + data.auth.currentUser.uid).set({
-            company: 'Company Z',
-            name: data.auth.currentUser.email,
+    // if there is a uid, check for contacts
+    if ( navParams.get('uid') ) {
+      data.root.child('/users/' + navParams.get('uid'))
+      .on('value', (currentUserData) => {
+        console.log('getting user data');
+
+        if ( navParams.get('uid') && currentUserData.exists() ) {
+          console.log('adding user data');
+          this.userData = JSON.stringify(currentUserData);
+        } else {
+          console.log('no user data');
+          data.root.child('/users/' + navParams.get('uid')).set({
+            company: 'Company A0',
+            name: 'User A0',
             contacts:[]
           });
-      } else {
-        console.log('adding user data');
-        try {
-          this.userData = JSON.stringify(data);
-        } catch (err) { console.log(err.message); }
-      }
-    }, this.handleContactError);
+        }
+      }, this.handleError);
+    }
 
-    this.email = data.auth.currentUser.email;
     console.log('Home finished loading');
   }
 
-  handleContactError(err) {
-    console.log("The read failed: " + err.message);
+  handleError(err) {
+    console.log("Home Error: " + err.message);
   }
 }
