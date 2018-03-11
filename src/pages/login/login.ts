@@ -3,7 +3,7 @@ import { NavController, MenuController  } from 'ionic-angular';
 
 import { DataProvider } from '../../providers/data/data';
 
-//import { HomePage } from '../home/home';
+import { RegisterPage } from '../register/register';
 
 @Component({
   selector: 'page-login',
@@ -16,16 +16,15 @@ export class LoginPage {
   userPassword: string;
   data: any;
   menuCtrl: any;
-  navCtrl: any;
+  //@ViewChild(Nav) nav: Nav;
 
-  constructor(navCtrl: NavController, menuCtrl: MenuController, data: DataProvider) {
+  constructor(public navCtrl: NavController, menuCtrl: MenuController, data: DataProvider) {
     console.log('Hello Login Page');
     data.init();
     this.data = data;
 
     menuCtrl.enable(false);
     this.menuCtrl = menuCtrl;
-    this.navCtrl = navCtrl;
 
     this.userEmail = '';
     this.userPassword = '';
@@ -38,9 +37,12 @@ export class LoginPage {
     .then((data) => {
       console.log('Login');
       this.menuCtrl.enable(true);
-      //this.navCtrl.setRoot(HomePage);
     }).catch(err => {
       console.error('Login error: ', err.message);
     });
+  }
+
+  goToRegister() {
+    this.navCtrl.push(RegisterPage);
   }
 }

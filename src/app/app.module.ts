@@ -8,6 +8,7 @@ import { MyApp } from './app.component';
 import { LoginPage } from '../pages/login/login';
 import { HomePage } from '../pages/home/home';
 import { ExpensesPage } from '../pages/expenses/expenses';
+import { RegisterPage } from '../pages/register/register';
 
 import { DataProvider } from '../providers/data/data';
 import { WindowProvider } from '../providers/window/window';
@@ -18,6 +19,7 @@ import { WindowProvider } from '../providers/window/window';
     MyApp,
     HomePage,
     ExpensesPage,
+    RegisterPage,
     LoginPage
   ],
   imports: [
@@ -29,6 +31,7 @@ import { WindowProvider } from '../providers/window/window';
     MyApp,
     HomePage,
     ExpensesPage,
+    RegisterPage,
     LoginPage
   ],
   providers: [

@@ -7,12 +7,32 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>register</ion-title>
+    <ion-title>Register</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+
+
+  <form (ngSubmit)="register()">
+    <ion-list>
+      <ion-item>
+        <ion-label stacked>Email</ion-label>
+        <ion-input [(ngModel)]="userEmail"
+                   type="email" name="userEmail"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>Password</ion-label>
+        <ion-input [(ngModel)]="userPassword"
+                   type="password" name="userPassword"></ion-input>
+      </ion-item>
+      <hr/>
+      <button type="submit" ion-button>Register</button>
+    </ion-list>
+
+  </form>
+
 
 </ion-content>

@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { NavParams, MenuController  } from 'ionic-angular';
+
+import { DataProvider } from '../../providers/data/data';
 
 /**
  * Generated class for the RegisterPage page.
@@ -8,18 +10,36 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
  * Ionic pages and navigation.
  */
 
-@IonicPage()
 @Component({
   selector: 'page-register',
   templateUrl: 'register.html',
+  providers: [DataProvider]
 })
 export class RegisterPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  userEmail: string;
+  userPassword: string;
+  //confirmPassword: string;
+  data: any;
+
+  constructor(menuCtrl: MenuController, data: DataProvider, navParams: NavParams) {
+    console.log('Hello Register Page');
+    menuCtrl.enable(true);
+
+    data.init();
+    this.data = data;
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad RegisterPage');
+  register() {
+    this.userEmail += '';
+    this.userPassword += '';
+    //this.confirmPassword += '';
+    //if password mismatch, return error
+    this.data.register(this.userEmail, this.userPassword)
+    .then((data) => {
+      console.log('Register');
+    }).catch(err => {
+      console.error('Register error: ', err.message);
+    });
   }
-
 }
