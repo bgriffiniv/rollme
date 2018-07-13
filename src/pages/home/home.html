@@ -1,25 +1,31 @@
 <ion-header>
   <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
     <ion-title>
       Rollme
     </ion-title>
-
-    <ion-buttons end>
-      <button ion-button icon-only>
-        <ion-icon name="search"></ion-icon>
-      </button>
-    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
-<ion-content class="center" padding>
+<ion-content padding>
+  <p>
+    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
+  </p>
+  {{userData}}
+  <ion-list>
+    <ion-card *ngFor="let contact of contacts">
+      <ion-card-header>
+        {{ contact.name }}
+      </ion-card-header>
+      <ion-card-content>
+        {{ contact.company }}
+      </ion-card-content>
 
-   <ion-list [virtualScroll]="users" [approxItemHeight]="'200px'" >
-      <div class="card" *virtualItem="let user" (click)="goToProfile(user)">
+    </ion-card>
+  </ion-list>
 
-        <div class="name">{{user.name}}</div>
-        <div class="info">{{user.role}} @ {{user.company}}</div>
-      </div>
 
-    </ion-list>
 </ion-content>

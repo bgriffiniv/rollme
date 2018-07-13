@@ -5,18 +5,20 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
 import { MyApp } from './app.component';
+import { LoginPage } from '../pages/login/login';
 import { HomePage } from '../pages/home/home';
-import { ProfilePage } from '../pages/profile/profile';
-import {AboutPage} from '../pages/about/about';
-//import { FIREBASE_PROVIDERS, defaultFirebase, AngularFire, AuthMethods, AuthProviders, firebaseAuthConfig } from 'angularfire2';
+import { ExpensesPage } from '../pages/expenses/expenses';
+
+import { DataProvider } from '../providers/data/data';
+import { WindowProvider } from '../providers/window/window';
 
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    AboutPage,
-    ProfilePage
+    ExpensesPage,
+    LoginPage
   ],
   imports: [
     BrowserModule,
@@ -26,20 +28,15 @@ import {AboutPage} from '../pages/about/about';
   entryComponents: [
     MyApp,
     HomePage,
-    AboutPage,
-    ProfilePage
+    ExpensesPage,
+    LoginPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-     /*FIREBASE_PROVIDERS,
-     defaultFirebase({
-       apiKey: "AIzaSyCOwTEY-c9hziBS5gqZoFjEQkn9R_Qmc7g",
-       authDomain: "rollme-4308a.firebaseapp.com",
-       databaseURL: "https://rollme-4308a.firebaseio.com/",
-       storageBucket: "gs://rollme-4308a.appspot.com/",
-     })*/
+    DataProvider,
+    WindowProvider
   ]
 })
 export class AppModule {}

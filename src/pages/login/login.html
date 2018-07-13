@@ -1,0 +1,31 @@
+
+<ion-header>
+</ion-header>
+<ion-content padding>
+
+  Generated template for the LoginPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+
+  <p>{{email}}</p>
+
+  <form (ngSubmit)="login()">
+    <ion-list>
+      <ion-item>
+        <ion-label stacked>Email</ion-label>
+        <ion-input [(ngModel)]="userEmail"
+                   type="email" name="userEmail"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>Password</ion-label>
+        <ion-input [(ngModel)]="userPassword"
+                   type="password" name="userPassword"></ion-input>
+      </ion-item>
+      <hr/>
+      <button type="submit" ion-button>Enter</button>
+    </ion-list>
+
+  </form>
+
+</ion-content>
