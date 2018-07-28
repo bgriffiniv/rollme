@@ -8,6 +8,7 @@ import { MyApp } from './app.component';
 import { LoginPage } from '../pages/login/login';
 import { HomePage } from '../pages/home/home';
 import { ExpensesPage } from '../pages/expenses/expenses';
+import {CardEditorPage } from '../pages/cardeditors/cardeditors';
 
 import { DataProvider } from '../providers/data/data';
 import { WindowProvider } from '../providers/window/window';
@@ -19,6 +20,7 @@ import { WindowProvider } from '../providers/window/window';
     HomePage,
     ExpensesPage,
     LoginPage
+    CardEditorPage
   ],
   imports: [
     BrowserModule,
@@ -30,6 +32,7 @@ import { WindowProvider } from '../providers/window/window';
     HomePage,
     ExpensesPage,
     LoginPage
+    CardEditorPage
   ],
   providers: [
     StatusBar,

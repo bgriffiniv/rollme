@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { LoginPage } from '../pages/login/login';
 import { HomePage } from '../pages/home/home';
+import { CardEditorPage } from '../pages/cardeditors/cardeditors';
 
 import { DataProvider } from '../providers/data/data';
 
