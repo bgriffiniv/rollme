@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { Nav, MenuController, NavParams } from 'ionic-angular';
+import { CardEditorPage } from '../cardeditors/cardeditors';
 
 import { DataProvider } from '../../providers/data/data';
 
@@ -69,4 +70,9 @@ export class HomePage {
   handleError(err) {
     console.log("Home Error: " + err.message);
   }
+
+  moveToCardEditorPage() {
+    this.navCtrl.push(CardEditorPage);
+  }
+
 }
