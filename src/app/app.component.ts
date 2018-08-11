@@ -5,7 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { LoginPage } from '../pages/login/login';
 import { HomePage } from '../pages/home/home';
-import { CardEditorPage } from '../pages/cardeditors/cardeditors';
+import { CardEditorPage } from '../pages/cardeditor/cardeditor';
 
 import { DataProvider } from '../providers/data/data';
 
@@ -13,12 +13,15 @@ import { DataProvider } from '../providers/data/data';
   templateUrl: 'app.html',
   providers: [DataProvider]
 })
+
+
 export class MyApp {
 
   @ViewChild(Nav) nav: Nav;
-  rootPage: any;
+  rootPage: any = 'TabsPage';
   data: any;
   uid: any;
+
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, data: DataProvider) {
     console.log('Hello App Components');
@@ -57,6 +60,5 @@ export class MyApp {
     console.log('Logout');
     this.data.logout();
     //this.nav.setRoot(LoginPage);
-  }
-
-}
+  };
+ };

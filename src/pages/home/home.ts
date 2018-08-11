@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, MenuController, NavParams } from 'ionic-angular';
-import { CardEditorPage } from '../cardeditors/cardeditors';
+import { Nav, MenuController, NavParams, NavController } from 'ionic-angular';
+import { CardEditorPage } from '../cardeditor/cardeditor';
+import { LottieAnimationViewModule } from 'ng-lottie';
 
 import { DataProvider } from '../../providers/data/data';
 
@@ -15,7 +16,20 @@ export class HomePage {
   contacts: {name: string, company: string}[] = [];
   userData: any = '';
 
-  constructor(menuCtrl: MenuController, data: DataProvider, navParams: NavParams) {
+  public lottieConfig: Object;
+  private anim: any;
+  private animationSpeed: number = 1;
+
+  constructor(public navCtrl: NavController, menuCtrl: MenuController, data: DataProvider, navParams: NavParams) {
+    LottieAnimationViewModule.forRoot();
+
+    this.lottieConfig = {
+      path: 'assets/animations/RollMeLogin.json',
+      autoplay: true,
+      loop: true
+    };
+
+
     console.log('Hello Home Page');
     menuCtrl.enable(true);
 
@@ -75,4 +89,24 @@ export class HomePage {
     this.navCtrl.push(CardEditorPage);
   }
 
+  handleAnimation(anim: any) {
+    this.anim = anim;
+  };
+
+  stop() {
+    this.anim.stop();
+  };
+
+  play() {
+    this.anim.play();
+  };
+
+  pause() {
+    this.anim.pause();
+  };
+
+  setSpeed(speed: number) {
+    this.animationSpeed = speed;
+    this.anim.setSpeed(speed);
+  };
 }
