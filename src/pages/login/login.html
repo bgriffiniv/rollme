@@ -3,10 +3,7 @@
 </ion-header>
 <ion-content padding>
 
-  Generated template for the LoginPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
+  Welcome to Roll.me!
 
   <p>{{email}}</p>
 
@@ -23,9 +20,10 @@
                    type="password" name="userPassword"></ion-input>
       </ion-item>
       <hr/>
-      <button type="submit" ion-button>Enter</button>
+      <button type="submit" ion-button (click)="moveToHome()">Enter</button>
     </ion-list>
 
   </form>
-
 </ion-content>
+
+
