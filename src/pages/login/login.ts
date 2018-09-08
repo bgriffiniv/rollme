@@ -1,6 +1,7 @@
 import { Component/*, ViewChild*/ } from '@angular/core';
 import { NavController, MenuController  } from 'ionic-angular';
 
+
 import { DataProvider } from '../../providers/data/data';
 
 //import { HomePage } from '../home/home';
