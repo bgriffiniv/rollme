@@ -8,28 +8,39 @@ import { MyApp } from './app.component';
 import { LoginPage } from '../pages/login/login';
 import { HomePage } from '../pages/home/home';
 import { ExpensesPage } from '../pages/expenses/expenses';
+import { CardEditorPage } from '../pages/cardeditor/cardeditor';
+import { Splash } from '../pages/splash/splash';
+
 
 import { DataProvider } from '../providers/data/data';
 import { WindowProvider } from '../providers/window/window';
 
+import { Component } from '@angular/core';
+import { LottieAnimationViewModule } from 'ng-lottie';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     ExpensesPage,
-    LoginPage
+    LoginPage,
+    CardEditorPage,
+    Splash
+
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    LottieAnimationViewModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
     HomePage,
     ExpensesPage,
-    LoginPage
+    LoginPage,
+    CardEditorPage,
+    Splash
   ],
   providers: [
     StatusBar,
