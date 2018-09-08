@@ -1,11 +1,12 @@
 import { Component/*, ViewChild*/ } from '@angular/core';
-import { NavController, MenuController  } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, MenuController  } from 'ionic-angular';
+import { HomePage } from '../home/home';
 
 
 import { DataProvider } from '../../providers/data/data';
 
-//import { HomePage } from '../home/home';
 
+@IonicPage()
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html',
@@ -19,7 +20,7 @@ export class LoginPage {
   menuCtrl: any;
   navCtrl: any;
 
-  constructor(navCtrl: NavController, menuCtrl: MenuController, data: DataProvider) {
+  constructor(navCtrl: NavController, public navParams: NavParams, menuCtrl: MenuController, data: DataProvider) {
     console.log('Hello Login Page');
     data.init();
     this.data = data;
@@ -43,5 +44,9 @@ export class LoginPage {
     }).catch(err => {
       console.error('Login error: ', err.message);
     });
+  }
+
+  moveToHome() {
+    this.navCtrl.push(HomePage);
   }
 }
