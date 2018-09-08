@@ -1,10 +1,12 @@
 import { Component, ViewChild } from '@angular/core';
-import { Platform, Nav } from 'ionic-angular';
+import { Platform, Nav, ModalController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { LoginPage } from '../pages/login/login';
 import { HomePage } from '../pages/home/home';
+import { CardEditorPage } from '../pages/cardeditor/cardeditor';
+import { Splash } from '../pages/splash/splash';
 
 import { DataProvider } from '../providers/data/data';
 
@@ -12,14 +14,18 @@ import { DataProvider } from '../providers/data/data';
   templateUrl: 'app.html',
   providers: [DataProvider]
 })
+
+
 export class MyApp {
 
   @ViewChild(Nav) nav: Nav;
-  rootPage: any;
+  rootPage: any = "TabsPage";
   data: any;
   uid: any;
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, data: DataProvider) {
+
+  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, data: DataProvider,
+    modalCtrl: ModalController) {
     console.log('Hello App Components');
     data.init();
     this.data = data;
@@ -47,8 +53,10 @@ export class MyApp {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
-      splashScreen.hide();
-      console.log('Splash screen hidden');
+
+      let splash = modalCtrl.create(Splash);
+      splash.present();
+
     });
   }
 
@@ -56,6 +64,5 @@ export class MyApp {
     console.log('Logout');
     this.data.logout();
     //this.nav.setRoot(LoginPage);
-  }
-
-}
+  };
+ };
