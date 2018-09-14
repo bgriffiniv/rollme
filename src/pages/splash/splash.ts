@@ -25,7 +25,7 @@ export class Splash {
           container: document.getElementById('logoSplash'),
           loop: false,
           autoplay: true,
-          path: 'assets/animations/RollMeLogin.json'
+          path: 'assets/animations/RollMe_Logo_NoBG.json'
       }
 
   }
