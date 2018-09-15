@@ -18,6 +18,8 @@ import { WindowProvider } from '../providers/window/window';
 import { Component } from '@angular/core';
 import { LottieAnimationViewModule } from 'ng-lottie';
 
+import {LinkedIn} from '@ionic-native/linkedin'
+
 @NgModule({
   declarations: [
     MyApp,
@@ -47,7 +49,8 @@ import { LottieAnimationViewModule } from 'ng-lottie';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     DataProvider,
-    WindowProvider
+    WindowProvider,
+    LinkedIn
   ]
 })
 export class AppModule {}
