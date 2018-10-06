@@ -23,7 +23,7 @@
   <preference name="FadeSplashScreenDuration" value="300" />
   <preference name="AutoHideSplashScreen" value="false" />
   <preference name="SplashShowOnlyFirstTime" value="false" />
-  <preference name="SplashScreen" value="screen" />
+  <preference name="SplashScreen" value="none" />
   <preference name="ShowSplashScreen" value="true"/>
   <preference name="SplashScreenDelay" value="3000" />
   <platform name="android">
