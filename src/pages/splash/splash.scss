@@ -8,45 +8,158 @@
      }
      page-splash {
 
-          .scroll-content {
-              display: flex;
-              justify-content: center;
-              align-items: center;
-          }
-
-          #logoSplash {
-            width: auto;
-            height: auto;
-            margin: auto;
-
-          }
-
           .splashContainer{
-            width: 50%;
-            padding: 10% 0 0;
-            margin: 0 auto;
-            position: relative;
+            width: 100%;
+            margin-top: -40px;
             display: flex;
-
-
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
           }
 
-          .button {
-            font-family: 'Roboto', sans-serif;
-            margin: auto;
-            color: white;
+          .splashForm {
+            margin-top: -235px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             background-color: transparent;
             border: none;
-            padding: 10px 30px;
-            font-size: 12px;
-            display: flex;
 
-
-
-            .button:hover {
+            button:hover {
               box-shadow: 0px 8px 10px 0 rgba(0,0,0,0.10), 0 12px 14px 0 rgba (0,0,0,0.08);
-
             }
+          }
+
+          .splashForm .loginSplash {
+             margin-right: 130px;
+             margin-left: -25px;
+             margin-top: -15px;
+             background-color: none;
+             border: none;
+          }
+
+          .splashForm .signupSplash {
+            margin-top: -15px;
+            margin-left: 25px;
+          }
+
+          #login {
+             font-size: 14px;
+          }
+
+          #signup {
+            font-size: 14px;
+          }
+
+          .form {
+             position: relative;
+             width: 100%;
+             display: flex;
+             align-items: center;
+             justify-content: center;
+             position: relative;
+             z-index: 1;
+             background: rgba(0,0,0,0);
+             max-width: 290px;
+             max-height: 280px;
+             margin: -30px auto 10px;
+             padding: 130px 160px 100px;
+             text-align: center;
+             display:none;
+          }
+
+
+          .form .login-form {
+             height: 260px;
+             margin: -135px -160px -100px;
+             padding-top: 20px;
+             padding-left: 40px;
+             padding-right: 40px;
+             background: rgba(0,0,0,0.5);
+             box-shadow: 0 15px 25px rgba(0,0,0,0.5);
+             border-radius: 10px;
+             display:none;
+          }
+
+          .form .signUp-form {
+              height: 450px;
+              width: 280px;
+              margin: -140px -150px -10px;
+              padding-top: 10px;
+              padding-left: 25px;
+              padding-right: 25px;
+              background: rgba(0,0,0,0.5);
+              box-shadow: 0 15px 25px rgba(0,0,0,0.5);
+              border-radius: 10px;
+              display: none;
+          }
+
+          .form .login-form ion-item {
+             width: 100%;
+             margin-bottom: -5px;
+             border: none;
+             outline: none;
+             background: none;
+          }
+
+          .form .signUp-form ion-item {
+             width: 100%;
+             padding: 10px;
+             border: none;
+             outline: none;
+             background: none;
+          }
+
+
+          .form input {
+             outline: 1;
+             background: none;
+             width: auto;
+             border: 0;
+             margin: 0 0 0px;
+             padding: 15px;
+             box-sizing: border-box;
+             font-size: 16px;
+             color: #fff;
+          }
+
+          .form .message a{
+             margin: 15px 0 0;
+             color: blue;
+             text-decoration: none;
+          }
+
+          .form .message {
+             color: #fff;
+          }
+
+
+          #forgotPassword {
+             text-decoration: none;
+             color: red;
+          }
+
+          .form .signUp-form ion-icon {
+              font-size: 45px;
+          }
+
+          #FB {
+              margin-top: 5px;
+              margin-right: 40px;
+          }
+
+          #Google {
+              margin-left: 20px;
+          }
+
+          #linkedIn {
+              margin-top: 5px;
+              margin-left: 40px;
+          }
+
+          .socialIcons p {
+             color: #fff;
           }
      }
 }
