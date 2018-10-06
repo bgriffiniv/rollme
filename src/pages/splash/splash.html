@@ -1,17 +1,74 @@
 <ion-content>
+    <div class="splashContainer">
+      <lottie-animation-view id="logoSplash"
+        [options]="lottieConfig"
+        [width]="auto"
+        [height]="auto"
+        (animCreated)="handleAnimation($event)">
+      </lottie-animation-view>
+    </div>
+    <div class="splashForm">
+     <p class="loginSplash">
+      <button ion-button (click)="toggleLogin($event)" id="login" color="light" outline>Login</button>
+     </p>
+      <p class="signupSplash">
+      <button ion-button (click)="toggleSignup()" id="signup" color="light" outline>SignUp</button>
+      </p>
+    </div>
+  <div class="form" id="formContainer">
+    <form class="login-form" id="login-form" (ngSubmit)="login()">
+        <ion-item>
+          <ion-label stacked>Phone Number or Email Address</ion-label>
+          <ion-input [(ngModel)]="userEmail"
+                       type="email" name="userEmail"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label stacked>Password</ion-label>
+          <ion-input [(ngModel)]="userPassword"
+                       type="password" name="userPassword"></ion-input>
+        </ion-item>
+          <hr/>
+        <button type="submit" ion-button color="light" (click)="navToHomePage()" outline>Login</button>
+        <hr/>
+        <a href="#" id="forgotPassword">Forgot password?</a>
+      <hr/>
+      <p class="message" (click)="signupRedirect()">Haven't registered yet? <a href="#">Sign-Up!</a></p>
+    </form>
+    <br/>
+    <form class="signUp-form" id="signup-form" (ngSubmit)="signUp()">
+        <div class="socialIcons">
+          <p> Login with: </p>
+          <ion-icon name="logo-googleplus" id="Google"></ion-icon>
+          <br/>
+          <ion-icon name="logo-facebook" id="FB"></ion-icon>
 
-             <lottie-animation-view id="logoSplash"
-                    [options]="lottieConfig"
-                    [width]="auto"
-                    [height]="auto"
-                    (animCreated)="handleAnimation($event)">
-             </lottie-animation-view>
-              <div class="splashContainer">
-                <button ion-button (click)="navigateToLoginPage()">Login</button>
-                <button ion-button (click)="navigateToSignUpPage()">Sign-Up</button>
-              </div>
+          <ion-icon name="logo-linkedin" id="linkedIn"></ion-icon>
+          <p>-OR-</p>
+        </div>
+        <ion-item>
+          <ion-label stacked>Phone Number or Email Address</ion-label>
+          <ion-input [(ngModel)]="userEmail"
+                     type="email" name="userEmail"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label stacked>Password</ion-label>
+          <ion-input [(ngModel)]="userPassword"
+                     type="password" name="userPassword"></ion-input>
+        </ion-item>
+        <hr/>
+        <button type="submit" ion-button color="light" (click)="navToHomePage()" outline>Sign me up!</button>
+        <p class="message" (click)="loginRedirect()">Already rollin'? <a href="#">Login</a></p>
+    </form>
+  </div>
+
+  <script type="text/javascript" src='https://code.jquery.com/jquery-3.3.1.min.js'></script>
+  <script type="text/javascript">
+    $('.loginSplash').click(function(){
+    $('.splashForm').animate({height: "toggle", opacity: "toggle"}, "slow");
+    });
+  </script>
+
 </ion-content>
-
 
 
 
