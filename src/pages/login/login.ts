@@ -2,7 +2,6 @@ import { Component/*, ViewChild*/ } from '@angular/core';
 import { IonicPage, NavController, NavParams, MenuController  } from 'ionic-angular';
 import { HomePage } from '../home/home';
 
-
 import { DataProvider } from '../../providers/data/data';
 
 
@@ -46,7 +45,7 @@ export class LoginPage {
     });
   }
 
-  moveToHome() {
+  navToHomePage() {
     this.navCtrl.push(HomePage);
   }
 }
