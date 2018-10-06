@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, MenuController, NavParams, NavController } from 'ionic-angular';
 import { CardEditorPage } from '../cardeditor/cardeditor';
 import { LottieAnimationViewModule } from 'ng-lottie';
+import { Splash } from '../splash/splash';
 
 import { DataProvider } from '../../providers/data/data';
 
@@ -24,9 +25,10 @@ export class HomePage {
     LottieAnimationViewModule.forRoot();
 
     this.lottieConfig = {
-      path: 'assets/animations/RollMeLogin.json',
+      container: document.getElementById('exampleAnim'),
+      path: 'assets/animations/RollMe_Logo_NoBG.json',
       autoplay: true,
-      loop: false
+      loop: true
     };
 
 
