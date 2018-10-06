@@ -11,13 +11,15 @@
 </ion-header>
 
 <ion-content padding>
+  <div class="exampleAnim">
     <lottie-animation-view
       [options]="lottieConfig"
-      [width]="300"
-      [height]="600"
+      [width]="auto"
+      [height]="auto"
       (animCreated)="handleAnimation($event)">
     </lottie-animation-view>
-    <div id="player">
+  </div>
+  <div class="player">
       <p>Speed: x{{animationSpeed}}</p>
       <div class="range-container">
         <input #range type="range" value="1" min="0" max="3" step="0.5"
@@ -26,21 +28,25 @@
       <button (click)="stop()">stop</button>
       <button (click)="pause()">pause</button>
       <button (click)="play()">play</button>
-    </div>
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
-  {{userData}}
-  <ion-list>
-    <ion-card *ngFor="let contact of contacts">
-      <ion-card-header>
-        {{ contact.name }}
-      </ion-card-header>
-      <ion-card-content>
-        {{ contact.company }}
-      </ion-card-content>
-    </ion-card>
-  </ion-list>
 
-<button ion-button (click)="moveToCardEditorPage()">Create a Card!</button>
+   <p>
+     If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
+   </p>
+
+   <div>
+    {{userData}}
+    <ion-list>
+      <ion-card *ngFor="let contact of contacts">
+        <ion-card-header>
+         {{ contact.name }}
+        </ion-card-header>
+        <ion-card-content>
+         {{ contact.company }}
+       </ion-card-content>
+     </ion-card>
+    </ion-list>
+   </div>
+
+   <button ion-button (click)="moveToCardEditorPage()">Create a Card!</button>
+  </div>
 </ion-content>
