@@ -11,7 +11,6 @@ import { ExpensesPage } from '../pages/expenses/expenses';
 import { CardEditorPage } from '../pages/cardeditor/cardeditor';
 import { Splash } from '../pages/splash/splash';
 
-
 import { DataProvider } from '../providers/data/data';
 import { WindowProvider } from '../providers/window/window';
 
@@ -26,7 +25,6 @@ import { LottieAnimationViewModule } from 'ng-lottie';
     LoginPage,
     CardEditorPage,
     Splash
-
   ],
   imports: [
     BrowserModule,
