@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MenuController, NavParams, NavController } from 'ionic-angular';
 import { LottieAnimationViewModule } from 'ng-lottie';
-import $ from "jquery";
+import $ from 'jquery';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { LoginPage } from '../login/login';
 import { HomePage } from '../home/home';
