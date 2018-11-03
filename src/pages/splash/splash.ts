@@ -1,5 +1,5 @@
-import { Component, ViewChild } from '@angular/core';
-import { Nav, MenuController, NavParams, NavController, ViewController } from 'ionic-angular';
+import { Component } from '@angular/core';
+import { MenuController, NavParams, NavController } from 'ionic-angular';
 import { LottieAnimationViewModule } from 'ng-lottie';
 import $ from "jquery";
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -17,7 +17,7 @@ import { DataProvider } from '../../providers/data/data';
 export class Splash {
       public lottieConfig: Object;
       private anim: any;
-      private animationSpeed: number = 1;
+      //private animationSpeed: number = 1;
 
 
   constructor(public navCtrl: NavController, menuCtrl: MenuController, data: DataProvider, navParams: NavParams,

@@ -4,6 +4,7 @@ import { HomePage } from '../home/home';
 
 import { DataProvider } from '../../providers/data/data';
 
+
 @IonicPage()
 @Component({
   selector: 'page-login',
@@ -17,14 +18,16 @@ export class LoginPage {
   data: any;
   menuCtrl: any;
   //@ViewChild(Nav) nav: Nav;
+  //navCtrl: any;
 
-  constructor(navCtrl: NavController, public navParams: NavParams, menuCtrl: MenuController, data: DataProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, menuCtrl: MenuController, data: DataProvider) {
     console.log('Hello Login Page');
     data.init();
     this.data = data;
 
     menuCtrl.enable(false);
     this.menuCtrl = menuCtrl;
+    //this.navCtrl = navCtrl;
 
     this.userEmail = '';
     this.userPassword = '';

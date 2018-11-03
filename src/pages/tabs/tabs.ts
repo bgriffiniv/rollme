@@ -3,7 +3,6 @@ import {IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { LoginPage } from '../login/login';
 import { HomePage } from '../home/home';
-import { ExpensesPage } from '../expenses/expenses';
 
 import { DataProvider } from '../../providers/data/data';
 
@@ -18,7 +17,6 @@ export class TabsPage {
   // should be each tab's root Page
   homeTab: HomePage;
   enterTab: LoginPage;
-  expensesTab: any;
   joinTab: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, data: DataProvider) {

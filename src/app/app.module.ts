@@ -14,7 +14,6 @@ import { Splash } from '../pages/splash/splash';
 import { DataProvider } from '../providers/data/data';
 import { WindowProvider } from '../providers/window/window';
 
-import { Component } from '@angular/core';
 import { LottieAnimationViewModule } from 'ng-lottie';
 
 @NgModule({
