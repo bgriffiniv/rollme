@@ -20,6 +20,7 @@ export class Splash {
       //private animationSpeed: number = 1;
 
 
+
   constructor(public navCtrl: NavController, menuCtrl: MenuController, data: DataProvider, navParams: NavParams,
       public splashScreen: SplashScreen) {
       LottieAnimationViewModule.forRoot();

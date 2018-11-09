@@ -1,9 +1,12 @@
 import { Component/*, ViewChild*/ } from '@angular/core';
-import { IonicPage, NavController, NavParams, MenuController  } from 'ionic-angular';
+import { NavController, MenuController  } from 'ionic-angular';
+import { IonicPage, NavParams, MenuController  } from 'ionic-angular';
 import { HomePage } from '../home/home';
 
 import { DataProvider } from '../../providers/data/data';
+import { LinkedInManager } from '../../providers/social_login/linkedin_manager';
 
+import { RegisterPage } from '../register/register';
 
 @IonicPage()
 @Component({
@@ -17,17 +20,15 @@ export class LoginPage {
   userPassword: string;
   data: any;
   menuCtrl: any;
-  //@ViewChild(Nav) nav: Nav;
-  //navCtrl: any;
+  navCtrl: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, menuCtrl: MenuController, data: DataProvider) {
+  constructor(public navCtrl: NavController, menuCtrl: MenuController, data: DataProvider, private linkedIn:LinkedInManager) {
     console.log('Hello Login Page');
     data.init();
     this.data = data;
 
     menuCtrl.enable(false);
     this.menuCtrl = menuCtrl;
-    //this.navCtrl = navCtrl;
 
     this.userEmail = '';
     this.userPassword = '';
@@ -40,12 +41,17 @@ export class LoginPage {
     .then((data) => {
       console.log('Login');
       this.menuCtrl.enable(true);
+      //this.navCtrl.setRoot(HomePage);
     }).catch(err => {
       console.error('Login error: ', err.message);
     });
   }
 
-  navToHomePage() {
-    this.navCtrl.push(HomePage);
+  goToRegister() {
+    this.navCtrl.push(RegisterPage);
+  }
+
+  signInLinkedIn(){
+    this.event.publish('signIn_LinkedIn');
   }
 }
