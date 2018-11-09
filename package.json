@@ -29,7 +29,13 @@
     "@types/jquery": "^3.3.10",
     "angular": "^1.6.9",
     "angularfire": "^2.3.0",
+    "cordova-android": "7.0.0",
+    "cordova-plugin-device": "^2.0.2",
+    "cordova-plugin-ionic-keyboard": "^2.1.3",
+    "cordova-plugin-ionic-webview": "^1.2.1",
     "cordova-plugin-linkedin": "^1.2.1",
+    "cordova-plugin-splashscreen": "^5.0.2",
+    "cordova-plugin-whitelist": "^1.3.3",
     "es6-shim": "^0.35.3",
     "firebase": "^3.9.0",
     "ionic-angular": "^3.9.2",
@@ -53,7 +59,15 @@
     "plugins": {
       "cordova-plugin-linkedin": {
         "APP_ID": "6293196"
-      }
-    }
+      },
+      "cordova-plugin-whitelist": {},
+      "cordova-plugin-device": {},
+      "cordova-plugin-splashscreen": {},
+      "cordova-plugin-ionic-webview": {},
+      "cordova-plugin-ionic-keyboard": {}
+    },
+    "platforms": [
+      "android"
+    ]
   }
 }

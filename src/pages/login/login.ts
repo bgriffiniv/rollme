@@ -3,8 +3,8 @@ import { NavController, MenuController  } from 'ionic-angular';
 import { IonicPage, NavController, NavParams, MenuController  } from 'ionic-angular';
 import { HomePage } from '../home/home';
 
-
 import { DataProvider } from '../../providers/data/data';
+import { LinkedInManager } from '../../providers/social_login/linkedin_manager';
 
 import { RegisterPage } from '../register/register';
 
@@ -20,9 +20,9 @@ export class LoginPage {
   userPassword: string;
   data: any;
   menuCtrl: any;
-  //@ViewChild(Nav) nav: Nav;
+  navCtrl: any;
 
-  constructor(public navCtrl: NavController, menuCtrl: MenuController, data: DataProvider) {
+  constructor(public navCtrl: NavController, menuCtrl: MenuController, data: DataProvider,s, private linkedIn:LinkedInManager) {
     console.log('Hello Login Page');
     data.init();
     this.data = data;
@@ -41,6 +41,7 @@ export class LoginPage {
     .then((data) => {
       console.log('Login');
       this.menuCtrl.enable(true);
+      //this.navCtrl.setRoot(HomePage);
     }).catch(err => {
       console.error('Login error: ', err.message);
     });
@@ -48,5 +49,9 @@ export class LoginPage {
 
   goToRegister() {
     this.navCtrl.push(RegisterPage);
+  }
+
+  signInLinkedIn(){
+    this.event.publish('signIn_LinkedIn');
   }
 }

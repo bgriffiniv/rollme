@@ -3,6 +3,7 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
+import { HttpClientModule } from '@angular/common/http'
 
 import { MyApp } from './app.component';
 import { LoginPage } from '../pages/login/login';
@@ -19,6 +20,7 @@ import { Component } from '@angular/core';
 import { LottieAnimationViewModule } from 'ng-lottie';
 
 import {LinkedIn} from '@ionic-native/linkedin'
+import { LinkedInManager } from '../../helpers/social_login/linkedin_manager';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,8 @@ import {LinkedIn} from '@ionic-native/linkedin'
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    LottieAnimationViewModule.forRoot()
+    LottieAnimationViewModule.forRoot(),
+    HttpClientModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -50,7 +53,8 @@ import {LinkedIn} from '@ionic-native/linkedin'
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     DataProvider,
     WindowProvider,
-    LinkedIn
+    LinkedIn,
+    LinkedInManager
   ]
 })
 export class AppModule {}

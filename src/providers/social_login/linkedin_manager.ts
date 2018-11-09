@@ -1,42 +1,48 @@
-import { LinkedIn } from '@ionic-native/linkedin';
+import { LinkedIn, LinkedInLoginScopes } from '@ionic-native/linkedin';
+import {Events} from 'ionic-angular'
+import { Directive, Component, NgModule } from '../../../node_modules/@angular/core';
 
-const scopes = ['r_basicprofile', 'r_emailaddress', 'w_share'];
+ @NgModule({
+    providers: [LinkedIn]
+  })
 
 export class LinkedInManager {
     private linkedinCtrl;
     private connections;
 
-    constructor(private linkedin: LinkedIn) { 
-        this.linkedinCtrl = linkedin;
+    constructor(private linkedin: LinkedIn, private event:Events) { 
+        this.event.subscribe('signIn_LinkedIn',() => {
+            console.log("Signing In...")
+            this.login();
+        })
     }
 
     hasActiveSession() {
-        if(this.linkedinCtrl)
-            return this.linkedinCtrl.hasActiveSession();
+        return this.linkedin.hasActiveSession();
     }
 
-    login(){
-        if(this.linkedinCtrl) {
-            this.linkedinCtrl.login(scopes, true)
-            .then(() => console.log('[LinkedIn]Logged In'))
-            .catch(e => console.log('Error Logging In', e));
-        }
+    public login(){
+        const scopes:LinkedInLoginScopes[] = ['r_basicprofile', 'r_emailaddress', 'rw_company_admin', 'w_share'];
+        this.linkedin.login(scopes, true)
+        .then(() => console.log('[LinkedIn]Logged In'))
+        .catch(e => console.log('Error Logging In', e));
+        
     }
 
     getConnections(){
-        if(this.linkedinCtrl) {
-            this.linkedinCtrl.getRequest('people/~')
-            .then(res => {this.connections = res; this.debugLog("Connections : " + res)})
-            .catch(e => this.debugLog('Error Retreiving Connections', e));
-        }
+        
+        this.linkedin.getRequest('people/~')
+        .then(res => {this.connections = res; this.debugLog("Connections : " + res)})
+        .catch(e => this.debugLog('Error Retreiving Connections', e));
+        
     }
 
     share(shareData){
-        if(this.linkedinCtrl) {
-        this.linkedinCtrl.postRequest('~/shares', shareData)
+        
+        this.linkedin.postRequest('~/shares', shareData)
             .then(res => this.debugLog("Shared Content: " + res))
             .catch(e => this.debugLog("Error Sharing",e));
-        }
+    
     }
 
     debugLog(message, exception = ""){
