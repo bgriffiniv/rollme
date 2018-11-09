@@ -20,7 +20,7 @@ import { Component } from '@angular/core';
 import { LottieAnimationViewModule } from 'ng-lottie';
 
 import {LinkedIn} from '@ionic-native/linkedin'
-import { LinkedInManager } from '../../helpers/social_login/linkedin_manager';
+import { LinkedInManager } from '../providers/social_login/linkedin_manager';
 
 @NgModule({
   declarations: [

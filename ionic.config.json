@@ -1,8 +1,8 @@
 {
   "name": "rollme",
-  "type": "ionic-angular",
   "integrations": {
     "cordova": {}
   },
-  "app_id": "9fbf8007"
+  "type": "ionic-angular",
+  "pro_id": "9fbf8007"
 }
