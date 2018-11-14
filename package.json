@@ -42,7 +42,8 @@
     "@ionic/app-scripts": "3.1.8",
     "gradle": "^1.0.9",
     "ionic": "4.1.1",
-    "typescript": "2.4.2"
+    "jasmine": "^3.3.0",
+    "typescript": "^2.4.2"
   },
   "description": "An Ionic project"
 }
