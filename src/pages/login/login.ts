@@ -1,6 +1,6 @@
 import { Component/*, ViewChild*/ } from '@angular/core';
 import { NavController, MenuController  } from 'ionic-angular';
-import { IonicPage, NavParams, MenuController  } from 'ionic-angular';
+import { IonicPage, NavParams  } from 'ionic-angular';
 import { HomePage } from '../home/home';
 
 import { DataProvider } from '../../providers/data/data';
@@ -22,7 +22,7 @@ export class LoginPage {
   menuCtrl: any;
   navCtrl: any;
 
-  constructor(public navCtrl: NavController, menuCtrl: MenuController, data: DataProvider, private linkedIn:LinkedInManager) {
+  constructor(navCtrl: NavController, menuCtrl: MenuController, data: DataProvider, private linkedIn:LinkedInManager) {
     console.log('Hello Login Page');
     data.init();
     this.data = data;
@@ -52,6 +52,6 @@ export class LoginPage {
   }
 
   signInLinkedIn(){
-    this.event.publish('signIn_LinkedIn');
+    //this.event.publish('signIn_LinkedIn');
   }
 }
