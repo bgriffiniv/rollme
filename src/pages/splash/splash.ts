@@ -20,7 +20,6 @@ export class Splash {
       //private animationSpeed: number = 1;
 
 
-
   constructor(public navCtrl: NavController, menuCtrl: MenuController, data: DataProvider, navParams: NavParams,
       public splashScreen: SplashScreen) {
       LottieAnimationViewModule.forRoot();
@@ -37,6 +36,21 @@ export class Splash {
       $('#signup').hide().delay(1000).fadeIn(1200)
       });
   };
+
+
+
+  loginWithFacebook(){
+    this.fire.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider())
+    .then( res => {
+        console.log(res);
+    })
+  }
+
+  logoutOfFacebook(){
+    this.fire.auth.signOut();
+
+  }
+
 
   signupRedirect() {
      $("#signup-form").animate({height: "toggle", opacity: "toggle"}, "slow")
@@ -85,4 +99,3 @@ export class Splash {
   }
 
 }
-

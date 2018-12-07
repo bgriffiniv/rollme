@@ -1,10 +1,12 @@
 import LinkedIn from './linkedin_manager';
 import Facebook from './facebook_manager';
+import Google from './google_manager';
 
 export class LoginWrapper {
     // enum Platforms {
-    //     LINKEDIN, 
-    //     FACEBOOK
+    //     LINKEDIN,
+    //     FACEBOOK,
+           GOOGLE
     // }
     // private linkedInManager:LinkedIn;
     // private facebookManager;

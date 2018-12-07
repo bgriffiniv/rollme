@@ -4,6 +4,7 @@ import { CardEditorPage } from '../cardeditor/cardeditor';
 import { LottieAnimationViewModule } from 'ng-lottie';
 import { Splash } from '../splash/splash';
 
+
 import { DataProvider } from '../../providers/data/data';
 
 @Component({
