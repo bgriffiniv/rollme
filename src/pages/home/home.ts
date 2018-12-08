@@ -4,6 +4,7 @@ import { CardEditorPage } from '../cardeditor/cardeditor';
 import { LottieAnimationViewModule } from 'ng-lottie';
 import { Splash } from '../splash/splash';
 
+import { Splash } from '../splash/splash';
 
 import { DataProvider } from '../../providers/data/data';
 
@@ -26,10 +27,9 @@ export class HomePage {
     LottieAnimationViewModule.forRoot();
 
     this.lottieConfig = {
-      container: document.getElementById('exampleAnim'),
-      path: 'assets/animations/RollMe_Logo_NoBG.json',
+      path: 'assets/animations/RollMeLogin.json',
       autoplay: true,
-      loop: true
+      loop: false
     };
 
 
