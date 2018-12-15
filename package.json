@@ -75,6 +75,10 @@
       "cordova-plugin-facebook4": {
         "APP_ID": "355676611676192",
         "APP_NAME": "Rollme"
+      },
+      "cordova-plugin-googleplus": {
+        "REVERSED_CLIENT_ID": "com.googleusercontent.apps.768651667072-o0atqb4b0o8q4u4i6n6cc8opujff9eo5",
+        "WEB_APPLICATION_CLIENT_ID": "768651667072-o0atqb4b0o8q4u4i6n6cc8opujff9eo5.apps.googleusercontent.com"
       }
     },
     "platforms": [
