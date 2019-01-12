@@ -1,0 +1,62 @@
+{
+  "project_info": {
+    "project_number": "768651667072",
+    "firebase_url": "https://rollme-4308a.firebaseio.com",
+    "project_id": "rollme-4308a",
+    "storage_bucket": "rollme-4308a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:768651667072:android:323a46ae524ef262",
+        "android_client_info": {
+          "package_name": "me.idealogic.rollme"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "768651667072-ktakks9d7fjgfb9c3gt5i1kvpnvlmqoo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "me.idealogic.rollme",
+            "certificate_hash": "1e42da577d1d09ca0efe4e070101fb7d000dad47"
+          }
+        },
+        {
+          "client_id": "768651667072-navbg6mpq2nu6a9gnlj8u2dl24n7krt0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtKKSi5lD8zBPIcQqe-L93H6k1E_MKvnU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "768651667072-navbg6mpq2nu6a9gnlj8u2dl24n7krt0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "768651667072-b6acs4uik5g9omi7j002o353fjcvehv3.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "me.idealogic.rollme"
+              }
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
