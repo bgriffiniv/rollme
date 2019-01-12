@@ -1,9 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { ErrorHandler, NgModule } from '@angular/core';
+import { forwardRef, ErrorHandler, NgModule, Injectable } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule } from '@angular/common/http';
+
+import  * as firebase from 'firebase/app';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 
@@ -19,9 +21,9 @@ import { WindowProvider } from '../providers/window/window';
 
 import { LottieAnimationViewModule } from 'ng-lottie';
 
-import {LinkedIn} from '@ionic-native/linkedin'
 import { LinkedInManager } from '../providers/social_login/linkedin_manager';
-import { Facebook } from '@ionic-native/facebook';
+import { FacebookManager } from '../providers/social_login/facebook_manager';
+import { GooglePlusManager } from '../providers/social_login/googleplus_manager';
 
 var config = {
     apiKey: "AIzaSyCOwTEY-c9hziBS5gqZoFjEQkn9R_Qmc7g",
@@ -65,11 +67,21 @@ var config = {
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     DataProvider,
     WindowProvider,
-    LinkedIn,
-    LinkedInManager
-    WindowProvider,
-    LinkedIn,
-    Facebook
+    forwardRef(() => LinkedInManager),
+    forwardRef(() => FacebookManager),
+    forwardRef(() => GooglePlusManager)
   ]
 })
 export class AppModule {}
+
+@Injectable()
+class LinkedInManager {
+}
+
+@Injectable()
+class FacebookManager {
+}
+
+@Injectable()
+class GooglePlusManager {
+}
