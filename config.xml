@@ -90,9 +90,14 @@
         <variable name="APP_ID" value="355676611676192" />
         <variable name="APP_NAME" value="Rollme" />
     </plugin>
-    <engine name="android" spec="7.0.0" />
     <plugin name="cordova-plugin-googleplus" spec="5.3.2">
         <variable name="REVERSED_CLIENT_ID" value="com.googleusercontent.apps.768651667072-o0atqb4b0o8q4u4i6n6cc8opujff9eo5" />
         <variable name="WEB_APPLICATION_CLIENT_ID" value="768651667072-o0atqb4b0o8q4u4i6n6cc8opujff9eo5.apps.googleusercontent.com" />
     </plugin>
+    <plugin name="cordova-plugin-buildinfo" spec="2.0.2" />
+    <plugin name="cordova-universal-links-plugin" spec="1.2.1" />
+    <plugin name="cordova-plugin-browsertab" spec="0.2.0" />
+    <plugin name="cordova-plugin-inappbrowser" spec="3.0.0" />
+    <engine name="android" spec="7.0.0" />
+    <engine name="ios" spec="~4.5.5" />
 </widget>
