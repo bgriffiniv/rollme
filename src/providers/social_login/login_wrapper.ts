@@ -1,20 +1,22 @@
-import LinkedIn from './linkedin_manager';
-import Facebook from './facebook_manager';
-import Google from './google_manager';
+// import LinkedInManager from './linkedin_manager';
+// import FacebookManager from './facebook_manager';
+// import GooglePlusManager from './googleplus_manager';
 
-export class LoginWrapper {
+//export class LoginWrapper {
     // enum Platforms {
     //     LINKEDIN,
     //     FACEBOOK,
-           GOOGLE
+    //     GOOGLEPLUS
     // }
     // private linkedInManager:LinkedIn;
-    // private facebookManager;
+    // private facebookManager:Facebook;
+    // private googlePlusManager:GooglePlus;
 
 
-    // constructor(linkedInManger:LinkedIn, facebookManager:Facebook){
+    // constructor(linkedInManager:LinkedIn, facebookManager:Facebook, googlePlusManager:GooglePlus){
     //     this.linkedInManager = linkedInManger;
     //     this.facebookManager = facebookManager;
+    //     this.googlePlusManager = googlePlusManager
     // }
 
     // login(type:Platforms){
@@ -23,7 +25,11 @@ export class LoginWrapper {
     //        LinkedIn
     //        break;
     //        case Platforms.FACEBOOK:
+    //        Facebook
+    //        break;
+    //        case Platforms.GOOGLEPLUS:
+    //        GooglePlus
     //        break;
     //    }
     // }
-}
+//}
