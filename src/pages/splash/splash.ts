@@ -1,17 +1,22 @@
 import { Component } from '@angular/core';
-import { MenuController, NavParams, NavController } from 'ionic-angular';
+import { MenuController, NavParams, NavController, Events } from 'ionic-angular';
 import { LottieAnimationViewModule } from 'ng-lottie';
 import $ from 'jquery';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { LoginPage } from '../login/login';
 import { HomePage } from '../home/home';
 
+import LinkedInManager from '../../providers/social_login/linkedin_manager';
+import FacebookManager from '../../providers/social_login/facebook_manager';
+import GooglePlusManager from '../../providers/social_login/googleplus_manager';
+
+
 import { DataProvider } from '../../providers/data/data';
 
 @Component({
   selector: 'page-splash',
   templateUrl: 'splash.html',
-  providers: [DataProvider]
+  providers: [DataProvider, GooglePlusManager, LinkedInManager, FacebookManager]
 })
 
 export class Splash {
@@ -37,19 +42,6 @@ export class Splash {
       });
   };
 
-
-
-  loginWithFacebook(){
-    this.fire.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider())
-    .then( res => {
-        console.log(res);
-    })
-  }
-
-  logoutOfFacebook(){
-    this.fire.auth.signOut();
-
-  }
 
 
   signupRedirect() {
