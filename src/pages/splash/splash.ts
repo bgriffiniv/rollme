@@ -6,9 +6,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { LoginPage } from '../login/login';
 import { HomePage } from '../home/home';
 
-import LinkedInManager from '../../providers/social_login/linkedin_manager';
-import FacebookManager from '../../providers/social_login/facebook_manager';
-import GooglePlusManager from '../../providers/social_login/googleplus_manager';
+import {LinkedInManager} from '../../providers/social_login/linkedin_manager';
+import {FacebookManager} from '../../providers/social_login/facebook_manager';
+import {GooglePlusManager} from '../../providers/social_login/googleplus_manager';
 
 
 import { DataProvider } from '../../providers/data/data';

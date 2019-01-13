@@ -73,15 +73,3 @@ var config = {
   ]
 })
 export class AppModule {}
-
-@Injectable()
-class LinkedInManager {
-}
-
-@Injectable()
-class FacebookManager {
-}
-
-@Injectable()
-class GooglePlusManager {
-}

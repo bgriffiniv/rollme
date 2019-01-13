@@ -1,4 +1,5 @@
 import { GooglePlus } from '@ionic-native/google-plus';
+import { Injectable } from '@angular/core';
 import { Directive, Component, NgModule } from '../../../node_modules/@angular/core';
 import { IonicModule } from 'ionic-angular';
 import { HttpClientModule } from '@angular/common/http';
@@ -10,6 +11,7 @@ import firebase from 'firebase';
       providers: [GooglePlus]
 })
 
+@Injectable()
 export class GooglePlusManager {
 userProfile: any = null;
 

@@ -1,4 +1,5 @@
 import { LinkedIn, LinkedInLoginScopes } from '@ionic-native/linkedin';
+import { Injectable } from '@angular/core';
 import {Events} from 'ionic-angular';
 import { Directive, Component, NgModule } from '../../../node_modules/@angular/core';
 
@@ -6,6 +7,7 @@ import { Directive, Component, NgModule } from '../../../node_modules/@angular/c
     providers: [LinkedIn]
   })
 
+@Injectable()
 export class LinkedInManager {
     private linkedinCtrl;
     private connections;
