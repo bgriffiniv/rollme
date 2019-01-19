@@ -22,11 +22,12 @@ import { DataProvider } from '../../providers/data/data';
 export class Splash {
       public lottieConfig: Object;
       private anim: any;
+      private linked
       //private animationSpeed: number = 1;
 
 
   constructor(public navCtrl: NavController, menuCtrl: MenuController, data: DataProvider, navParams: NavParams,
-      public splashScreen: SplashScreen) {
+      public splashScreen: SplashScreen, private events:Events) {
       LottieAnimationViewModule.forRoot();
 
       this.lottieConfig = {
@@ -82,12 +83,27 @@ export class Splash {
     this.navCtrl.push(HomePage);
   }
 
-  login() {
-
+  googleLogin() {
+      console.log("GOOGLE LOGIN");
+      this.events.publish('signIn_Google');
   }
 
-  signUp(){
-
+  facebookLogin(){
+      console.log("FACEBOOK LOGIN");
+      this.events.publish('signIn_Facebook');
   }
+
+  linkedInLogin(){
+      console.log("LINKEDIN LOGIN");
+      this.events.publish('signIn_LinkedIn');
+  }
+
+   login() {
+      console.log("LOGIN");
+   }
+ 
+   signUp(){
+      console.log("SIGNUP");
+   }
 
 }

@@ -15,7 +15,7 @@ export class LinkedInManager {
     constructor(private linkedin: LinkedIn, private event:Events) {
         this.event.subscribe('signIn_LinkedIn',() => {
             console.log("Signing In...")
-            this.publicLogin();
+            this.linkedInLogin();
         })
     }
 
@@ -23,7 +23,7 @@ export class LinkedInManager {
         return this.linkedin.hasActiveSession();
     }
 
-    publicLogin(){
+    linkedInLogin(){
         const scopes:LinkedInLoginScopes[] = ['r_basicprofile', 'r_emailaddress', 'rw_company_admin', 'w_share'];
         this.linkedin.login(scopes, true)
         .then(() => console.log('[LinkedIn]Logged In'))

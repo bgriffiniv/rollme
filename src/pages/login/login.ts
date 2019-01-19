@@ -5,7 +5,7 @@ import { HomePage } from '../home/home';
 
 import { DataProvider } from '../../providers/data/data';
 import { LinkedInManager } from '../../providers/social_login/linkedin_manager';
-
+import {Events} from 'ionic-angular';
 import { RegisterPage } from '../register/register';
 
 @IonicPage()
@@ -22,7 +22,7 @@ export class LoginPage {
   menuCtrl: any;
   navCtrl: any;
 
-  constructor(navCtrl: NavController, menuCtrl: MenuController, data: DataProvider, private linkedIn:LinkedInManager) {
+  constructor(navCtrl: NavController, menuCtrl: MenuController, data: DataProvider, private linkedIn:LinkedInManager, private events:Events) {
     console.log('Hello Login Page');
     data.init();
     this.data = data;
@@ -52,6 +52,6 @@ export class LoginPage {
   }
 
   signInLinkedIn(){
-    //this.event.publish('signIn_LinkedIn');
+    //this.events.publish('signIn_LinkedIn');
   }
 }

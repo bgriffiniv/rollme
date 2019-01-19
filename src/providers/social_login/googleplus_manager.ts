@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AngularFireAuth } from 'angularfire2/auth';
 import firebase from 'firebase';
+import {Events} from 'ionic-angular';
 
 @NgModule({
       providers: [GooglePlus]
@@ -15,7 +16,7 @@ import firebase from 'firebase';
 export class GooglePlusManager {
 userProfile: any = null;
 
-  constructor (private googlePlus: GooglePlus){
+  constructor (private googlePlus: GooglePlus, private event:Events){
     firebase.auth().onAuthStateChanged( user => {
       if(user){
         this.userProfile = user;
@@ -23,6 +24,10 @@ userProfile: any = null;
           this.userProfile = null;
       }
     });
+    this.event.subscribe('signIn_Google',() => {
+      console.log("Signing In...")
+      this.googleLogin();
+    })
   }
 
   googleLogin(): void {
