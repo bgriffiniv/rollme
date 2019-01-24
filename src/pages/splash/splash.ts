@@ -27,7 +27,8 @@ export class Splash {
 
 
   constructor(public navCtrl: NavController, menuCtrl: MenuController, data: DataProvider, navParams: NavParams,
-      public splashScreen: SplashScreen, private events:Events) {
+      public splashScreen: SplashScreen, private events:Events, private linkedInManager:LinkedInManager, 
+      private googlePlusManager:GooglePlusManager, private facebookManager:FacebookManager) {
       LottieAnimationViewModule.forRoot();
 
       this.lottieConfig = {
@@ -84,17 +85,14 @@ export class Splash {
   }
 
   googleLogin() {
-      console.log("GOOGLE LOGIN");
       this.events.publish('signIn_Google');
   }
 
   facebookLogin(){
-      console.log("FACEBOOK LOGIN");
       this.events.publish('signIn_Facebook');
   }
 
   linkedInLogin(){
-      console.log("LINKEDIN LOGIN");
       this.events.publish('signIn_LinkedIn');
   }
 

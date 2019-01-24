@@ -40,6 +40,7 @@
     "app-scripts": "0.0.0",
     "cordova": "^8.1.2",
     "cordova-android": "6.3.0",
+    "cordova-browser": "5.0.4",
     "cordova-ios": "^4.5.5",
     "cordova-plugin-browsertab": "^0.2.0",
     "cordova-plugin-buildinfo": "^2.0.2",
@@ -106,7 +107,8 @@
     },
     "platforms": [
       "ios",
-      "android"
+      "android",
+      "browser"
     ]
   },
   "main": "index.js",

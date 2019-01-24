@@ -15,6 +15,7 @@ import { HomePage } from '../pages/home/home';
 import { ExpensesPage } from '../pages/expenses/expenses';
 import { CardEditorPage } from '../pages/cardeditor/cardeditor';
 import { Splash } from '../pages/splash/splash';
+import { LinkedIn} from '@ionic-native/linkedin';
 
 import { DataProvider } from '../providers/data/data';
 import { WindowProvider } from '../providers/window/window';
@@ -24,6 +25,8 @@ import { LottieAnimationViewModule } from 'ng-lottie';
 import { LinkedInManager } from '../providers/social_login/linkedin_manager';
 import { FacebookManager } from '../providers/social_login/facebook_manager';
 import { GooglePlusManager } from '../providers/social_login/googleplus_manager';
+import { Facebook } from '@ionic-native/facebook';
+import { GooglePlus } from '@ionic-native/google-plus';
 
 var config = {
     apiKey: "AIzaSyCOwTEY-c9hziBS5gqZoFjEQkn9R_Qmc7g",
@@ -67,6 +70,9 @@ var config = {
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     DataProvider,
     WindowProvider,
+    LinkedIn,
+    GooglePlus,
+    Facebook,
     forwardRef(() => LinkedInManager),
     forwardRef(() => FacebookManager),
     forwardRef(() => GooglePlusManager)
