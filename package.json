@@ -39,21 +39,22 @@
     "angularfire2": "^5.1.1",
     "app-scripts": "0.0.0",
     "cordova": "^8.1.2",
-    "cordova-android": "7.0.0",
-    "cordova-ios": "4.5.5",
-    "cordova-plugin-browsertab": "0.2.0",
-    "cordova-plugin-buildinfo": "2.0.2",
+    "cordova-android": "6.3.0",
+    "cordova-ios": "^4.5.5",
+    "cordova-plugin-browsertab": "^0.2.0",
+    "cordova-plugin-buildinfo": "^2.0.2",
+    "cordova-plugin-compat": "^1.2.0",
     "cordova-plugin-device": "^2.0.2",
-    "cordova-plugin-facebook4": "^3.1.0",
-    "cordova-plugin-googleplus": "5.3.2",
-    "cordova-plugin-inappbrowser": "3.0.0",
+    "cordova-plugin-facebook4": "^3.2.0",
+    "cordova-plugin-googleplus": "^5.3.2",
+    "cordova-plugin-inappbrowser": "^3.0.0",
     "cordova-plugin-ionic": "^4.2.0",
     "cordova-plugin-ionic-keyboard": "^2.1.3",
     "cordova-plugin-ionic-webview": "^1.2.1",
     "cordova-plugin-linkedin": "^1.2.1",
     "cordova-plugin-splashscreen": "^5.0.2",
     "cordova-plugin-whitelist": "^1.3.3",
-    "cordova-universal-links-plugin": "1.2.1",
+    "cordova-universal-links-plugin": "^1.2.1",
     "es6-shim": "^0.35.3",
     "firebase": "^5.7.0",
     "ionic-angular": "^3.9.2",
@@ -90,11 +91,13 @@
       "cordova-plugin-ionic-keyboard": {},
       "cordova-plugin-facebook4": {
         "APP_ID": "355676611676192",
-        "APP_NAME": "Rollme"
+        "APP_NAME": "Rollme",
+        "FACEBOOK_ANDROID_SDK_VERSION": "4.38.1"
       },
       "cordova-plugin-googleplus": {
         "REVERSED_CLIENT_ID": "com.googleusercontent.apps.768651667072-o0atqb4b0o8q4u4i6n6cc8opujff9eo5",
-        "WEB_APPLICATION_CLIENT_ID": "768651667072-o0atqb4b0o8q4u4i6n6cc8opujff9eo5.apps.googleusercontent.com"
+        "WEB_APPLICATION_CLIENT_ID": "768651667072-o0atqb4b0o8q4u4i6n6cc8opujff9eo5.apps.googleusercontent.com",
+        "PLAY_SERVICES_VERSION": "11.8.0"
       },
       "cordova-plugin-buildinfo": {},
       "cordova-universal-links-plugin": {},
@@ -102,8 +105,8 @@
       "cordova-plugin-inappbrowser": {}
     },
     "platforms": [
-      "android",
-      "ios"
+      "ios",
+      "android"
     ]
   },
   "main": "index.js",
