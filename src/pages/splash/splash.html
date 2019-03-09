@@ -43,10 +43,24 @@
             Log in with Google
           </button>
           <br/>
-          <button ion-button (click)="facebookLogin()">
-            <ion-icon name="logo-facebook" id="FB"></ion-icon>
-            Log in with Facebook
-          </button>
+          <div *ngIf="isLoggedIn; else facebookLogin">
+            <h2>Hi, {{users.name}} ({{users.email}})</h2>
+            <p>
+              Gender: {{users.gender}}
+            </p>
+            <p>
+              <img src="{{users.picture.data.url}}" width="100" alt="{{users.name}}" />
+            </p>
+              <button ion-button icon-right (click)="logout()">
+                Logout
+              </button>
+          </div>
+          <ng-template #facebookLogin>
+            <button ion-button icon-right (click)="fbLogin()">
+              Log in with
+              <ion-icon name="logo-facebook"></ion-icon>
+            </button>
+          </ng-template>
           <br/>
           <button ion-button (click)="linkedInLogin()">
             <ion-icon name="logo-linkedin" id="linkedIn"></ion-icon>
