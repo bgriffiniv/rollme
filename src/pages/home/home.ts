@@ -105,7 +105,6 @@ export class HomePage {
     console.log('Home finished loading');
   }
 
-
   loginWithFacebook(): Promise<any> {
         return this.facebook.login(['email'])
           .then( response => {
