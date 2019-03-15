@@ -73,8 +73,8 @@ var config = {
     LinkedIn,
     GooglePlus,
     Facebook,
-    forwardRef(() => LinkedInManager),
-    forwardRef(() => FacebookManager),
+    LinkedInManager,
+    FacebookManager,
     forwardRef(() => GooglePlusManager)
   ]
 })

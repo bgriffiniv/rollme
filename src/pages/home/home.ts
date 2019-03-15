@@ -4,8 +4,16 @@ import { CardEditorPage } from '../cardeditor/cardeditor';
 import { LottieAnimationViewModule } from 'ng-lottie';
 import { Splash } from '../splash/splash';
 
+import { Facebook } from '@ionic-native/facebook';
+import firebase from 'firebase';
+import { NgModule } from '../../../node_modules/@angular/core';
+
 
 import { DataProvider } from '../../providers/data/data';
+
+@NgModule({
+    providers: [Facebook]
+  })
 
 @Component({
   selector: 'page-home',
@@ -22,7 +30,7 @@ export class HomePage {
   private anim: any;
   private animationSpeed: number = 1;
 
-  constructor(public navCtrl: NavController, menuCtrl: MenuController, data: DataProvider, navParams: NavParams) {
+  constructor(public navCtrl: NavController, menuCtrl: MenuController, data: DataProvider, navParams: NavParams, private facebook: Facebook) {
     LottieAnimationViewModule.forRoot();
 
     this.lottieConfig = {
@@ -82,6 +90,18 @@ export class HomePage {
     }
 
     console.log('Home finished loading');
+  }
+  loginWithFacebook(): Promise<any> {
+        return this.facebook.login(['email'])
+          .then( response => {
+            const facebookCredential = firebase.auth.FacebookAuthProvider
+              .credential(response.authResponse.accessToken);
+
+            firebase.auth().signInWithCredential(facebookCredential)
+              .then( success => {
+                console.log("Firebase success: " + JSON.stringify(success));
+              });
+          }).catch((error) => { console.log(error) })
   }
 
   handleError(err) {

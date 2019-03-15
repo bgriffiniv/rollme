@@ -1,7 +1,7 @@
 import { LinkedIn, LinkedInLoginScopes } from '@ionic-native/linkedin';
 import { Injectable } from '@angular/core';
 import {Events} from 'ionic-angular';
-import { Directive, Component, NgModule } from '../../../node_modules/@angular/core';
+import { NgModule } from '../../../node_modules/@angular/core';
 
  @NgModule({
     providers: [LinkedIn]

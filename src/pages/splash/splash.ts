@@ -27,7 +27,7 @@ export class Splash {
 
 
   constructor(public navCtrl: NavController, menuCtrl: MenuController, data: DataProvider, navParams: NavParams,
-      public splashScreen: SplashScreen, private events:Events, private linkedInManager:LinkedInManager, 
+      public splashScreen: SplashScreen, private events:Events, private linkedInManager:LinkedInManager,
       private googlePlusManager:GooglePlusManager, private facebookManager:FacebookManager) {
       LottieAnimationViewModule.forRoot();
 
@@ -99,7 +99,7 @@ export class Splash {
    login() {
       console.log("LOGIN");
    }
- 
+
    signUp(){
       console.log("SIGNUP");
    }

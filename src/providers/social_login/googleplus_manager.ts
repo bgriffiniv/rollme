@@ -1,6 +1,6 @@
 import { GooglePlus } from '@ionic-native/google-plus';
 import { Injectable } from '@angular/core';
-import { Directive, Component, NgModule } from '../../../node_modules/@angular/core';
+import {  NgModule } from '../../../node_modules/@angular/core';
 import { IonicModule } from 'ionic-angular';
 import { HttpClientModule } from '@angular/common/http';
 

@@ -20,7 +20,7 @@ import { DataProvider } from '../providers/data/data';
 export class MyApp {
 
   @ViewChild(Nav) nav: Nav;
-  rootPage: any = "TabsPage";
+  rootPage: any = HomePage;
   data: any;
   uid: any;
 
@@ -45,7 +45,7 @@ export class MyApp {
       } else {
         this.uid = null;
         console.log('no user signed in');
-        this.nav.setRoot(LoginPage);  //I've tried also with this.rootPage = LoginPage and the behavior is the same
+        this.nav.setRoot(HomePage);  //I've tried also with this.rootPage = LoginPage and the behavior is the same
       }
     });
     console.log('Auth change callback set');
@@ -55,8 +55,8 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
 
-      let splash = modalCtrl.create(Splash);
-      splash.present();
+      //let splash = modalCtrl.create(Splash);
+      //splash.present();
 
     });
   }
