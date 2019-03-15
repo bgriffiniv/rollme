@@ -1,11 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
 import { Nav, MenuController, NavParams, NavController } from 'ionic-angular';
 import { CardEditorPage } from '../cardeditor/cardeditor';
-import { LottieAnimationViewModule } from 'ng-lottie';
 import { Splash } from '../splash/splash';
 
 import { Facebook } from '@ionic-native/facebook';
-import firebase from 'firebase';
+import * as firebase from 'firebase/app';
+
 import { NgModule } from '../../../node_modules/@angular/core';
 
 
@@ -20,25 +20,38 @@ import { DataProvider } from '../../providers/data/data';
   templateUrl: 'home.html',
   providers: [DataProvider]
 })
+
 export class HomePage {
 
   @ViewChild(Nav) nav: Nav;
   contacts: {name: string, company: string}[] = [];
   userData: any = '';
 
-  public lottieConfig: Object;
-  private anim: any;
-  private animationSpeed: number = 1;
-
   constructor(public navCtrl: NavController, menuCtrl: MenuController, data: DataProvider, navParams: NavParams, private facebook: Facebook) {
-    LottieAnimationViewModule.forRoot();
+    var provider = new firebase.auth.FacebookAuthProvider();
 
-    this.lottieConfig = {
-      container: document.getElementById('exampleAnim'),
-      path: 'assets/animations/RollMe_Logo_NoBG.json',
-      autoplay: true,
-      loop: true
-    };
+    firebase.auth().signInWithPopup(provider).then(function(result) {
+      // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+      var token = result.credential.accessToken;
+      // The signed-in user info.
+      var user = result.user;
+      // ...
+    }).catch(function(error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      // The email of the user's account used.
+      var email = error.email;
+      // The firebase.auth.AuthCredential type that was used.
+      var credential = error.credential;
+      // ...
+    });
+
+    firebase.auth().signOut().then(function() {
+      // Sign-out successful.
+    }).catch(function(error) {
+        // An error happened.
+    });
 
 
     console.log('Hello Home Page');
@@ -91,6 +104,8 @@ export class HomePage {
 
     console.log('Home finished loading');
   }
+
+
   loginWithFacebook(): Promise<any> {
         return this.facebook.login(['email'])
           .then( response => {
@@ -107,29 +122,4 @@ export class HomePage {
   handleError(err) {
     console.log("Home Error: " + err.message);
   }
-
-  moveToCardEditorPage() {
-    this.navCtrl.push(CardEditorPage);
-  }
-
-  handleAnimation(anim: any) {
-    this.anim = anim;
-  };
-
-  stop() {
-    this.anim.stop();
-  };
-
-  play() {
-    this.anim.play();
-  };
-
-  pause() {
-    this.anim.pause();
-  };
-
-  setSpeed(speed: number) {
-    this.animationSpeed = speed;
-    this.anim.setSpeed(speed);
-  };
 }
