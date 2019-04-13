@@ -1,4 +1,4 @@
-import { Facebook } from '@ionic-native/facebook';
+import { Facebook } from '@ionic-native/facebook/ngx';
 import { Injectable } from '@angular/core';
 import { NgModule } from '../../../node_modules/@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
