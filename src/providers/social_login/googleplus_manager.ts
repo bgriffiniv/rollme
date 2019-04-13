@@ -1,4 +1,4 @@
-import { GooglePlus } from '@ionic-native/google-plus';
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { Injectable } from '@angular/core';
 import {  NgModule } from '../../../node_modules/@angular/core';
 import { IonicModule } from 'ionic-angular';
