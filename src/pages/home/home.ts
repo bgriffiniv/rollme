@@ -1,14 +1,13 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, MenuController, NavParams, NavController } from 'ionic-angular';
+import { Nav, MenuController, NavParams, NavController, Platform } from 'ionic-angular';
 import { CardEditorPage } from '../cardeditor/cardeditor';
 import { Splash } from '../splash/splash';
 
-import { Facebook } from '@ionic-native/facebook';
+import { Facebook } from '@ionic-native/facebook/ngx';
 import * as firebase from 'firebase/app';
 
+
 import { NgModule } from '../../../node_modules/@angular/core';
-
-
 import { DataProvider } from '../../providers/data/data';
 
 @NgModule({
@@ -28,32 +27,6 @@ export class HomePage {
   userData: any = '';
 
   constructor(public navCtrl: NavController, menuCtrl: MenuController, data: DataProvider, navParams: NavParams, private facebook: Facebook) {
-    var provider = new firebase.auth.FacebookAuthProvider();
-
-    firebase.auth().signInWithPopup(provider).then(function(result) {
-      // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-      var token = result.credential.accessToken;
-      // The signed-in user info.
-      var user = result.user;
-      // ...
-    }).catch(function(error) {
-      // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      // The email of the user's account used.
-      var email = error.email;
-      // The firebase.auth.AuthCredential type that was used.
-      var credential = error.credential;
-      // ...
-    });
-
-    firebase.auth().signOut().then(function() {
-      // Sign-out successful.
-    }).catch(function(error) {
-        // An error happened.
-    });
-
-
     console.log('Hello Home Page');
     menuCtrl.enable(true);
 
@@ -105,20 +78,35 @@ export class HomePage {
     console.log('Home finished loading');
   }
 
-  loginWithFacebook(): Promise<any> {
-        return this.facebook.login(['email'])
-          .then( response => {
-            const facebookCredential = firebase.auth.FacebookAuthProvider
-              .credential(response.authResponse.accessToken);
-
-            firebase.auth().signInWithCredential(facebookCredential)
-              .then( success => {
-                console.log("Firebase success: " + JSON.stringify(success));
-              });
-          }).catch((error) => { console.log(error) })
-  }
-
   handleError(err) {
     console.log("Home Error: " + err.message);
-  }
+  };
+
+loginWithFacebook() {
+  var provider = new firebase.auth.FacebookAuthProvider();
+
+  firebase.auth().getRedirectResult().then(function(result) {
+    if (result.credential) {
+      // This gives you a Google Access Token.
+      // You can use it to access the Google API.
+      var token = result.credential.accessToken;
+      // The signed-in user info.
+      var user = result.user;
+      // ...
+    }
+  }).catch(function(error) {
+    // Handle Errors here.
+    var errorCode = error.code;
+    var errorMessage = error.message;
+  });
+};
+
+logout() {
+ firebase.auth().signOut().then(function() {
+   // Sign-out successful.
+ }).catch(function(error) {
+   // An error happened.
+ });
+}
+
 }
