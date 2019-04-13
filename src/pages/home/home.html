@@ -11,9 +11,12 @@
 </ion-header>
 
 <ion-content padding>
-    <button ion-button icon-right (click)="loginWithFacebook()">
+
+    <h1>Hello {{displayName}}</h1>
+
+    <button ion-button outline (click)="loginWithFacebook()">
       Log in with
       <ion-icon name="logo-facebook"></ion-icon>
     </button>
-
+    <button ion-button outline (click)="logout()">Logout</button>
 </ion-content>
