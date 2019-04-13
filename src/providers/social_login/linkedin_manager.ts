@@ -1,6 +1,6 @@
-import { LinkedIn, LinkedInLoginScopes } from '@ionic-native/linkedin';
+import { LinkedIn, LinkedInLoginScopes } from '@ionic-native/linkedin/ngx';
 import { Injectable } from '@angular/core';
-import {Events} from 'ionic-angular';
+import { Events } from 'ionic-angular';
 import { NgModule } from '../../../node_modules/@angular/core';
 
  @NgModule({
@@ -12,7 +12,7 @@ export class LinkedInManager {
     private linkedinCtrl;
     private connections;
 
-    constructor(private linkedin: LinkedIn, private event:Events) {
+    constructor(private linkedin: LinkedIn, private event: Events) {
         this.event.subscribe('signIn_LinkedIn',() => {
             console.log("Signing In...")
             this.linkedInLogin();
