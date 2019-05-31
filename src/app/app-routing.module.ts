@@ -15,8 +15,13 @@ const routes: Routes = [
     path: 'list',
     loadChildren: './list/list.module#ListPageModule'
   },
-  { path: 'profile',
+  {
+    path: 'profile',
     loadChildren: './profile/profile.module#ProfilePageModule'
+  },
+  {
+    path: 'edit',
+    loadChildren: './edit/edit.module#EditPageModule'
   }
 ];
 

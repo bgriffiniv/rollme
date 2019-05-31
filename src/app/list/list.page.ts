@@ -28,6 +28,7 @@ export class ListPage implements OnInit {
         icon: this.icons[Math.floor(Math.random() * this.icons.length)]
       });
     }
+    console.log("List page started");
   }
 
   ngOnInit() {

@@ -6,8 +6,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
+  public user: any;
+  constructor() {
+    this.user = {
+      name : "Burnest Griffin IV",
+      company : "IdeaLogic",
+      role : "Developer"
+    };
 
-  constructor() { }
+    console.log("Profile page started");
+  }
 
   ngOnInit() {
   }
