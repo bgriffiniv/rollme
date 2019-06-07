@@ -1,57 +1,27 @@
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ErrorHandler, NgModule } from '@angular/core';
-import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
-import { SplashScreen } from '@ionic-native/splash-screen';
-import { StatusBar } from '@ionic-native/status-bar';
-import { HttpClientModule } from '@angular/common/http'
+import { RouteReuseStrategy } from '@angular/router';
 
-import { MyApp } from './app.component';
-import { LoginPage } from '../pages/login/login';
-import { HomePage } from '../pages/home/home';
-import { ExpensesPage } from '../pages/expenses/expenses';
-import { CardEditorPage } from '../pages/cardeditor/cardeditor';
-import { Splash } from '../pages/splash/splash';
+import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+import { StatusBar } from '@ionic-native/status-bar/ngx';
 
-import { DataProvider } from '../providers/data/data';
-import { WindowProvider } from '../providers/window/window';
-
-import { LottieAnimationViewModule } from 'ng-lottie';
-
-import {LinkedIn} from '@ionic-native/linkedin'
-import { LinkedInManager } from '../providers/social_login/linkedin_manager';
+import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
-  declarations: [
-    MyApp,
-    HomePage,
-    ExpensesPage,
-    LoginPage,
-    CardEditorPage,
-    Splash
-  ],
+  declarations: [AppComponent],
+  entryComponents: [],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp),
-    LottieAnimationViewModule.forRoot(),
-    HttpClientModule
-  ],
-  bootstrap: [IonicApp],
-  entryComponents: [
-    MyApp,
-    HomePage,
-    ExpensesPage,
-    LoginPage,
-    CardEditorPage,
-    Splash
+    IonicModule.forRoot(),
+    AppRoutingModule
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
-    DataProvider,
-    WindowProvider,
-    LinkedIn,
-    LinkedInManager
-  ]
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule {}
