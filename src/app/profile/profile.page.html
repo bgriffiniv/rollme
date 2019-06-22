@@ -11,7 +11,7 @@
   Name: {{user.name}}<br/>
   Company: {{user.company}}<br/>
   Role: {{user.role}}<br/>
-  <ion-button expand="block" routerLink="/edit" routerDirection="forward">
+  <ion-button expand="block" routerLink="/edit" (click)="goToEditPage();" routerDirection="forward">
     Edit
   </ion-button>
 

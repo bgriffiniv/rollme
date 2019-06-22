@@ -28,10 +28,15 @@ export class ListPage implements OnInit {
         icon: this.icons[Math.floor(Math.random() * this.icons.length)]
       });
     }
-    console.log("List page started");
+    console.log("List page started (constructor)");
+  }
+
+  setSelectedItem(item) {
+    this.selectedItem = item;
   }
 
   ngOnInit() {
+      console.log("List page started (init)");
   }
   // add back when alpha.4 is out
   // navigate(item) {
