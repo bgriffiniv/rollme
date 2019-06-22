@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, NavigationExtras } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -6,18 +7,26 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
-  public user: any;
-  constructor() {
-    this.user = {
-      name : "Burnest Griffin IV",
-      company : "IdeaLogic",
-      role : "Developer"
-    };
 
-    console.log("Profile page started");
+  user;
+
+  constructor(private router: Router) {
+    console.log("Profile page started (constructor)");
+          this.user = {
+                name : "Burnest Griffin IV",
+                company : "IdeaLogic",
+                role : "Developer"
+              };
+  }
+
+  goToEditPage() {
+
+      this.router.navigate(['edit']);
   }
 
   ngOnInit() {
+    console.log("Profile page started (init)");
+
   }
 
 }

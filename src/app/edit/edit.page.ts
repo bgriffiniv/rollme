@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 
 @Component({
   selector: 'app-edit',
@@ -7,9 +9,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EditPage implements OnInit {
 
-  constructor() { }
+  public name = new FormControl('Jamal Black');
+
+  constructor(private router: Router) {
+    console.log("Edit page started (constructor)");
+  }
 
   ngOnInit() {
+    console.log("Edit page started (init)");
+  }
+
+  goToProfilePage() {
+
+      this.router.navigate(['profile']);
   }
 
 }

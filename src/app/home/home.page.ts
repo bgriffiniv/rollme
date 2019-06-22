@@ -8,6 +8,10 @@ import { Component } from '@angular/core';
 export class HomePage {
 
   constructor() {
-    console.log("Home page started");
+    console.log("Home page started (constructor)");
+  }
+
+  ngOnInit() {
+    console.log("Home page started (init)")
   }
 }
