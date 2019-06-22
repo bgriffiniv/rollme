@@ -11,7 +11,11 @@ const routes: Routes = [
   {
     path: '',
     component: ProfilePage
-  }
+  },
+     {
+       path: 'edit',
+       loadChildren: '../edit/edit.module#EditPageModule'
+     }
 ];
 
 @NgModule({

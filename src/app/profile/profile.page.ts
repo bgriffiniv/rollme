@@ -21,7 +21,7 @@ export class ProfilePage implements OnInit {
 
   goToEditPage() {
 
-      this.router.navigate(['edit']);
+      this.router.navigate(['profile/edit']);
   }
 
   ngOnInit() {
