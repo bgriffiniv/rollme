@@ -9,10 +9,10 @@
 
 <ion-content>
 <label>
-  Favorite Color: <input type="text" [formControl]="name">
+  Name: <input type="text" [formControl]="name">
 </label>
 Answer: {{name.value}}
-  <ion-button expand="block" (click)="goToProfilePage();" routerDirection="back">
+  <ion-button expand="block" routerLink="/profile" routerDirection="back">
     Return
   </ion-button>
 
