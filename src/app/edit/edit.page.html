@@ -9,11 +9,12 @@
 
 <ion-content>
 <label>
-  Name: <input type="text" formControlName="name">
+  Name: <input type="text" [formControl]="name">
 </label>
 Answer: {{name.value}}
   <ion-button expand="block" routerLink="/profile" routerDirection="back">
     Return
   </ion-button>
+
 
 </ion-content>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, NavigationExtras } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -20,7 +20,6 @@ export class ProfilePage implements OnInit {
   }
 
   goToEditPage() {
-
       this.router.navigate(['profile/edit']);
   }
 

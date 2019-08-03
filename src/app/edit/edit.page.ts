@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-edit',
@@ -9,7 +9,7 @@ import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 })
 export class EditPage implements OnInit {
 
-  public name = new FormControl('Jamal Black');
+  name = new FormControl('Jamal Black');
 
   constructor(private router: Router) {
     console.log("Edit page started (constructor)");
