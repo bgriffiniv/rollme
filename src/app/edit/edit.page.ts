@@ -31,7 +31,11 @@ export class EditPage implements OnInit {
 
   onSubmit() {
     console.log(this.userForm.value);
-    this.router.navigate(['profile']);
-  }
+    let navigationExtras: NavigationExtras = {
+      state: {
+        user: this.userForm.value
+      }
+    };
+    this.router.navigate(['profile'], navigationExtras);  }
 
 }
