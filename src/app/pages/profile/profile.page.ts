@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 
+import { DataService } from './../../services/data/data.service';
+
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.page.html',
@@ -10,7 +12,7 @@ export class ProfilePage implements OnInit {
 
   user;
 
-  constructor(private route: ActivatedRoute, private router: Router) {
+  constructor(private dataService: DataService, private route: ActivatedRoute, private router: Router) {
     console.log("Profile page started (constructor)");
     var defaultUser = {
       name : "Burnest Griffin IV",
