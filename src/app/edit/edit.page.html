@@ -8,13 +8,28 @@
 </ion-header>
 
 <ion-content>
-<label>
-  Name: <input type="text" [formControl]="name">
-</label>
-Answer: {{name.value}}
-  <ion-button expand="block" routerLink="/profile" routerDirection="back">
-    Return
-  </ion-button>
 
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+
+    <label>
+      Name:
+      <input type="text" formControlName="name">
+    </label>
+
+    <label>
+      Company:
+      <input type="text" formControlName="company">
+    </label>
+
+    <label>
+      Role:
+      <input type="text" formControlName="role">
+    </label>
+
+    <ion-button type="submit" [disabled]="!userForm.valid" >
+      Return
+    </ion-button>
+
+  </form>
 
 </ion-content>

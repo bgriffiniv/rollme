@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { Router } from '@angular/router';
+import { FormControl, FormGroup } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-edit',
@@ -8,20 +8,30 @@ import { Router } from '@angular/router';
   styleUrls: ['./edit.page.scss'],
 })
 export class EditPage implements OnInit {
+  userForm = new FormGroup({
+    name: new FormControl(''),
+    company: new FormControl(''),
+    role: new FormControl('')
+  });
 
-  name = new FormControl('Jamal Black');
-
-  constructor(private router: Router) {
+  constructor(private route: ActivatedRoute, private router: Router) {
     console.log("Edit page started (constructor)");
+
+    this.route.queryParams.subscribe(params => {
+      if (this.router.getCurrentNavigation().extras.state) {
+        console.log(this.userForm);
+        this.userForm.setValue(this.router.getCurrentNavigation().extras.state.user);
+      }
+    });
   }
 
   ngOnInit() {
     console.log("Edit page started (init)");
   }
 
-  goToProfilePage() {
-
-      this.router.navigate(['profile']);
+  onSubmit() {
+    console.log(this.userForm.value);
+    this.router.navigate(['profile']);
   }
 
 }
