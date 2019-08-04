@@ -9,7 +9,7 @@
 
 <ion-content>
 
-  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="userForm">
 
     <label>
       Name:
@@ -26,7 +26,7 @@
       <input type="text" formControlName="role">
     </label>
 
-    <ion-button type="submit" [disabled]="!userForm.valid" >
+    <ion-button type="submit" [disabled]="!userForm.valid" (click)="onSubmit()">
       Return
     </ion-button>
 
