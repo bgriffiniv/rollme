@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-//import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-edit',
@@ -22,26 +21,10 @@ export class EditPage implements OnInit {
 
     if (this.router.getCurrentNavigation().extras.state) {
       this.userForm.setValue(this.router.getCurrentNavigation().extras.state.user);
-      console.log(this.userForm);
-      this.parent = this.router.getCurrentNavigation().extras.state.user;
+      console.log("user:", this.userForm.value);
+      this.parent = this.router.getCurrentNavigation().extras.state.parent;
+      console.log("parent:", this.parent);
     }
-
-    /*
-    const data = route.data.pipe(map(d => d));
-    console.log("data (pipe):", data);
-
-    this.route.params.subscribe((params) => {
-      console.log("params:", params);
-    });
-
-    this.route.data.subscribe((data) => {
-      console.log("data:", data);
-    });
-
-    this.route.queryParams.subscribe((queryParams) => {
-      console.log("queryParams:", queryParams);
-    });
-    */
   }
 
   ngOnInit() {
@@ -49,7 +32,7 @@ export class EditPage implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.userForm.value);
+    console.log("updated user:", this.userForm.value);
     let navigationExtras: NavigationExtras = {
       state: {
         user: this.userForm.value
