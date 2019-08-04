@@ -12,31 +12,31 @@ export class ProfilePage implements OnInit {
 
   constructor(private route: ActivatedRoute, private router: Router) {
     console.log("Profile page started (constructor)");
-      var defaultUser = {
-        name : "Burnest Griffin IV",
-        company : "IdeaLogic",
-        role : "Developer"
-      };
+    var defaultUser = {
+      name : "Burnest Griffin IV",
+      company : "IdeaLogic",
+      role : "Developer"
+    };
 
-      //this.route.queryParams.subscribe(params => {
-        if (this.router.getCurrentNavigation().extras.state) {
-          console.log("use passed data");
-          this.user = this.router.getCurrentNavigation().extras.state.user;
-        } else {
-          console.log("use default user");
-          this.user = defaultUser;
-        }
-      //});
+    this.route.data.subscribe((data) => {
+      if (this.router.getCurrentNavigation().extras.state) {
+        console.log("use passed data");
+        this.user = this.router.getCurrentNavigation().extras.state.user;
+      } else {
+        console.log("use default user");
+        this.user = defaultUser;
+      }
+    });
   }
 
   goToEditPage() {
     let navigationExtras: NavigationExtras = {
       state: {
         user: this.user,
-        parent: "profile"
+        parent: 'profile'
       }
     };
-    this.router.navigate(['profile/edit'], navigationExtras);
+    this.router.navigate(['edit'], navigationExtras);
   }
 
   ngOnInit() {
