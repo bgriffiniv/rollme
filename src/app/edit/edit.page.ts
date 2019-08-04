@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import {map} from 'rxjs/operators';
+//import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-edit',
