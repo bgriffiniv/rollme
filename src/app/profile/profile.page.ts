@@ -18,7 +18,7 @@ export class ProfilePage implements OnInit {
         role : "Developer"
       };
 
-      this.route.queryParams.subscribe(params => {
+      //this.route.queryParams.subscribe(params => {
         if (this.router.getCurrentNavigation().extras.state) {
           console.log("use passed data");
           this.user = this.router.getCurrentNavigation().extras.state.user;
@@ -26,13 +26,14 @@ export class ProfilePage implements OnInit {
           console.log("use default user");
           this.user = defaultUser;
         }
-      });
+      //});
   }
 
   goToEditPage() {
     let navigationExtras: NavigationExtras = {
       state: {
-        user: this.user
+        user: this.user,
+        parent: "profile"
       }
     };
     this.router.navigate(['profile/edit'], navigationExtras);
