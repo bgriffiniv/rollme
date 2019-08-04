@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, NavigationExtras } from '@angular/router';
+import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -10,7 +10,7 @@ export class ProfilePage implements OnInit {
 
   user;
 
-  constructor(private router: Router) {
+  constructor(private route: ActivatedRoute, private router: Router) {
     console.log("Profile page started (constructor)");
       var defaultUser = {
         name : "Burnest Griffin IV",
@@ -18,7 +18,15 @@ export class ProfilePage implements OnInit {
         role : "Developer"
       };
 
-      this.user = defaultUser;
+      this.route.queryParams.subscribe(params => {
+        if (this.router.getCurrentNavigation().extras.state) {
+          console.log("use passed data");
+          this.user = this.router.getCurrentNavigation().extras.state.user;
+        } else {
+          console.log("use default user");
+          this.user = defaultUser;
+        }
+      });
   }
 
   goToEditPage() {
