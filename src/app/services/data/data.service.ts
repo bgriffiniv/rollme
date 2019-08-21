@@ -12,7 +12,24 @@ export class DataService {
     this.user = {
       name: "Burnest Griffin IV",
       company: "House of Ease",
-      role: "Ninjaneer"
+      role: "Ninjaneer",
+      contacts: {
+        "justin-jones": {
+          name: "Justin Jones",
+          company: "House of Ease",
+          role: "Designer"
+        },
+        "shannon-shird": {
+          name: "Shannon Shird",
+          company: "House of Ease",
+          role: "Creator"
+        },
+        "brandon-stuart": {
+          name: "Brandon Stuart",
+          company: "IdeaLogic",
+          role: "Founder"
+        }
+      }
     };
 
     console.log("user:", this.user);
