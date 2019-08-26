@@ -13,23 +13,21 @@ export class DataService {
       name: "Burnest Griffin IV",
       company: "House of Ease",
       role: "Ninjaneer",
-      contacts: {
-        "justin-jones": {
+      contacts: [
+        {
           name: "Justin Jones",
           company: "House of Ease",
           role: "Designer"
-        },
-        "shannon-shird": {
+        },{
           name: "Shannon Shird",
           company: "House of Ease",
           role: "Creator"
-        },
-        "brandon-stuart": {
+        },{
           name: "Brandon Stuart",
           company: "IdeaLogic",
           role: "Founder"
         }
-      }
+      ]
     };
 
     console.log("user:", this.user);
@@ -40,7 +38,8 @@ export class DataService {
     this.user = {
       name: updated.name,
       company: updated.company,
-      role: updated.role
+      role: updated.role,
+      contacts: updated.contacts
     }
   }
 

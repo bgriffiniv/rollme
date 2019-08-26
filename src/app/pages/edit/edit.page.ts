@@ -13,8 +13,8 @@ export class EditPage implements OnInit {
     company: new FormControl(''),
     role: new FormControl('')
   });
-
   parent;
+  index;
 
   constructor(private route: ActivatedRoute, private router: Router) {
     console.log("Edit page started (constructor)");
@@ -24,6 +24,9 @@ export class EditPage implements OnInit {
       console.log("user:", this.userForm.value);
       this.parent = this.router.getCurrentNavigation().extras.state.parent;
       console.log("parent:", this.parent);
+      this.index = this.router.getCurrentNavigation().extras.state.index;
+      console.log("index:", this.index);
+
     }
   }
 
@@ -33,9 +36,11 @@ export class EditPage implements OnInit {
 
   onSubmit() {
     console.log("updated user:", this.userForm.value);
+    console.log("index:", this.index);
     let navigationExtras: NavigationExtras = {
       state: {
-        user: this.userForm.value
+        user: this.userForm.value,
+        index: this.index
       }
     };
     this.router.navigate([this.parent], navigationExtras);  }
