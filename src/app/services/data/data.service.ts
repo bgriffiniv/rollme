@@ -26,6 +26,10 @@ export class DataService {
           name: "Brandon Stuart",
           company: "IdeaLogic",
           role: "Founder"
+        },{
+          name: "Mario Banks",
+          company: "IdeaLogic",
+          role: "Developer"
         }
       ]
     };
@@ -34,16 +38,24 @@ export class DataService {
   }
 
   setUser(id: string, updated) {
-    console.log("saving user",id,updated);
-    this.user = {
-      name: updated.name,
-      company: updated.company,
-      role: updated.role,
-      contacts: updated.contacts
-    }
+    console.log("set user:",id,updated);
+    this.user.name = updated.name;
+    this.user.company = updated.company;
+    this.user.role = updated.role;
   }
 
   getUser(id: string) {
+    console.log("get user:",this.user);
     return this.user;
+  }
+
+  setContact(id: string, index: number, updated) {
+    console.log("set contact:",id,index,updated);
+    this.user.contacts[index] = updated;
+  }
+
+  deleteContact(id: string, index: number) {
+    console.log("delete contact:",id,index);
+    this.user.contacts.splice(index,1);
   }
 }
