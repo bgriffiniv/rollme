@@ -15,6 +15,18 @@ export class DataService {
       role: "Ninjaneer",
       contacts: [
         {
+          name: "Sam",
+          company: "IdeaLogic",
+          role: "Artist"
+        },{
+          name: "Mario Banks",
+          company: "IdeaLogic",
+          role: "Developer"
+        },{
+          name: "Glenn Supris",
+          company: "Mitre",
+          role: "Engineer"
+        },{
           name: "Justin Jones",
           company: "House of Ease",
           role: "Designer"
@@ -26,10 +38,6 @@ export class DataService {
           name: "Brandon Stuart",
           company: "IdeaLogic",
           role: "Founder"
-        },{
-          name: "Mario Banks",
-          company: "IdeaLogic",
-          role: "Developer"
         }
       ]
     };
