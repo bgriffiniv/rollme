@@ -5,8 +5,9 @@
 
     </ion-buttons>
     <ion-buttons slot="end">
-      <ion-icon slot="end" (click)="addContact()" name="person-add"></ion-icon>
-
+      <ion-button (click)="addContact()">
+        <ion-icon name="person-add"></ion-icon>
+      </ion-button>
     </ion-buttons>
     <ion-title>
       Rolodex
@@ -19,8 +20,14 @@
   <ion-list>
     <ion-item *ngFor="let contact of user.contacts; let index = index;">
       {{contact.name}}
-      <ion-icon icon-only name="create" slot="end" (click)="goToEditPage(index)"></ion-icon>
-      <ion-icon icon-only name="trash" slot="end" (click)="deleteContact(index)"></ion-icon>
+      <ion-buttons slot="end">
+        <ion-button (click)="goToEditPage(index)">
+          <ion-icon name="create"></ion-icon>
+        </ion-button>
+        <ion-button (click)="deleteContact(index)">
+          <ion-icon name="trash"></ion-icon>
+        </ion-button>
+      </ion-buttons>
     </ion-item>
   </ion-list>
 </ion-content>

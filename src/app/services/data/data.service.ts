@@ -13,31 +13,38 @@ export class DataService {
       name: "Burnest Griffin IV",
       company: "House of Ease",
       role: "Ninjaneer",
+      email: "bgriffiniv@gmail.com",
       contacts: [
         {
           name: "Sam",
           company: "IdeaLogic",
-          role: "Artist"
+          role: "Artist",
+          email: ""
         },{
           name: "Mario Banks",
           company: "IdeaLogic",
-          role: "Developer"
+          role: "Developer",
+          email: ""
         },{
           name: "Glenn Supris",
           company: "Mitre",
-          role: "Engineer"
+          role: "Engineer",
+          email: ""
         },{
           name: "Justin Jones",
           company: "House of Ease",
-          role: "Designer"
+          role: "Designer",
+          email: ""
         },{
           name: "Shannon Shird",
           company: "House of Ease",
-          role: "Creator"
+          role: "Creator",
+          email: ""
         },{
           name: "Brandon Stuart",
           company: "IdeaLogic",
-          role: "Founder"
+          role: "Founder",
+          email: ""
         }
       ]
     };
@@ -50,6 +57,7 @@ export class DataService {
     this.user.name = updated.name;
     this.user.company = updated.company;
     this.user.role = updated.role;
+    this.user.email = updated.email;
   }
 
   getUser(id: string) {

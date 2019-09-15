@@ -43,7 +43,7 @@ export class RolodexPage implements OnInit {
     this.index = this.user.contacts.length;
     let navigationExtras: NavigationExtras = {
       state: {
-        user: {name:"",company:"",role:""},
+        user: {name:"",company:"",role:"", email:""},
         parent: 'rolodex'
       }
     };
