@@ -62,7 +62,6 @@ export class RolodexPage implements OnInit {
   }
 
   refresh() {
-    let current = this.dataService.getUser("default");
-    this.user = current;
+    this.user = this.dataService.getUser("default");
   }
 }

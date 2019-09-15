@@ -11,7 +11,8 @@ export class EditPage implements OnInit {
   userForm = new FormGroup({
     name: new FormControl(''),
     company: new FormControl(''),
-    role: new FormControl('')
+    role: new FormControl(''),
+    email: new FormControl('')
   });
   parent;
   //index;

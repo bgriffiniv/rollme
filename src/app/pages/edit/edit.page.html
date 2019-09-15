@@ -26,6 +26,11 @@
       <input type="text" formControlName="role">
     </label>
 
+    <label>
+      Email:
+      <input type="text" formControlName="email">
+    </label>
+
     <ion-button type="submit" [disabled]="!userForm.valid" (click)="onSubmit()">
       Save
     </ion-button>
