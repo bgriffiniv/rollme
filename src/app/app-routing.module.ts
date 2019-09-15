@@ -22,7 +22,12 @@ const routes: Routes = [
   {
     path: 'edit',
     loadChildren: './pages/edit/edit.module#EditPageModule'
+  },
+  {
+    path: 'rolodex',
+    loadChildren: './pages/rolodex/rolodex.module#RolodexPageModule'
   }
+
 ];
 
 @NgModule({
