@@ -12,17 +12,18 @@ const routes: Routes = [
     loadChildren: './pages/home/home.module#HomePageModule'
   },
   {
-    path: 'list',
-    loadChildren: './pages/list/list.module#ListPageModule'
-  },
-  {
     path: 'profile',
     loadChildren: './pages/profile/profile.module#ProfilePageModule'
   },
   {
     path: 'edit',
     loadChildren: './pages/edit/edit.module#EditPageModule'
+  },
+  {
+    path: 'rolodex',
+    loadChildren: './pages/rolodex/rolodex.module#RolodexPageModule'
   }
+
 ];
 
 @NgModule({
