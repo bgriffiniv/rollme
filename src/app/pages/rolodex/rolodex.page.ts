@@ -11,35 +11,49 @@ import { DataService } from './../../services/data/data.service';
 export class RolodexPage implements OnInit {
 
   user;
+  index;
 
   constructor(private dataService: DataService, private route: ActivatedRoute, private router: Router) {
     console.log("Rolodex page started (constructor)");
 
     this.route.data.subscribe((data) => {
       if (this.router.getCurrentNavigation().extras.state) {
-        console.log("save passed data");
         let updated = this.router.getCurrentNavigation().extras.state.user;
-        console.log(updated);
-        let index = this.router.getCurrentNavigation().extras.state.index;
-        this.user.contacts[index] = updated;
-        this.dataService.setUser("default", this.user);
+        //let index = this.router.getCurrentNavigation().extras.state.index;
+        //this.user.contacts[this.index] = updated;
+        this.dataService.setContact("default", this.index, updated);
       }
-      console.log("get saved user");
-      let current = this.dataService.getUser("default");
-      console.log(current);
-      this.user = current;
+
+      this.refresh();
     });
   }
 
-  goToEditPage(contact, index) {
+  goToEditPage(index) {
+    this.index = index;
     let navigationExtras: NavigationExtras = {
       state: {
-        user: contact,
-        parent: 'rolodex',
-        index: index
+        user: this.user.contacts[index],
+        parent: 'rolodex'
       }
     };
     this.router.navigate(['edit'], navigationExtras);
+  }
+
+  addContact() {
+    this.index = this.user.contacts.length;
+    let navigationExtras: NavigationExtras = {
+      state: {
+        user: {name:"",company:"",role:"", email:""},
+        parent: 'rolodex'
+      }
+    };
+    this.router.navigate(['edit'], navigationExtras);
+  }
+
+  deleteContact(index) {
+    this.dataService.deleteContact("default", index);
+    console.log(this.user);
+    //this.refresh();
   }
 
   ngOnInit() {
@@ -47,4 +61,7 @@ export class RolodexPage implements OnInit {
 
   }
 
+  refresh() {
+    this.user = this.dataService.getUser("default");
+  }
 }

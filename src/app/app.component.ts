@@ -28,7 +28,7 @@ export class AppComponent {
     {
       title: 'Rolodex',
       url: '/rolodex',
-      icon: 'list'
+      icon: 'aperture'
     }
   ];
 

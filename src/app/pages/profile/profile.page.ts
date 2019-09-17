@@ -17,14 +17,10 @@ export class ProfilePage implements OnInit {
 
     this.route.data.subscribe((data) => {
       if (this.router.getCurrentNavigation().extras.state) {
-        console.log("save passed data");
         let updated = this.router.getCurrentNavigation().extras.state.user;
-        console.log(updated);
         this.dataService.setUser("default", updated);
       }
-      console.log("get saved user");
       let current = this.dataService.getUser("default");
-      console.log(current);
       this.user = current;
 
     });

@@ -13,19 +13,38 @@ export class DataService {
       name: "Burnest Griffin IV",
       company: "House of Ease",
       role: "Ninjaneer",
+      email: "bgriffiniv@gmail.com",
       contacts: [
         {
+          name: "Sam",
+          company: "IdeaLogic",
+          role: "Artist",
+          email: ""
+        },{
+          name: "Mario Banks",
+          company: "IdeaLogic",
+          role: "Developer",
+          email: ""
+        },{
+          name: "Glenn Supris",
+          company: "Mitre",
+          role: "Engineer",
+          email: ""
+        },{
           name: "Justin Jones",
           company: "House of Ease",
-          role: "Designer"
+          role: "Designer",
+          email: ""
         },{
           name: "Shannon Shird",
           company: "House of Ease",
-          role: "Creator"
+          role: "Creator",
+          email: ""
         },{
           name: "Brandon Stuart",
           company: "IdeaLogic",
-          role: "Founder"
+          role: "Founder",
+          email: ""
         }
       ]
     };
@@ -34,16 +53,25 @@ export class DataService {
   }
 
   setUser(id: string, updated) {
-    console.log("saving user",id,updated);
-    this.user = {
-      name: updated.name,
-      company: updated.company,
-      role: updated.role,
-      contacts: updated.contacts
-    }
+    console.log("set user:",id,updated);
+    this.user.name = updated.name;
+    this.user.company = updated.company;
+    this.user.role = updated.role;
+    this.user.email = updated.email;
   }
 
   getUser(id: string) {
+    console.log("get user:",this.user);
     return this.user;
+  }
+
+  setContact(id: string, index: number, updated) {
+    console.log("set contact:",id,index,updated);
+    this.user.contacts[index] = updated;
+  }
+
+  deleteContact(id: string, index: number) {
+    console.log("delete contact:",id,index);
+    this.user.contacts.splice(index,1);
   }
 }
