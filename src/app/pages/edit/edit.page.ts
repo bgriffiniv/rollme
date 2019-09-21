@@ -21,7 +21,14 @@ export class EditPage implements OnInit {
     console.log("Edit page started (constructor)");
 
     if (this.router.getCurrentNavigation().extras.state) {
-      this.userForm.setValue(this.router.getCurrentNavigation().extras.state.user);
+      let currentUser = this.router.getCurrentNavigation().extras.state.user;
+      let formData = {
+        name: currentUser.name,
+        company: currentUser.company,
+        role: currentUser.role,
+        email: currentUser.email
+      };
+      this.userForm.setValue(formData);
       console.log("user:", this.userForm.value);
       this.parent = this.router.getCurrentNavigation().extras.state.parent;
       console.log("parent:", this.parent);

@@ -16,7 +16,7 @@ export class DataService {
       email: "bgriffiniv@gmail.com",
       contacts: [
         {
-          name: "Sam",
+          name: "Sam Bass",
           company: "IdeaLogic",
           role: "Artist",
           email: ""
