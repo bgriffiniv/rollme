@@ -17,7 +17,7 @@ export class ProfilePage implements OnInit {
 
     this.route.data.subscribe((data) => {
       if (this.router.getCurrentNavigation().extras.state) {
-        let updated = this.router.getCurrentNavigation().extras.state.user;
+        let updated = this.router.getCurrentNavigation().extras.state.data;
         this.dataService.setUser("default", updated);
       }
       let current = this.dataService.getUser("default");
@@ -29,7 +29,7 @@ export class ProfilePage implements OnInit {
   goToEditPage() {
     let navigationExtras: NavigationExtras = {
       state: {
-        user: this.user,
+        data: this.user.data,
         parent: 'profile'
       }
     };
