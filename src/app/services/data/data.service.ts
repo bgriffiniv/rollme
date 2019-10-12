@@ -10,41 +10,55 @@ export class DataService {
   constructor() {
     console.log("DataService constructor")
     this.user = {
-      name: "Burnest Griffin IV",
-      company: "House of Ease",
-      role: "Ninjaneer",
-      email: "bgriffiniv@gmail.com",
+      data: [
+        {key: "name", value: "Burnest Griffin IV"},
+        {key: "company", value: "House of Ease"},
+        {key: "role", value: "Ninjaneer"},
+        {key: "email", value: "bgriffiniv@gmail.com"},
+      ],
       contacts: [
         {
-          name: "Sam Bass",
-          company: "IdeaLogic",
-          role: "Artist",
-          email: ""
+          data: [
+            {key: "name", value: "Sam Bass"},
+            {key: "company", value: "IdeaLogic"},
+            {key: "role", value: "Artist"},
+            {key: "email", value: ""}
+          ]
         },{
-          name: "Mario Banks",
-          company: "IdeaLogic",
-          role: "Developer",
-          email: ""
+          data: [
+            {key: "name", value: "Mario Banks"},
+            {key: "company", value: "IdeaLogic"},
+            {key: "role", value: "Developer"},
+            {key: "email", value: ""}
+          ]
         },{
-          name: "Glenn Supris",
-          company: "Mitre",
-          role: "Engineer",
-          email: ""
+          data: [
+            {key: "name", value: "Glenn Supris"},
+            {key: "company", value: "Mitre"},
+            {key: "role", value: "Engineer"},
+            {key: "email", value: ""}
+          ]
         },{
-          name: "Justin Jones",
-          company: "House of Ease",
-          role: "Designer",
-          email: ""
+          data: [
+            {key: "name", value: "Justin Jones"},
+            {key: "company", value: "House of Ease"},
+            {key: "role", value: "Designer"},
+            {key: "email", value: ""}
+          ]
         },{
-          name: "Shannon Shird",
-          company: "House of Ease",
-          role: "Creator",
-          email: ""
+          data: [
+            {key: "name", value: "Shannon Shird"},
+            {key: "company", value: "House of Ease"},
+            {key: "role", value: "Creator"},
+            {key: "email", value: ""}
+          ]
         },{
-          name: "Brandon Stuart",
-          company: "IdeaLogic",
-          role: "Founder",
-          email: ""
+          data: [
+            {key: "name", value: "Brandon Stuart"},
+            {key: "company", value: "IdeaLogic"},
+            {key: "role", value: "Founder"},
+            {key: "email", value: ""}
+          ]
         }
       ]
     };
@@ -54,10 +68,7 @@ export class DataService {
 
   setUser(id: string, updated) {
     console.log("set user:",id,updated);
-    this.user.name = updated.name;
-    this.user.company = updated.company;
-    this.user.role = updated.role;
-    this.user.email = updated.email;
+    this.user.data = updated;
   }
 
   getUser(id: string) {
@@ -67,7 +78,7 @@ export class DataService {
 
   setContact(id: string, index: number, updated) {
     console.log("set contact:",id,index,updated);
-    this.user.contacts[index] = updated;
+    this.user.contacts[index].data = updated;
   }
 
   deleteContact(id: string, index: number) {

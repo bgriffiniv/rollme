@@ -18,7 +18,7 @@ export class RolodexPage implements OnInit {
 
     this.route.data.subscribe((data) => {
       if (this.router.getCurrentNavigation().extras.state) {
-        let updated = this.router.getCurrentNavigation().extras.state.user;
+        let updated = this.router.getCurrentNavigation().extras.state.data;
         //let index = this.router.getCurrentNavigation().extras.state.index;
         //this.user.contacts[this.index] = updated;
         this.dataService.setContact("default", this.index, updated);
@@ -32,7 +32,7 @@ export class RolodexPage implements OnInit {
     this.index = index;
     let navigationExtras: NavigationExtras = {
       state: {
-        user: this.user.contacts[index],
+        data: this.user.contacts[index].data,
         parent: 'rolodex'
       }
     };
@@ -43,7 +43,12 @@ export class RolodexPage implements OnInit {
     this.index = this.user.contacts.length;
     let navigationExtras: NavigationExtras = {
       state: {
-        user: {name:"",company:"",role:"", email:""},
+        data: [
+          {key: "name", value: ""},
+          {key: "company", value: ""},
+          {key: "role", value: ""},
+          {key: "email", value: ""}
+        ],
         parent: 'rolodex'
       }
     };
