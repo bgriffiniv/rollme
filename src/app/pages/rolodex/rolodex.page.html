@@ -18,7 +18,7 @@
 <ion-content>
 
   <ion-list>
-    <ion-item *ngFor="let contact of user.contacts; let index = index;">
+    <ion-item *ngFor="let contact of contacts" lines="none">
       {{contact.name}}
       <ion-buttons slot="end">
         <ion-button (click)="goToEditPage(index)">

@@ -5,84 +5,103 @@ import { Injectable } from '@angular/core';
 })
 export class DataService {
 
-  user:any;
+  users:any;
 
   constructor() {
     console.log("DataService constructor")
-    this.user = {
-      data: [
-        {key: "name", value: "Burnest Griffin IV"},
-        {key: "company", value: "House of Ease"},
-        {key: "role", value: "Ninjaneer"},
-        {key: "email", value: "bgriffiniv@gmail.com"},
-      ],
-      contacts: [
-        {
-          data: [
-            {key: "name", value: "Sam Bass"},
-            {key: "company", value: "IdeaLogic"},
-            {key: "role", value: "Artist"},
-            {key: "email", value: ""}
-          ]
-        },{
-          data: [
-            {key: "name", value: "Mario Banks"},
-            {key: "company", value: "IdeaLogic"},
-            {key: "role", value: "Developer"},
-            {key: "email", value: ""}
-          ]
-        },{
-          data: [
-            {key: "name", value: "Glenn Supris"},
-            {key: "company", value: "Mitre"},
-            {key: "role", value: "Engineer"},
-            {key: "email", value: ""}
-          ]
-        },{
-          data: [
-            {key: "name", value: "Justin Jones"},
-            {key: "company", value: "House of Ease"},
-            {key: "role", value: "Designer"},
-            {key: "email", value: ""}
-          ]
-        },{
-          data: [
-            {key: "name", value: "Shannon Shird"},
-            {key: "company", value: "House of Ease"},
-            {key: "role", value: "Creator"},
-            {key: "email", value: ""}
-          ]
-        },{
-          data: [
-            {key: "name", value: "Brandon Stuart"},
-            {key: "company", value: "IdeaLogic"},
-            {key: "role", value: "Founder"},
-            {key: "email", value: ""}
-          ]
-        }
-      ]
+    this.users = {
+      bgriffiniv: {
+          name: "Burnest Griffin IV",
+          company: "House of Ease",
+          role: "Ninjaneer",
+          email: "bgriffiniv@gmail.com",
+          contacts: {
+            sbass: true,
+            bstuart: true
+          }
+      },
+      sbass: {
+          name: "Sam Bass",
+          company: "IdeaLogic",
+          role: "Artist",
+          email: "",
+          contacts: {}
+      },
+      mbanks: {
+          name: "Mario Banks",
+          company: "IdeaLogic",
+          role: "Developer",
+          email: "",
+          contacts: {}
+      },
+      gsupris: {
+          name: "Glenn Supris",
+          company: "Mitre",
+          role: "Engineer",
+          email: "",
+          contacts: {}
+      },
+      jjones: {
+          name: "Justin Jones",
+          company: "House of Ease",
+          role: "Designer",
+          email: "",
+          contacts: {}
+      },
+      sshird: {
+          name: "Shannon Shird",
+          company: "House of Ease",
+          role: "Creator",
+          email: "",
+          contacts: {}
+      },
+      bstuart: {
+          name: "Brandon Stuart",
+          company: "IdeaLogic",
+          role: "Founder",
+          email: "",
+          contacts: {
+            bgriffin: true,
+            gsupris: true,
+            mbanks: true
+          }
+      }
     };
 
-    console.log("user:", this.user);
+    console.log("users:", this.users);
   }
 
   setUser(id: string, updated) {
     console.log("set user:",id,updated);
-    this.user.data = updated;
+    // avoid updating contacts
+    delete updated.contacts;
+    let user = this.users[id];
+    for (let key in updated) {
+        user[key] = updated[key];
+    }
   }
 
   getUser(id: string) {
-    console.log("get user:",this.user);
-    return this.user;
+    console.log("get user:",id);
+    if (!this.users[id]) {
+      console.log("user not found");
+    }
+    return this.users[id];
   }
 
-  setContact(id: string, index: number, updated) {
-    console.log("set contact:",id,index,updated);
-    this.user.contacts[index].data = updated;
+  setContact(id: string, index: string, isContact: boolean) {
+    console.log("set contact:",id,index,isContact);
+    let user = this.users[id];
+    if (!isContact) {
+      delete user.contacts[index];
+    } else {
+      user.contacts[index] = true;
+    }
   }
 
-  deleteContact(id: string, index: number) {
-    console.log("delete contact:",id,index);
-    this.user.contacts.splice(index,1);
+  isContact(id: string, index: string) {
+    console.log("is contact? ",id,index);
+    let user = this.users[id];
+    return user.contacts[index];
   }
 }

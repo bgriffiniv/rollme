@@ -8,9 +8,9 @@ import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
   styleUrls: ['./edit.page.scss'],
 })
 export class EditPage implements OnInit {
-  dataForm = new FormGroup();
+  dataForm = new FormGroup({});
   parent;
-  //index;
+  keys;
 
   constructor(private route: ActivatedRoute, private router: Router) {
     console.log("Edit page started (constructor)");
@@ -19,15 +19,15 @@ export class EditPage implements OnInit {
       let data = this.router.getCurrentNavigation().extras.state.data;
       console.log("data:", data);
 
-      data.forEach(field => {
-        this.dataForm.addControl(field.key, new formControl(key.value));
-      });
+      this.keys = Object.keys(data);
+      this.keys.splice(this.keys.indexOf("contacts"), 1);
+
+      for (let key of this.keys) {
+        this.dataForm.addControl(key, new FormControl(data[key]));
+      }
 
       this.parent = this.router.getCurrentNavigation().extras.state.parent;
       console.log("parent:", this.parent);
-      //this.index = this.router.getCurrentNavigation().extras.state.index;
-      //console.log("index:", this.index);
-
     }
   }
 
@@ -38,8 +38,7 @@ export class EditPage implements OnInit {
   onSubmit() {
     let navigationExtras: NavigationExtras = {
       state: {
-        data: this.dataForm.value//,
-        //index: this.index
+        data: this.dataForm.value
       }
     };
     this.router.navigate([this.parent], navigationExtras);  }

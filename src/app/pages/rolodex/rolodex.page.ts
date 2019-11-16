@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 
 import { DataService } from './../../services/data/data.service';
+import { UserService } from './../../services/user/user.service';
 
 @Component({
   selector: 'app-rolodex',
@@ -9,19 +10,20 @@ import { DataService } from './../../services/data/data.service';
   styleUrls: ['./rolodex.page.scss'],
 })
 export class RolodexPage implements OnInit {
-
   user;
+  contacts;
   index;
+  id;
 
-  constructor(private dataService: DataService, private route: ActivatedRoute, private router: Router) {
+  constructor(private dataService: DataService, private userService: UserService, private route: ActivatedRoute, private router: Router) {
     console.log("Rolodex page started (constructor)");
+
+    this.id = userService.getUser();
 
     this.route.data.subscribe((data) => {
       if (this.router.getCurrentNavigation().extras.state) {
         let updated = this.router.getCurrentNavigation().extras.state.data;
-        //let index = this.router.getCurrentNavigation().extras.state.index;
-        //this.user.contacts[this.index] = updated;
-        this.dataService.setContact("default", this.index, updated);
+        this.dataService.setContact(this.id, this.index, updated);
       }
 
       this.refresh();
@@ -56,7 +58,7 @@ export class RolodexPage implements OnInit {
   }
 
   deleteContact(index) {
-    this.dataService.deleteContact("default", index);
+    this.dataService.setContact("default", index, false);
     console.log(this.user);
     //this.refresh();
   }
@@ -67,6 +69,12 @@ export class RolodexPage implements OnInit {
   }
 
   refresh() {
-    this.user = this.dataService.getUser("default");
+    this.user = this.dataService.getUser(this.id);
+
+    // TODO: Page over this data when too large!
+    this.contacts = [];
+    for (let contact in this.user.contacts) {
+      this.contacts.push(this.dataService.getUser(contact));
+    }
   }
 }
