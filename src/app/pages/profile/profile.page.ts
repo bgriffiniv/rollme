@@ -24,8 +24,8 @@ export class ProfilePage implements OnInit {
         let updated = this.router.getCurrentNavigation().extras.state.data;
         this.dataService.setUser(this.id, updated);
       }
-      let current = this.dataService.getUser(this.id);
-      this.user = current;
+
+      this.user = this.dataService.getUser(this.id);
       this.keys = Object.keys(this.user);
       this.keys.splice(this.keys.indexOf("contacts"), 1);
     });

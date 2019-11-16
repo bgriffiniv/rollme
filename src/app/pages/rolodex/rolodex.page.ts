@@ -11,7 +11,7 @@ import { UserService } from './../../services/user/user.service';
 })
 export class RolodexPage implements OnInit {
   user;
-  contacts;
+  contactDataList;
   index;
   id;
 
@@ -34,11 +34,21 @@ export class RolodexPage implements OnInit {
     this.index = index;
     let navigationExtras: NavigationExtras = {
       state: {
-        data: this.user.contacts[index].data,
+        data: this.dataService.getUser(index),
         parent: 'rolodex'
       }
     };
     this.router.navigate(['edit'], navigationExtras);
+  }
+  goToContactPage(index) {
+    this.index = index;
+    let navigationExtras: NavigationExtras = {
+      state: {
+        data: index,
+        parent: 'rolodex'
+      }
+    };
+    this.router.navigate(['contact'], navigationExtras);
   }
 
   addContact() {
@@ -72,9 +82,13 @@ export class RolodexPage implements OnInit {
     this.user = this.dataService.getUser(this.id);
 
     // TODO: Page over this data when too large!
-    this.contacts = [];
-    for (let contact in this.user.contacts) {
-      this.contacts.push(this.dataService.getUser(contact));
+    this.contactDataList = [];
+    for (let contactId in this.user.contacts) {
+      let contactData = {
+        id: contactId,
+        name: this.dataService.getUser(contactId).name
+      };
+      this.contactDataList.push(contactData);
     }
   }
 }

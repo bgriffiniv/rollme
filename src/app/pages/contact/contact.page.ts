@@ -10,43 +10,23 @@ import { DataService } from './../../services/data/data.service';
 })
 export class ContactPage implements OnInit {
   contact;
-  index;
-  parent;
+  keys;
 
   constructor(private dataService: DataService, private route: ActivatedRoute, private router: Router) {
     console.log("Contact page started (constructor)");
 
-    this.route.data.subscribe((data) => {
-      if (this.router.getCurrentNavigation().extras.state) {
-        this.index = this.router.getCurrentNavigation().extras.state.index;
-        this.parent = this.router.getCurrentNavigation().extras.state.parent;
-        let updated = this.router.getCurrentNavigation().extras.state.data;
-        this.dataService.setContact("default", this.index, updated);
-      }
-      //let current = this.dataService.getUser(this.index);
-      //this.contact = current;
+    let contactId;
 
-    });
-  }
-
-  goToEditPage() {
-    let navigationExtras: NavigationExtras = {
-      state: {
-        data: this.contact.data,
-        parent: 'contact'
-      }
-    };
-    this.router.navigate(['edit'], navigationExtras);
-  }
-
-  goToRolodexPage() {
-      let navigationExtras: NavigationExtras = {
-        state: {
-          data: this.contact.data,
-        }
-      };
-      this.router.navigate(this.parent, navigationExtras);
+    if (this.router.getCurrentNavigation().extras.state) {
+      //this.parent = this.router.getCurrentNavigation().extras.state.parent;
+      contactId = this.router.getCurrentNavigation().extras.state.data;
     }
+
+    this.contact = this.dataService.getUser(contactId);
+    this.keys = Object.keys(this.contact);
+    this.keys.splice(this.keys.indexOf("contacts"), 1);
+
+  }
 
   ngOnInit() {
     console.log("Contact page started (init)");
