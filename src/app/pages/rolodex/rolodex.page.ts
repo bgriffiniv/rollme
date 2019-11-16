@@ -68,9 +68,8 @@ export class RolodexPage implements OnInit {
   }
 
   deleteContact(index) {
-    this.dataService.setContact("default", index, false);
-    console.log(this.user);
-    //this.refresh();
+    this.dataService.setContact(this.id, index, false);
+    this.refresh();
   }
 
   ngOnInit() {
