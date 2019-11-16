@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
 
+import { UserService } from './../../services/user/user.service';
+
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
 
   users:any;
+  id;
 
-  constructor() {
+  constructor(private userService: UserService) {
     console.log("DataService constructor")
     this.users = {
       bgriffiniv: {
@@ -67,7 +70,7 @@ export class DataService {
           }
       }
     };
-
+    this.id = this.userService.getUser();
     console.log("users:", this.users);
   }
 
@@ -89,6 +92,31 @@ export class DataService {
     return this.users[id];
   }
 
+  listUsers() {
+    console.log("list users!");
+
+    console.log(this.users);
+    let userDataList = [];
+    for (let user in this.users) {
+      if (user === this.id) {
+        console.log("skip current user");
+        continue;
+      }
+      if (this.users[this.id].contacts[user]) {
+        console.log("skip linked contact");
+        continue;
+      }
+
+      let userData = {
+        id: user,
+        name: this.users[user].name
+      };
+      userDataList.push(userData);
+    }
+
+    return userDataList;
+  }
+
   setContact(id: string, index: string, isContact: boolean) {
     console.log("set contact:",id,index,isContact);
     let user = this.users[id];
@@ -100,7 +128,7 @@ export class DataService {
   }
 
   isContact(id: string, index: string) {
-    console.log("is contact? ",id,index);
+    console.log("is contact?",id,index);
     let user = this.users[id];
     return user.contacts[index];
   }

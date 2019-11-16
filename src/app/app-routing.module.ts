@@ -26,7 +26,8 @@ const routes: Routes = [
   {
     path: 'contact',
     loadChildren: './pages/contact/contact.module#ContactPageModule'
-  }
+  },
+  { path: 'link', loadChildren: './pages/link/link.module#LinkPageModule' }
 
 ];
 

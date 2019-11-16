@@ -41,6 +41,7 @@ export class EditPage implements OnInit {
         data: this.dataForm.value
       }
     };
-    this.router.navigate([this.parent], navigationExtras);  }
+    this.router.navigate([this.parent], navigationExtras);
+  }
 
 }
