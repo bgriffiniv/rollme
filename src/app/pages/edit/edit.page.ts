@@ -8,33 +8,26 @@ import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
   styleUrls: ['./edit.page.scss'],
 })
 export class EditPage implements OnInit {
-  userForm = new FormGroup({
-    name: new FormControl(''),
-    company: new FormControl(''),
-    role: new FormControl(''),
-    email: new FormControl('')
-  });
+  dataForm = new FormGroup({});
   parent;
-  //index;
+  keys;
 
   constructor(private route: ActivatedRoute, private router: Router) {
     console.log("Edit page started (constructor)");
 
     if (this.router.getCurrentNavigation().extras.state) {
-      let currentUser = this.router.getCurrentNavigation().extras.state.user;
-      let formData = {
-        name: currentUser.name,
-        company: currentUser.company,
-        role: currentUser.role,
-        email: currentUser.email
-      };
-      this.userForm.setValue(formData);
-      console.log("user:", this.userForm.value);
+      let data = this.router.getCurrentNavigation().extras.state.data;
+      console.log("data:", data);
+
+      this.keys = Object.keys(data);
+      this.keys.splice(this.keys.indexOf("contacts"), 1);
+
+      for (let key of this.keys) {
+        this.dataForm.addControl(key, new FormControl(data[key]));
+      }
+
       this.parent = this.router.getCurrentNavigation().extras.state.parent;
       console.log("parent:", this.parent);
-      //this.index = this.router.getCurrentNavigation().extras.state.index;
-      //console.log("index:", this.index);
-
     }
   }
 
@@ -45,10 +38,10 @@ export class EditPage implements OnInit {
   onSubmit() {
     let navigationExtras: NavigationExtras = {
       state: {
-        user: this.userForm.value//,
-        //index: this.index
+        data: this.dataForm.value
       }
     };
-    this.router.navigate([this.parent], navigationExtras);  }
+    this.router.navigate([this.parent], navigationExtras);
+  }
 
 }
