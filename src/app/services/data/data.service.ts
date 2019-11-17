@@ -1,77 +1,135 @@
 import { Injectable } from '@angular/core';
 
+import { UserService } from './../../services/user/user.service';
+
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
 
-  user:any;
+  users:any;
+  id;
 
-  constructor() {
+  constructor(private userService: UserService) {
     console.log("DataService constructor")
-    this.user = {
-      name: "Burnest Griffin IV",
-      company: "House of Ease",
-      role: "Ninjaneer",
-      email: "bgriffiniv@gmail.com",
-      contacts: [
-        {
+    this.users = {
+      bgriffiniv: {
+          name: "Burnest Griffin IV",
+          company: "House of Ease",
+          role: "Ninjaneer",
+          email: "bgriffiniv@gmail.com",
+          contacts: {
+            sbass: true,
+            bstuart: true
+          }
+      },
+      sbass: {
           name: "Sam Bass",
           company: "IdeaLogic",
           role: "Artist",
-          email: ""
-        },{
+          email: "",
+          contacts: {}
+      },
+      mbanks: {
           name: "Mario Banks",
           company: "IdeaLogic",
           role: "Developer",
-          email: ""
-        },{
+          email: "",
+          contacts: {}
+      },
+      gsupris: {
           name: "Glenn Supris",
           company: "Mitre",
           role: "Engineer",
-          email: ""
-        },{
+          email: "",
+          contacts: {}
+      },
+      jjones: {
           name: "Justin Jones",
           company: "House of Ease",
           role: "Designer",
-          email: ""
-        },{
+          email: "",
+          contacts: {}
+      },
+      sshird: {
           name: "Shannon Shird",
           company: "House of Ease",
           role: "Creator",
-          email: ""
-        },{
+          email: "",
+          contacts: {}
+      },
+      bstuart: {
           name: "Brandon Stuart",
           company: "IdeaLogic",
           role: "Founder",
-          email: ""
-        }
-      ]
+          email: "",
+          contacts: {
+            bgriffin: true,
+            gsupris: true,
+            mbanks: true
+          }
+      }
     };
-
-    console.log("user:", this.user);
+    this.id = this.userService.getUser();
+    console.log("users:", this.users);
   }
 
   setUser(id: string, updated) {
     console.log("set user:",id,updated);
-    this.user.name = updated.name;
-    this.user.company = updated.company;
-    this.user.role = updated.role;
-    this.user.email = updated.email;
+    // avoid updating contacts
+    delete updated.contacts;
+    let user = this.users[id];
+    for (let key in updated) {
+        user[key] = updated[key];
+    }
   }
 
   getUser(id: string) {
-    console.log("get user:",this.user);
-    return this.user;
+    console.log("get user:",id);
+    if (!this.users[id]) {
+      console.log("user not found");
+    }
+    return this.users[id];
   }
 
-  setContact(id: string, index: number, updated) {
-    console.log("set contact:",id,index,updated);
-    this.user.contacts[index] = updated;
+  listUsers() {
+    console.log("list users!");
+
+    console.log(this.users);
+    let userDataList = [];
+    for (let user in this.users) {
+      if (user === this.id) {
+        console.log("skip current user");
+        continue;
+      }
+      if (this.users[this.id].contacts[user]) {
+        console.log("skip linked contact");
+        continue;
+      }
+
+      let userData = {
+        id: user,
+        name: this.users[user].name
+      };
+      userDataList.push(userData);
+    }
+
+    return userDataList;
   }
 
-  deleteContact(id: string, index: number) {
-    console.log("delete contact:",id,index);
-    this.user.contacts.splice(index,1);
+  setContact(id: string, index: string, isContact: boolean) {
+    console.log("set contact:",id,index,isContact);
+    let user = this.users[id];
+    if (!isContact) {
+      delete user.contacts[index];
+    } else {
+      user.contacts[index] = true;
+    }
+  }
+
+  isContact(id: string, index: string) {
+    console.log("is contact?",id,index);
+    let user = this.users[id];
+    return user.contacts[index];
   }
 }
