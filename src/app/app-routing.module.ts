@@ -22,7 +22,12 @@ const routes: Routes = [
   {
     path: 'rolodex',
     loadChildren: './pages/rolodex/rolodex.module#RolodexPageModule'
-  }
+  },
+  {
+    path: 'contact',
+    loadChildren: './pages/contact/contact.module#ContactPageModule'
+  },
+  { path: 'link', loadChildren: './pages/link/link.module#LinkPageModule' }
 
 ];
 
