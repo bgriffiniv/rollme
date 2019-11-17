@@ -9,9 +9,13 @@ import { timer } from 'rxjs/observable/timer';
 
 @Component({
   selector: 'app-root',
-  templateUrl: 'app.component.html'
+  templateUrl: 'app.component.html',
+  styleUrls: ['app.component.scss']
 })
+
 export class AppComponent {
+  showSplash = true;
+
   public appPages = [
     {
       title: 'Home',
@@ -29,8 +33,6 @@ export class AppComponent {
       icon: 'aperture'
     }
   ];
-  
-  showSplash = true;
 
   constructor(
     private platform: Platform,
@@ -45,9 +47,8 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+       timer(3000).subscribe(() => {  this.showSplash = false;});
     });
-
-    timer(3000).subscribe(() => { this.showSplash = false;});
     this.userService.setUser("bgriffiniv");
   }
 }
