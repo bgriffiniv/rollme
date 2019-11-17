@@ -27,7 +27,9 @@ const routes: Routes = [
   { path: 'about', loadChildren: './pages/about/about.module#AboutPageModule' },
   { path: 'license', loadChildren: './pages/license/license.module#LicensePageModule' },
   { path: 'settings', loadChildren: './pages/settings/settings.module#SettingsPageModule' },
-  { path: 'feedback', loadChildren: './pages/feedback/feedback.module#FeedbackPageModule' }
+  { path: 'feedback', loadChildren: './pages/feedback/feedback.module#FeedbackPageModule' },  { path: 'invite', loadChildren: './pages/invite/invite.module#InvitePageModule' },
+  { path: 'password', loadChildren: './pages/password/password.module#PasswordPageModule' }
+
 
 
 ];
