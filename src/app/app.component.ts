@@ -31,6 +31,46 @@ export class AppComponent {
       title: 'Rolodex',
       url: '/rolodex',
       icon: 'aperture'
+    },
+    {
+      title: 'About',
+      url: '/about',
+      icon: 'information-circle'
+    },
+    {
+      title: 'Send Feedback',
+      url: '/feedback',
+      icon: 'text'
+    },
+    {
+      title: 'FAQs',
+      url: '/faq',
+      icon: 'help-circle'
+    },
+    {
+      title: 'Invite',
+      url: '/invite',
+      icon: 'people'
+    },
+    {
+      title: 'Change Password',
+      url: '/password',
+      icon: 'lock'
+    },
+    {
+      title: 'Settings',
+      url: '/settings',
+      icon: 'settings'
+    },
+    {
+      title: 'License',
+      url: '/license',
+      icon: 'clipboard'
+    },
+    {
+      title: 'Roll Out',
+      url: '/',
+      icon: 'log-out'
     }
   ];
 
