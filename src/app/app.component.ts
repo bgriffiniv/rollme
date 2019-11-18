@@ -4,8 +4,6 @@ import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
-import { UserService } from './services/user/user.service';
-
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html'
@@ -27,13 +25,19 @@ export class AppComponent {
       url: '/rolodex',
       icon: 'aperture'
     }
+
+
+    ,{
+      title: 'User List',
+      url: '/users',
+      icon: 'aperture'
+    }
   ];
 
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private userService: UserService
   ) {
     this.initializeApp();
   }
@@ -43,7 +47,5 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
-
-    this.userService.setUser("bgriffiniv");
   }
 }

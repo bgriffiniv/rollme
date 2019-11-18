@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 
 import { DataService } from './../../services/data/data.service';
-import { UserService } from './../../services/user/user.service';
 
 @Component({
   selector: 'app-rolodex',
@@ -15,19 +14,9 @@ export class RolodexPage implements OnInit {
   index;
   id;
 
-  constructor(private dataService: DataService, private userService: UserService, private route: ActivatedRoute, private router: Router) {
+  constructor(private dataService: DataService, private route: ActivatedRoute, private router: Router) {
     console.log("Rolodex page started (constructor)");
 
-    this.id = userService.getUser();
-
-    this.route.data.subscribe((data) => {
-      if (this.router.getCurrentNavigation().extras.state) {
-        let index = this.router.getCurrentNavigation().extras.state.data;
-        this.dataService.setContact(this.id, index, true);
-      }
-
-      this.refresh();
-    });
   }
 
   goToEditPage(index) {

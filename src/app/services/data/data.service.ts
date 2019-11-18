@@ -70,8 +70,12 @@ export class DataService {
           }
       }
     };
-    this.id = this.userService.getUser();
+    this.id = this.getUserId();
     console.log("users:", this.users);
+  }
+
+  getUserId() {
+    return "user001";
   }
 
   setUser(id: string, updated) {
