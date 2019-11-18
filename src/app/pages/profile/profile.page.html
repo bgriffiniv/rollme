@@ -8,10 +8,12 @@
 </ion-header>
 
 <ion-content>
-  Name: {{user.name}}<br/>
-  Company: {{user.company}}<br/>
-  Role: {{user.role}}<br/>
-  Email: {{user.email}}<br/>
+  <ion-list>
+    <ion-item *ngFor="let key of keys" lines="none">
+      {{key.toUpperCase()}} : {{user[key]}}
+    </ion-item>
+  </ion-list>
+
   <ion-button (click)="goToEditPage()">
     Edit
   </ion-button>

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 
 import { DataService } from './../../services/data/data.service';
+import { UserService } from './../../services/user/user.service';
 
 @Component({
   selector: 'app-rolodex',
@@ -9,19 +10,20 @@ import { DataService } from './../../services/data/data.service';
   styleUrls: ['./rolodex.page.scss'],
 })
 export class RolodexPage implements OnInit {
-
   user;
+  contactDataList;
   index;
+  id;
 
-  constructor(private dataService: DataService, private route: ActivatedRoute, private router: Router) {
+  constructor(private dataService: DataService, private userService: UserService, private route: ActivatedRoute, private router: Router) {
     console.log("Rolodex page started (constructor)");
+
+    this.id = userService.getUser();
 
     this.route.data.subscribe((data) => {
       if (this.router.getCurrentNavigation().extras.state) {
-        let updated = this.router.getCurrentNavigation().extras.state.user;
-        //let index = this.router.getCurrentNavigation().extras.state.index;
-        //this.user.contacts[this.index] = updated;
-        this.dataService.setContact("default", this.index, updated);
+        let index = this.router.getCurrentNavigation().extras.state.data;
+        this.dataService.setContact(this.id, index, true);
       }
 
       this.refresh();
@@ -32,28 +34,35 @@ export class RolodexPage implements OnInit {
     this.index = index;
     let navigationExtras: NavigationExtras = {
       state: {
-        user: this.user.contacts[index],
+        data: this.dataService.getUser(index),
         parent: 'rolodex'
       }
     };
     this.router.navigate(['edit'], navigationExtras);
+  }
+  goToContactPage(index) {
+    this.index = index;
+    let navigationExtras: NavigationExtras = {
+      state: {
+        data: index,
+        parent: 'rolodex'
+      }
+    };
+    this.router.navigate(['contact'], navigationExtras);
   }
 
   addContact() {
-    this.index = this.user.contacts.length;
     let navigationExtras: NavigationExtras = {
       state: {
-        user: {name:"",company:"",role:"", email:""},
         parent: 'rolodex'
       }
     };
-    this.router.navigate(['edit'], navigationExtras);
+    this.router.navigate(['link'], navigationExtras);
   }
 
   deleteContact(index) {
-    this.dataService.deleteContact("default", index);
-    console.log(this.user);
-    //this.refresh();
+    this.dataService.setContact(this.id, index, false);
+    this.refresh();
   }
 
   ngOnInit() {
@@ -62,6 +71,16 @@ export class RolodexPage implements OnInit {
   }
 
   refresh() {
-    this.user = this.dataService.getUser("default");
+    this.user = this.dataService.getUser(this.id);
+
+    // TODO: Page over this data when too large!
+    this.contactDataList = [];
+    for (let contactId in this.user.contacts) {
+      let contactData = {
+        id: contactId,
+        name: this.dataService.getUser(contactId).name
+      };
+      this.contactDataList.push(contactData);
+    }
   }
 }
