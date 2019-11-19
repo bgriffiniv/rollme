@@ -10,18 +10,25 @@ import { ToastController } from '@ionic/angular';
 })
 export class UserDetailsPage implements OnInit {
   id;
-  user: User;
+  user: User = {
+    name: '',
+    bio: ''
+  };
 
   constructor(private activatedRoute: ActivatedRoute, private userService: UserService,
-                  private toastCtrl: ToastController, private router: Router) { }
-
-  ngOnInit() {
-      this.id = this.activatedRoute.snapshot.paramMap.get('id');
+                  private toastCtrl: ToastController, private router: Router) {
+    console.log("User Details page (constructor)");
   }
 
-  ionViewWillEnter() {
+  ngOnInit() {
+    console.log("User Details page (init)");
+
+    this.id = this.activatedRoute.snapshot.paramMap.get('id');
+
     if (this.id) {
+      console.log("current id: ", this.id);
       this.userService.getUser(this.id).subscribe(user => {
+        console.log("got user: ", user);
         this.user = user;
       });
     } else {
@@ -29,9 +36,14 @@ export class UserDetailsPage implements OnInit {
     }
   }
 
+  ionViewWillEnter() {
+    console.log("User Details page (will enter)");
+
+  }
+
   addUser() {
     this.userService.addUser(this.user).then(() => {
-      this.router.navigateByUrl('/');
+      this.router.navigateByUrl('/users');
       this.showToast('User added');
     }, err => {
       this.showToast('There was a problem adding your user :(');
@@ -40,7 +52,7 @@ export class UserDetailsPage implements OnInit {
 
   deleteUser() {
     this.userService.deleteUser(this.user.id).then(() => {
-      this.router.navigateByUrl('/');
+      this.router.navigateByUrl('/users');
       this.showToast('User deleted');
     }, err => {
       this.showToast('There was a problem deleting your user :(');

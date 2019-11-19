@@ -54,7 +54,7 @@ export class UserService {
   }
 
   updateUser(user: User): Promise<void> {
-    return this.userCollection.doc(user.id).update({ name: user.name, notes: user.bio });
+    return this.userCollection.doc(user.id).update({ name: user.name, bio: user.bio });
   }
 
   deleteUser(id: string): Promise<void> {
