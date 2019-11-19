@@ -16,7 +16,7 @@
   </ion-fab>
 
   <ion-list>
-    <ion-item button [routerLink]="['/user', user.id]" *ngFor="let user of (users | async)">
+    <ion-item button [routerLink]="['/user', user.id]" *ngFor="let user of (users | async)" lines="none">
       {{ user.name }}
     </ion-item>
   </ion-list>

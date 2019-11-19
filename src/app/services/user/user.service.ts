@@ -5,13 +5,13 @@ import { Observable } from 'rxjs';
 
 export interface User {
   id?: string,
-  name: string,
-  bio: string,
-  company: string,
-  email: string,
-  role: string,
-  contacts: any,
-  cards: any
+  name?: string,
+  bio?: string,
+  company?: string,
+  email?: string,
+  role?: string,
+  contacts?: any,
+  cards?: any
 }
 
 @Injectable({
@@ -21,8 +21,9 @@ export class UserService {
   private users: Observable<User[]>;
   private userCollection: AngularFirestoreCollection<User>;
 
-  constructor(private af: AngularFirestore) {
-    this.userCollection = this.af.collection<User>('static/users');
+  constructor(private afs: AngularFirestore) {
+    this.userCollection = this.afs.collection<User>('staticusers');
+    console.log(this.afs);
     this.users = this.userCollection.snapshotChanges().pipe(
       map(actions => {
         return actions.map(a => {
