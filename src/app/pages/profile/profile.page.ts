@@ -3,6 +3,7 @@ import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { DataService } from './../../services/data/data.service';
+import { UserService } from './../../services/user/user.service';
 
 @Component({
   selector: 'app-profile',
@@ -14,9 +15,8 @@ export class ProfilePage implements OnInit {
   keys;
   id;
 
-  constructor(private dataService: DataService, private route: ActivatedRoute, private router: Router) {
+  constructor(private dataService: DataService, private userService: UserService, private route: ActivatedRoute, private router: Router) {
     console.log("Profile page started (constructor)");
-
   }
 
   goToEditPage() {
