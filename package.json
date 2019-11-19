@@ -13,6 +13,7 @@
   },
   "private": true,
   "dependencies": {
+    "@angular/common": "^8.2.14",
     "@angular/core": "^8.2.14",
     "@angular/fire": "^5.2.3",
     "@angular/forms": "^7.2.2",
@@ -43,7 +44,7 @@
     "@angular-devkit/build-angular": "^0.803.19",
     "@angular-devkit/core": "~7.3.8",
     "@angular-devkit/schematics": "~7.3.8",
-    "@angular/common": "^8.2.14",
+    "@angular/cli": "^8.3.19",
     "@angular/compiler": "^8.2.14",
     "@angular/compiler-cli": "^8.2.14",
     "@angular/language-service": "~7.2.2",
