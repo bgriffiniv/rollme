@@ -33,9 +33,11 @@ const routes: Routes = [
   { path: 'license', loadChildren: './pages/license/license.module#LicensePageModule' },
   { path: 'settings', loadChildren: './pages/settings/settings.module#SettingsPageModule' },
   { path: 'feedback', loadChildren: './pages/feedback/feedback.module#FeedbackPageModule' },
+  { path: 'users', loadChildren: './pages/user-list/user-list.module#UserListPageModule' },
+  { path: 'user', loadChildren: './pages/user-details/user-details.module#UserDetailsPageModule' },
+  { path: 'user/:id', loadChildren: './pages/user-details/user-details.module#UserDetailsPageModule' },
   { path: 'invite', loadChildren: './pages/invite/invite.module#InvitePageModule' },
   { path: 'password', loadChildren: './pages/password/password.module#PasswordPageModule' }
-
 ];
 
 @NgModule({
