@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
+
 
 @Component({
   selector: 'app-home',
@@ -7,7 +9,7 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
-  constructor() {
+  constructor(private route: ActivatedRoute, private router: Router) {
     console.log("Home page started (constructor)");
   }
 

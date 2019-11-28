@@ -1,13 +1,30 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
+    <ion-buttons slot="primary">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>
-      Home
+
     </ion-title>
+    <ion-searchbar></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content padding>
+  <ion-tabs>
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button tab="rolodex">
+        <ion-icon name="filing"></ion-icon>
+        <ion-label>Rolodex</ion-label>
+      </ion-tab-button>
+      <ion-tab-button tab="exchange">
+        <ion-icon name="swap"></ion-icon>
+        <ion-label>Roll</ion-label>
+      </ion-tab-button>
+      <ion-tab-button tab="profile">
+        <ion-icon name="contact"></ion-icon>
+        <ion-label>Cards</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
 </ion-content>
