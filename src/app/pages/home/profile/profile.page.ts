@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 
 @Component({
 selector: 'app-profile',
@@ -7,7 +8,11 @@ styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
 
-constructor() { }
+constructor(private router: Router) { }
+
+  goToEditPage() {
+    this.router.navigateByUrl('/edit');
+  }
 
   ngOnInit() {
   }
