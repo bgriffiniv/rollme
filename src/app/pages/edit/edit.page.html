@@ -3,11 +3,25 @@
     <ion-buttons slot="primary">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>Edit</ion-title>
+    <ion-title>Card Editor</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-card padding>
+    <ion-item>
+      <ion-avatar slot="start">
+        <img src="./assets/imgs/avatar.png">
+      </ion-avatar>
+      <ion-label>[Blank]</ion-label>
+    </ion-item>
+    <br>
+      <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+      <ion-label>
+        <h3>Contact info</h3>
+        <p>Let's connect</p>
+      </ion-label>
+  </ion-card>
 
   <form [formGroup]="dataForm">
 
@@ -21,11 +35,26 @@
 
       </ion-item>
     </ion-list>
-
-    <ion-button type="submit" [disabled]="!dataForm.valid" (click)="onSubmit()">
-      Save
-    </ion-button>
-
+    <div padding>
+      <ion-button [disabled]="!dataForm.valid" (click)="presentToastWithOptions()" shape="round" >
+        Save
+      </ion-button>
+    </div>
   </form>
-
 </ion-content>
+
+<script class="success">
+    const controller = document.querySelector('ion-toast-controller');
+    const button = document.querySelector('ion-button');
+    button.addEventListener('click', handleButtonClick);
+    function handleButtonClick() {
+      controller.create({
+        color: 'success',
+        duration: 2000,
+        message: '',
+        showCloseButton: true
+      }).then(toast => {
+        toast.present();
+      });
+    }
+  </script>

@@ -69,7 +69,7 @@ export class AppComponent {
     },
     {
       title: 'Roll Out',
-      url: '/',
+      url: '/login',
       icon: 'log-out'
     }
   ];

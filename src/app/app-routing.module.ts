@@ -4,21 +4,13 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
       path: '',
-      redirectTo: 'home',
+      redirectTo: 'login',
       pathMatch: 'full'
   },
   {
     path:'',
     loadChildren:'./pages/home/home.module#HomePageModule'
   },
-  //{
-    //path: 'edit',
-    //loadChildren: './pages/edit/edit.module#EditPageModule'
-  //},
-  //{
-    //path: 'contact',
-    //loadChildren: './pages/contact/contact.module#ContactPageModule'
-  //},
 
   { path: 'link', loadChildren: './pages/link/link.module#LinkPageModule' },
   { path: 'faq', loadChildren: './pages/faq/faq.module#FaqPageModule' },
@@ -28,8 +20,10 @@ const routes: Routes = [
   { path: 'feedback', loadChildren: './pages/feedback/feedback.module#FeedbackPageModule' },
   { path: 'invite', loadChildren: './pages/invite/invite.module#InvitePageModule' },
   { path: 'password', loadChildren: './pages/password/password.module#PasswordPageModule' },
-  { path: 'exchange', loadChildren: './pages/home/exchange/exchange.module#ExchangePageModule' }
-
+  { path: 'exchange', loadChildren: './pages/home/exchange/exchange.module#ExchangePageModule' },
+  { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
+  { path: 'edit', loadChildren: './pages/edit/edit.module#EditPageModule'},
+  { path: 'profile', loadChildren: './pages/home/profile/profile.module#ProfilePageModule'},
 ];
 
 @NgModule({
