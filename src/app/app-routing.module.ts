@@ -24,6 +24,7 @@ const routes: Routes = [
   { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
   { path: 'edit', loadChildren: './pages/edit/edit.module#EditPageModule'},
   { path: 'profile', loadChildren: './pages/home/profile/profile.module#ProfilePageModule'},
+  { path: 'contact', loadChildren: './pages/contact/contact.module#ContactPageModule'},
 ];
 
 @NgModule({

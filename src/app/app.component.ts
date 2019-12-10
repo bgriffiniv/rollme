@@ -22,16 +22,6 @@ export class AppComponent {
       url: '/home',
       icon: 'home'
       },
-    //{
-      //title: 'Profile',
-      //url: '/home/profile',
-      //icon: 'person'
-    //},
-    //{
-      //title: 'Rolodex',
-      //url: '/home/rolodex',
-      //icon: 'aperture'
-    //},
     {
       title: 'About',
       url: '/about',
