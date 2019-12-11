@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument, DocumentReference } from '@angular/fire/firestore';
+//import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument, DocumentReference } from '@angular/fire/firestore';
 import { map, take } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
@@ -18,10 +18,10 @@ cards?: any
   providedIn: 'root'
 })
 export class UserService {
-  private users: Observable<User[]>;
-  private userCollection: AngularFirestoreCollection<User>;
+  //private users: Observable<User[]>;
+  //private userCollection: AngularFirestoreCollection<User>;
 
-  user:string;
+  //user:string;
 
   constructor() { }
 
