@@ -20,7 +20,7 @@ parent;
       this.parent = this.router.getCurrentNavigation().extras.state.parent;
     }
 
-    this.id = this.userService.getUser();
+    this.id = this.dataService.getUserId();
     this.userDataList = this.dataService.listUsers();
 
   }
