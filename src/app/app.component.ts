@@ -16,11 +16,6 @@ export class AppComponent {
   showSplash = true;
 
   public appPages = [
-      {
-      title: 'Home',
-      url: '/home',
-      icon: 'home'
-      },
     {
       title: 'About',
       url: '/about',
