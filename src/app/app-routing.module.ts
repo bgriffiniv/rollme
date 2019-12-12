@@ -8,25 +8,18 @@ const routes: Routes = [
       pathMatch: 'full'
   },
   {
-    path: 'home',
-    loadChildren: './pages/home/home.module#HomePageModule'
+    path:'',
+    loadChildren:'./pages/home/home.module#HomePageModule'
   },
-  {
-    path: 'profile',
-    loadChildren: './pages/profile/profile.module#ProfilePageModule'
-  },
-  {
-    path: 'edit',
-    loadChildren: './pages/edit/edit.module#EditPageModule'
-  },
-  {
-    path: 'rolodex',
-    loadChildren: './pages/rolodex/rolodex.module#RolodexPageModule'
-  },
-  {
-    path: 'contact',
-    loadChildren: './pages/contact/contact.module#ContactPageModule'
-  },
+  //{
+    //path: 'edit',
+    //loadChildren: './pages/edit/edit.module#EditPageModule'
+  //},
+  //{
+    //path: 'contact',
+    //loadChildren: './pages/contact/contact.module#ContactPageModule'
+  //},
+
   { path: 'link', loadChildren: './pages/link/link.module#LinkPageModule' },
   { path: 'faq', loadChildren: './pages/faq/faq.module#FaqPageModule' },
   { path: 'about', loadChildren: './pages/about/about.module#AboutPageModule' },
@@ -37,7 +30,13 @@ const routes: Routes = [
   { path: 'user', loadChildren: './pages/user-details/user-details.module#UserDetailsPageModule' },
   { path: 'user/:id', loadChildren: './pages/user-details/user-details.module#UserDetailsPageModule' },
   { path: 'invite', loadChildren: './pages/invite/invite.module#InvitePageModule' },
+<<<<<<< HEAD
+  { path: 'password', loadChildren: './pages/password/password.module#PasswordPageModule' },
+  { path: 'exchange', loadChildren: './pages/home/exchange/exchange.module#ExchangePageModule' }
+
+=======
   { path: 'password', loadChildren: './pages/password/password.module#PasswordPageModule' }
+>>>>>>> dev
 ];
 
 @NgModule({

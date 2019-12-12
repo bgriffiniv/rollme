@@ -38,7 +38,7 @@ export class DataService {
           contacts: {}
       },
       gsupris: {
-          name: "Glenn Supris",
+          name: "Glenn Surpris",
           company: "Mitre",
           role: "Engineer",
           email: "",
