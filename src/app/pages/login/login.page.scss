@@ -1,0 +1,60 @@
+app-login {
+
+}
+
+$white-color: #fff;
+$height100: 100%;
+
+ion-grid {
+    width:100%;
+    height: $height100;
+    background: #dfdfdf;
+}
+
+ion-row {
+    height: $height100;
+}
+
+ion-col {
+    border: 1px solid #488aff;
+    background: $white-color;
+}
+
+ion-button {
+    font-weight: 300;
+}
+
+@media (min-width: 240px) and (max-width: 768px) {
+    ion-grid {
+        background: $white-color;
+    }
+    ion-col {
+        border: none;
+    }
+}
+
+.custom-text {
+    color: #7E1946;
+    text-align: center;
+    font-family: 'Nunito Sans', sans-serif;
+    font-weight: 500;
+    font-style: normal;
+}
+
+a.password {
+  color: #7E1946;
+  text-decoration: none;
+}
+
+a.password:hover {
+  color: #7E1946;
+}
+
+a.signup {
+  color: #fff;
+  text-decoration: none;
+}
+
+a.signup:hover {
+  color: #fff;
+}

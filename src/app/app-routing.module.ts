@@ -4,39 +4,33 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
       path: '',
-      redirectTo: 'home',
+      redirectTo: 'login',
       pathMatch: 'full'
   },
   {
     path:'',
     loadChildren:'./pages/home/home.module#HomePageModule'
   },
-  //{
-    //path: 'edit',
-    //loadChildren: './pages/edit/edit.module#EditPageModule'
-  //},
-  //{
-    //path: 'contact',
-    //loadChildren: './pages/contact/contact.module#ContactPageModule'
-  //},
-
-  { path: 'link', loadChildren: './pages/link/link.module#LinkPageModule' },
-  { path: 'faq', loadChildren: './pages/faq/faq.module#FaqPageModule' },
   { path: 'about', loadChildren: './pages/about/about.module#AboutPageModule' },
+  { path: 'faq', loadChildren: './pages/faq/faq.module#FaqPageModule' },
   { path: 'license', loadChildren: './pages/license/license.module#LicensePageModule' },
   { path: 'settings', loadChildren: './pages/settings/settings.module#SettingsPageModule' },
   { path: 'feedback', loadChildren: './pages/feedback/feedback.module#FeedbackPageModule' },
-  { path: 'users', loadChildren: './pages/user-list/user-list.module#UserListPageModule' },
+  { path: 'invite', loadChildren: './pages/invite/invite.module#InvitePageModule' },
+  { path: 'password', loadChildren: './pages/password/password.module#PasswordPageModule' },
+  { path: 'login', loadChildren: './pages/login/login.module#LoginPageModule' },
+
+  { path: 'rolodex', loadChildren: './pages/home/rolodex/rolodex.module#RolodexPageModule' },
+  { path: 'exchange', loadChildren: './pages/home/exchange/exchange.module#ExchangePageModule' },
+  { path: 'profile', loadChildren: './pages/home/profile/profile.module#ProfilePageModule' },
+  { path: 'edit', loadChildren: './pages/edit/edit.module#EditPageModule'},
+
+  { path: 'users', loadChildren: './pages/user-list/user-list.module#UserListPageModule'},
   { path: 'user', loadChildren: './pages/user-details/user-details.module#UserDetailsPageModule' },
   { path: 'user/:id', loadChildren: './pages/user-details/user-details.module#UserDetailsPageModule' },
-  { path: 'invite', loadChildren: './pages/invite/invite.module#InvitePageModule' },
-<<<<<<< HEAD
-  { path: 'password', loadChildren: './pages/password/password.module#PasswordPageModule' },
-  { path: 'exchange', loadChildren: './pages/home/exchange/exchange.module#ExchangePageModule' }
 
-=======
-  { path: 'password', loadChildren: './pages/password/password.module#PasswordPageModule' }
->>>>>>> dev
+  { path: 'link', loadChildren: './pages/link/link.module#LinkPageModule' },
+  { path: 'contact', loadChildren: './pages/contact/contact.module#ContactPageModule' },
 ];
 
 @NgModule({

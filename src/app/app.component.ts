@@ -16,21 +16,6 @@ export class AppComponent {
   showSplash = true;
 
   public appPages = [
-      {
-      title: 'Home',
-      url: '/home',
-      icon: 'home'
-      },
-    //{
-      //title: 'Profile',
-      //url: '/home/profile',
-      //icon: 'person'
-    //},
-    //{
-      //title: 'Rolodex',
-      //url: '/home/rolodex',
-      //icon: 'aperture'
-    //},
     {
       title: 'About',
       url: '/about',
@@ -68,7 +53,7 @@ export class AppComponent {
     },
     {
       title: 'Roll Out',
-      url: '/',
+      url: '/login',
       icon: 'log-out'
     }
     ,{

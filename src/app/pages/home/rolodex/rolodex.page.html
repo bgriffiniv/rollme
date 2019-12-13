@@ -1,12 +1,5 @@
  <ion-toolbar>
-    <ion-buttons slot="end">
-      <ion-button (click)="addContact()">
-        <ion-icon name="person-add"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-    <!--<ion-title>
-      Rolodex
-    </ion-title>-->
+   <ion-searchbar></ion-searchbar>
   </ion-toolbar>
 
 <ion-content>
@@ -33,7 +26,8 @@
 
   </ion-card>
 
-  <ion-card>
+
+  <ion-card href="/contact">
   <ion-card-header>
     <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
     <ion-card-title>Card Title</ion-card-title>
@@ -51,16 +45,7 @@
     </ion-card-header>
 
     <ion-card-content>
-    </ion-card-content>
-
-  </ion-card>
-
-
-
-  <ion-list>
-    <ion-item *ngFor="let contactData of contactDataList" lines="none">
-      {{contactData.name}}
-      <ion-buttons slot="end">
+      <ion-buttons slot="start">
         <ion-button (click)="goToContactPage(contactData.id)">
           <ion-icon name="eye"></ion-icon>
         </ion-button>
@@ -68,6 +53,17 @@
           <ion-icon name="trash"></ion-icon>
         </ion-button>
       </ion-buttons>
+
+    </ion-card-content>
+  </ion-card>
+
+
+  <ion-list>
+    <ion-item *ngFor="let contactData of contactDataList" lines="none">
+      {{contactData.name}}
     </ion-item>
   </ion-list>
+
 </ion-content>
+
+
