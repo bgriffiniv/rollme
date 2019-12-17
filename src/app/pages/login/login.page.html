@@ -17,7 +17,7 @@
         </ion-item>
         <br>
         <ion-button expand="block" (click)="goToHomePage()" shape="round">Login</ion-button>
-        <a class="password" href="">Forgot password?</a>
+        <a routerLink="/password" routerLinkActive="active" class="password" >Forgot password?</a>
       </div>
 
 
@@ -27,7 +27,9 @@
 
 <ion-footer>
   <ion-toolbar class="footer">
-    <a class="signup" href="/signup">Don't have an account? Sign up!</a>
+    <nav>
+      <a routerLink="/signup" routerLinkActive="active" class="signup" >Don't have an account? Sign up!</a>
+    </nav>
   </ion-toolbar>
 </ion-footer>
 

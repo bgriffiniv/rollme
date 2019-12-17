@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -7,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SignupPage implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
+
+    goToHomePage() {
+      this.router.navigateByUrl('/home');
+    }
 
   ngOnInit() {
   }
