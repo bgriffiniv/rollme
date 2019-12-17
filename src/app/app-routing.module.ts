@@ -33,6 +33,8 @@ const routes: Routes = [
 
   { path: 'link', loadChildren: './pages/link/link.module#LinkPageModule' },
   { path: 'contact', loadChildren: './pages/contact/contact.module#ContactPageModule' },
+  { path: 'create-account', loadChildren: './pages/create-account/create-account.module#CreateAccountPageModule' },
+
 
 ];
 

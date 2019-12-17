@@ -10,8 +10,8 @@ export class SignupPage implements OnInit {
 
   constructor(private router: Router) { }
 
-    goToHomePage() {
-      this.router.navigateByUrl('/home');
+    createAccount() {
+      this.router.navigateByUrl('/create-account');
     }
 
   ngOnInit() {
