@@ -1,35 +1,46 @@
 <ion-toolbar class="header"></ion-toolbar>
 
-<ion-grid>
-   <ion-row justify-content-center>
-    <ion-col align-self-center size-md="6" size-lg="5" size-xs="12">
-      <div>
-        <ion-img src="./assets/imgs/login.png"></ion-img>
-      </div>
-      <div padding class="span">
+<ion-content>
+  <form [formGroup]="signInForm" (ngSubmit)="submitForm()" novalidate>
 
-        <ion-item>
-          <ion-input type="text" placeholder="Phone, email, or username" class="custom-text"></ion-input>
-        </ion-item>
+    <div padding class="span">
+      <ion-img src="./assets/imgs/loginlogo.jpg"></ion-img>
+      <br>
+      <ion-item class="custom-text">
+        <ion-label position="floating" class="custom-text">Mobile or email</ion-label>
+        <ion-input formControlName="userLogin" type="text" color="primary" required></ion-input>
+      </ion-item>
+      <!-- Error messages -->
+      <span class="error ion-padding" *ngIf="isSubmitted && errorControl.userLogin.errors?.required">
+        Mobile/email is required.
+      </span>
+      <span class="error ion-padding" *ngIf="isSubmitted && errorControl.userLogin.errors?.minlength">
+        Mobile/email should be min 2 chars long.
+      </span>
 
-        <ion-item>
-          <ion-input type="password" placeholder="Password" class="custom-text"></ion-input>
-        </ion-item>
-        <br>
-        <ion-button expand="block" (click)="goToHomePage()" shape="round">Login</ion-button>
-        <a routerLink="/password" routerLinkActive="active" class="password" >Forgot password?</a>
-      </div>
+      <ion-item class="custom-text">
+        <ion-label position="floating" class="custom-text">Password</ion-label>
+        <ion-input formControlName="password" type="password" color="primary"></ion-input>
+      </ion-item>
+      <!-- Error messages -->
+      <span class="error ion-padding" *ngIf="isSubmitted && errorControl.password.errors?.required">
+        Password is required.
+      </span>
+      <span class="error ion-padding" *ngIf="isSubmitted && errorControl.password.errors?.pattern">
+        Password must be min 5 chars long and contain letters (both uppercase and lowercase) and numbers.
+      </span>
+      <br>
+      <ion-button expand="block" (click)="goToHomePage()" shape="round" class="roll-btn">Sign in</ion-button>
+      <a routerLink="/password" routerLinkActive="active" class="password" >Forgot password?</a>
+    </div>
+  </form>
+</ion-content>
 
-
-    </ion-col>
-  </ion-row>
-</ion-grid>
 
 <ion-footer>
   <ion-toolbar class="footer">
-    <nav>
-      <a routerLink="/signup" routerLinkActive="active" class="signup" >Don't have an account? Sign up!</a>
-    </nav>
+    <a class="footer-text">Don't have an account?</a>
+    <a routerLink="/signup" routerLinkActive="active" class="signup" > Sign up</a>
   </ion-toolbar>
 </ion-footer>
 

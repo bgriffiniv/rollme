@@ -12,23 +12,40 @@
 
 .span {
   font-family: 'Nunito Sans', sans-serif;
-  font-weight: 500;
+  font-weight: 400;
   font-style: normal;
   text-align: center;
 }
 
-.footertext {
-  --color: white;
-}
-
-.custom-text {
-    color: #7E1946;
+.header {
+    --background: #D54747;
+    --color: #fff;
+    text-align: center;
     font-family: 'Nunito Sans', sans-serif;
     font-weight: 500;
     font-style: normal;
 }
 
-.applogo {
-  width: 40%;
-  height: 35%;
+
+.footer{
+  --background: #D54747;
+  text-align: center;
 }
+
+.footer-text {
+  color: white;
+  text-align: center;
+  font-family: 'Nunito Sans', sans-serif;
+  font-weight: 300;
+  font-style: normal;
+ }
+
+.custom-text {
+    font-family: 'Nunito Sans', sans-serif;
+    font-weight: 200;
+    font-style: normal;
+    --color: #707070;
+
+}
+
+
