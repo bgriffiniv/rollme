@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar class="header">
+    <ion-img src="./assets/imgs/floatinglogowhite.svg" class="applogo"></ion-img>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <ion-text color="success" class="welcome-text">
+    <h2>Hello,
+      <br>
+      {{ firstName }}!
+    </h2>
+
+  </ion-text>
+
+
+  <ion-row>
+    <ion-col>
+      <ion-button type="submit" expand="block" shape="round" padding (click)="goToRolodexPage()">Let's get rollin'</ion-button>
+    </ion-col>
+  </ion-row>
+</ion-content>
+
+
+<ion-footer>
+  <ion-toolbar class="footer">
+  </ion-toolbar>
+</ion-footer>

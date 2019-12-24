@@ -12,7 +12,6 @@ import { CreateAccountPage } from './create-account.page';
   imports: [
     CommonModule,
     FormsModule,
-    FormsModule,
     ReactiveFormsModule,
     IonicModule,
     CreateAccountPageRoutingModule

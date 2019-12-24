@@ -36,25 +36,11 @@
       </ion-item>
     </ion-list>
     <div padding>
-      <ion-button [disabled]="!dataForm.valid" (click)="presentToastWithOptions()" shape="round" >
+      <ion-button [disabled]="!dataForm.valid" (click)="saveChanges()" shape="round" >
         Save
       </ion-button>
     </div>
   </form>
 </ion-content>
 
-<script class="success">
-    const controller = document.querySelector('ion-toast-controller');
-    const button = document.querySelector('ion-button');
-    button.addEventListener('click', handleButtonClick);
-    function handleButtonClick() {
-      controller.create({
-        color: 'success',
-        duration: 2000,
-        message: '',
-        showCloseButton: true
-      }).then(toast => {
-        toast.present();
-      });
-    }
-</script>
+
