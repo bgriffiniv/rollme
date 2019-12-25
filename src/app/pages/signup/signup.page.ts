@@ -15,9 +15,10 @@ export class SignupPage implements OnInit {
   segment = 0;
   signupMethod = 0;
 
-  constructor(private router: Router, public authService: AuthService) { }
+  constructor(private router: Router, public authService: AuthService, private activatedRoute: ActivatedRoute) { }
 
-  createAccount() {
+  submitForm() {
+
     this.router.navigateByUrl('/create-account');
   }
 

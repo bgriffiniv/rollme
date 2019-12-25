@@ -4,7 +4,6 @@
       <ion-img src="./assets/imgs/floatinglogowhite.svg" class="applogo" padding></ion-img>
     </div>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/signup"></ion-back-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -55,7 +54,7 @@
           <ion-slide></ion-slide>
         </ion-slides>
 
-        <ion-button (click)="createAccount()" expand="block" shape="round" color="primary" class="nxt-btn" padding>
+        <ion-button (click)="submitForm()" expand="block" shape="round" color="primary" class="nxt-btn" padding>
           Next
         </ion-button>
 
@@ -67,5 +66,7 @@
 
 <ion-footer>
   <ion-toolbar class="footer">
+    <a class="footer-text">Already a user?</a>
+    <a routerLink="/login" routerLinkActive="active" class="signup" > Sign in</a>
   </ion-toolbar>
 </ion-footer>

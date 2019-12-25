@@ -23,6 +23,7 @@ export class CreateAccountPage implements OnInit {
       firstName: new FormControl(),
       lastName: new FormControl(),
       password: new FormControl(),
+      confirmPassword: new FormControl(),
     });
   }
 
@@ -35,11 +36,16 @@ export class CreateAccountPage implements OnInit {
       signupMethod: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
       firstName: ['', [Validators.required, Validators.minLength(2)]],
       lastName: ['', [Validators.required, Validators.minLength(2)]],
-      password: ['', [Validators.required, Validators.minLength(5), Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')]]
+      password: ['', Validators.compose([
+        Validators.minLength(5),
+        Validators.required,
+        Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')
+      ])],
+      confirmPassword: ['', Validators.required]
     });
   }
 
-  submitForm() {
+  createAccount() {
     this.isSubmitted = true;
     if (!this.signupForm.valid) {
       console.log('Please provide all the required values!')

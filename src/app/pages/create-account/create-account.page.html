@@ -4,7 +4,7 @@
 </ion-header>
 
 <ion-content>
-  <form [formGroup]="signupForm" (ngSubmit)="submitForm()" novalidate>
+  <form [formGroup]="signupForm" (ngSubmit)="createAccount()" novalidate>
 
     <ion-item lines="full">
       <ion-label position="floating">Mobile/Email</ion-label>
@@ -12,7 +12,6 @@
     </ion-item>
 
     <a routerLink="/signup" routerLinkActive="active" position="relative" class="try-again" padding>Not Correct? Try again</a>
-
 
     <ion-item lines="full">
     <ion-label position="floating">First name</ion-label>
@@ -50,12 +49,21 @@
       </span>
     <span class="error ion-padding" *ngIf="isSubmitted && errorControl.password.errors?.pattern">
         Password must be min 5 chars long and contain letters (both uppercase and lowercase) and numbers.
-      </span>
+    </span>
+
+    <ion-item>
+      <ion-label position="floating" class="custom-text">Confirm Password</ion-label>
+      <ion-input formControlName="confirmPassword" type="password" color="primary"></ion-input>
+    </ion-item>
+    <!-- Error messages -->
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.confirmPassword.errors?.required">
+        Passwords do not match.
+    </span>
 
 
     <ion-row>
       <ion-col>
-        <ion-button type="submit" color="success" expand="block" >Create Account</ion-button>
+        <ion-button type="submit" shape="round" expand="block" >Create Account</ion-button>
       </ion-col>
     </ion-row>
   </form>
