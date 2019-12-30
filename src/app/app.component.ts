@@ -6,6 +6,9 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { timer } from 'rxjs/observable/timer';
 
+import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
+import { AngularFireAuth } from '@angular/fire/auth';
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -67,6 +70,8 @@ export class AppComponent {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
+    private activatedRoute: ActivatedRoute, private router: Router,
+    private fAuth: AngularFireAuth
   ) {
     this.initializeApp();
   }
@@ -78,4 +83,10 @@ export class AppComponent {
        timer(3000).subscribe(() => {  this.showSplash = false;});
     });
   }
+
+  logout() {
+    this.fAuth.auth.signOut();
+    this.router.navigateByUrl('/login');
+  }
+
 }

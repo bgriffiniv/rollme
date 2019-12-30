@@ -8,7 +8,6 @@ const routes: Routes = [
       pathMatch: 'full'
   },
 
-
   // home page with tabs
   { path:'home', loadChildren:'./pages/home/home.module#HomePageModule' },
 
@@ -37,6 +36,7 @@ const routes: Routes = [
   { path: 'users', loadChildren: './pages/user-list/user-list.module#UserListPageModule'},
   { path: 'user', loadChildren: './pages/user-details/user-details.module#UserDetailsPageModule' },
   { path: 'user/:id', loadChildren: './pages/user-details/user-details.module#UserDetailsPageModule' },
+  { path: 'register', loadChildren: './pages/register/register.module#RegisterPageModule'},
 ];
 
 @NgModule({
