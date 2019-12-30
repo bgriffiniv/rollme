@@ -55,15 +55,10 @@ export class AppComponent {
       icon: 'clipboard'
     },
     {
-      title: 'Roll Out',
-      url: '/login',
-      icon: 'log-out'
-    }
-    ,{
       title: 'User List',
       url: '/users',
       icon: 'aperture'
-    }
+    },
   ];
 
   constructor(

@@ -17,9 +17,11 @@ export class RegisterPage implements OnInit {
   public user:User = new User();
 
   constructor(private activatedRoute: ActivatedRoute, private router: Router, private fAuth: AngularFireAuth){
+    console.log("RegisterPage constructor");
   }
 
   async register() {
+    console.log("register()");
     try {
       var r = await this.fAuth.auth.createUserWithEmailAndPassword(
         this.user.email,
@@ -36,6 +38,7 @@ export class RegisterPage implements OnInit {
   }
 
   ngOnInit() {
+    console.log("RegisterPage init");
   }
 
 }

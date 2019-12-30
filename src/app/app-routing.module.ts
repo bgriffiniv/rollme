@@ -7,6 +7,7 @@ const routes: Routes = [
       redirectTo: 'login',
       pathMatch: 'full'
   },
+  { path: 'login', loadChildren: './pages/login/login.module#LoginPageModule' },
 
   // home page with tabs
   { path:'home', loadChildren:'./pages/home/home.module#HomePageModule' },
@@ -30,7 +31,6 @@ const routes: Routes = [
   { path: 'feedback', loadChildren: './pages/feedback/feedback.module#FeedbackPageModule' },
   { path: 'invite', loadChildren: './pages/invite/invite.module#InvitePageModule' },
   { path: 'password', loadChildren: './pages/password/password.module#PasswordPageModule' },
-  { path: 'login', loadChildren: './pages/login/login.module#LoginPageModule' },
 
   // default users page (deprecated)
   { path: 'users', loadChildren: './pages/user-list/user-list.module#UserListPageModule'},

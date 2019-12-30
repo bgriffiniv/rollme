@@ -17,30 +17,32 @@ export class LoginPage implements OnInit {
   public user:User = new User();
 
   constructor(private route: ActivatedRoute, private router: Router, public fAuth: AngularFireAuth){
+    console.log("LoginPage constructor");
   }
 
   goToHomePage() {
     this.router.navigateByUrl('/home');
   }
 
-    async login() {
-      try {
-        var r = await this.fAuth.auth.signInWithEmailAndPassword(
-          this.user.email,
-          this.user.password
-        );
-        if (r) {
-          console.log("Successfully logged in!");
-          this.router.navigateByUrl('/home');
-        }
-
-      } catch (err) {
-        console.error(err);
+  async login() {
+    console.log("login()", this.user);
+    try {
+      var r = await this.fAuth.auth.signInWithEmailAndPassword(
+        this.user.email,
+        this.user.password
+      );
+      if (r) {
+        console.log("Successfully logged in!");
+        this.router.navigateByUrl('/home');
       }
-    }
 
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
   ngOnInit() {
+    console.log("LoginPage init");
   }
 
 }
