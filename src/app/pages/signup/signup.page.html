@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar class="header">
-    <div >
-      <ion-img src="./assets/imgs/floatinglogowhite.svg" class="applogo" padding></ion-img>
+    <div>
+      <ion-img src="./assets/imgs/floatinglogowhite.svg" class="applogo"></ion-img>
     </div>
     <ion-buttons slot="start">
     </ion-buttons>
@@ -12,17 +12,17 @@
   <ion-grid>
     <ion-row>
       <ion-col align-self-center>
-          <ion-button [routerLink]="" expand="block" color="primary" class="span">
+          <ion-button class="google-icon" fill="clear" (click)="googleAuthService.SigninWithGoogle()">
             <ion-img src="./assets/imgs/googlelogo.svg" class="google-logo"></ion-img>
-            Sign In with Google
+            <div class="google-btn-txt">Sign In with Google</div>
           </ion-button>
-          <ion-button expand="block" color="primary" (click)="authService.fbAuth()" class="span">
+          <ion-button class="fb-icon" (click)="authService.fbAuth()">
             <ion-img src="./assets/imgs/facebooklogo.svg" class="fb-logo"></ion-img>
-            Sign In with Facebook
+            <div class="fb-btn-txt">Sign In with Facebook</div>
           </ion-button>
-          <ion-button expand="block" color="primary" class="span">
+          <ion-button class="linkedin-icon" (click)="linkedInLogin()">
             <ion-img src="./assets/imgs/linkedinlogo.png" class="linkedin-logo"></ion-img>
-            Sign In with LinkedIn
+            <div class="linkedin-btn-txt">Sign In with LinkedIn</div>
           </ion-button>
         <span class="divider line one-line">or</span>
 
@@ -67,6 +67,6 @@
 <ion-footer>
   <ion-toolbar class="footer">
     <a class="footer-text">Already a user?</a>
-    <a routerLink="/login" routerLinkActive="active" class="signup" > Sign in</a>
+    <a routerLink="/login" routerLinkActive="active" class="signin" > Sign in</a>
   </ion-toolbar>
 </ion-footer>

@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { AuthService } from './../../services/auth/auth.service';
-import { IonSlides } from  '@ionic/angular';
+import { GoogleAuthService } from './../../services/auth/google-auth.service';
+import { LinkedinAuthService } from './../../services/auth/linkedin-auth.service';
+import { IonSlides } from '@ionic/angular';
 
 
 @Component({
@@ -15,7 +17,7 @@ export class SignupPage implements OnInit {
   segment = 0;
   signupMethod = 0;
 
-  constructor(private router: Router, public authService: AuthService, private activatedRoute: ActivatedRoute) { }
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, private authService: AuthService, private googleAuthService: GoogleAuthService, private linkedinAuthService: LinkedinAuthService) { }
 
   submitForm() {
 
