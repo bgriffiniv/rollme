@@ -10,12 +10,13 @@
         <ion-label position="stacked">Mobile or email</ion-label>
         <ion-input formControlName="userLogin" type="text" color="primary" style="margin-left:11px" required></ion-input>
       </ion-item>
+
       <!-- Error messages -->
       <span class="error ion-padding" *ngIf="isSubmitted && errorControl.userLogin.errors?.required">
-        Mobile/email is required.
+        <ion-icon name="alert" color="danger"></ion-icon>Mobile/email is required.
       </span>
       <span class="error ion-padding" *ngIf="isSubmitted && errorControl.userLogin.errors?.minlength">
-        Mobile/email should be min 2 chars long.
+        <ion-icon name="alert" color="danger"></ion-icon>Mobile/email should be min 2 chars long.
       </span>
 
       <ion-item class="custom-text">
@@ -24,10 +25,10 @@
       </ion-item>
       <!-- Error messages -->
       <span class="error ion-padding" *ngIf="isSubmitted && errorControl.password.errors?.required">
-        Password is required.
+        <ion-icon name="alert" color="danger"></ion-icon>Password is required.
       </span>
       <span class="error ion-padding" *ngIf="isSubmitted && errorControl.password.errors?.pattern">
-        Password must be min 5 chars long and contain letters (both uppercase and lowercase) and numbers.
+        <ion-icon name="alert" color="danger"></ion-icon>Password must be min 5 chars long and contain letters (both uppercase and lowercase) and numbers.
       </span>
       <br>
       <ion-button expand="block" (click)="goToHomePage()" shape="round" class="roll-btn">Sign in</ion-button>
@@ -40,7 +41,7 @@
 <ion-footer>
   <ion-toolbar class="footer">
     <a class="footer-text">Don't have an account?</a>
-    <a routerLink="/signup" routerLinkActive="active" class="signup" > Sign up</a>
+    <a routerLink="/signup" routerLinkActive="active" class="signup"> Sign up</a>
   </ion-toolbar>
 </ion-footer>
 
