@@ -17,10 +17,11 @@ export class SignupPage implements OnInit {
   segment = 0;
   signupMethod = 0;
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute, private authService: AuthService, private googleAuthService: GoogleAuthService, private linkedinAuthService: LinkedinAuthService) { }
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, private authService: AuthService, private googleAuthService: GoogleAuthService, private linkedinAuthService: LinkedinAuthService) {
+
+  }
 
   submitForm() {
-
     this.router.navigateByUrl('/create-account');
   }
 
@@ -32,6 +33,10 @@ export class SignupPage implements OnInit {
   async slideChanged(){
     this.segment = await this.slider.getActiveIndex();
     this.signupMethod = await this.slider.getActiveIndex();
+  }
+
+  showRedirectURL() {
+    this.linkedinAuthService.getRedirectURL()
   }
 
   ngOnInit() {

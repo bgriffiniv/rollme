@@ -5,7 +5,7 @@ import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { HTTP } from "@ionic-native/http/ngx";
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -23,6 +23,7 @@ import { AngularFireAuth } from "@angular/fire/auth";
   entryComponents: [],
   imports: [
     BrowserModule,
+    HttpClientModule,
     IonicModule.forRoot(),
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
@@ -31,7 +32,6 @@ import { AngularFireAuth } from "@angular/fire/auth";
   providers: [
     StatusBar,
     SplashScreen,
-    HTTP,
     AuthService,
     AngularFireAuth,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
