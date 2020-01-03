@@ -47,18 +47,11 @@ export class EditPage implements OnInit {
     this.router.navigateByUrl('/home/profile');
   }
 
-  async presentToast() {
-      const toast = await this.toastController.create({
-        message: 'SAVED!',
-        duration: 2000
-      });
-      toast.present();
-  }
-
-  async presentToastWithOptions() {
+  async saveChanges() {
       const toast = await this.toastController.create({
         header: '',
         message: '',
+        color: 'success',
         duration: 2000,
         position: 'top',
         buttons: [

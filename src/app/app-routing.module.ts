@@ -19,6 +19,8 @@ const routes: Routes = [
   { path: 'invite', loadChildren: './pages/invite/invite.module#InvitePageModule' },
   { path: 'password', loadChildren: './pages/password/password.module#PasswordPageModule' },
   { path: 'login', loadChildren: './pages/login/login.module#LoginPageModule' },
+  { path: 'signup', loadChildren: './pages/signup/signup.module#SignupPageModule' },
+
 
   { path: 'rolodex', loadChildren: './pages/home/rolodex/rolodex.module#RolodexPageModule' },
   { path: 'exchange', loadChildren: './pages/home/exchange/exchange.module#ExchangePageModule' },
@@ -31,6 +33,9 @@ const routes: Routes = [
 
   { path: 'link', loadChildren: './pages/link/link.module#LinkPageModule' },
   { path: 'contact', loadChildren: './pages/contact/contact.module#ContactPageModule' },
+  { path: 'create-account', loadChildren: './pages/create-account/create-account.module#CreateAccountPageModule' },
+  { path: 'successful-signup', loadChildren: './pages/successful-signup/successful-signup.module#SuccessfulSignupPageModule' },
+
 ];
 
 @NgModule({

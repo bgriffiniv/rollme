@@ -1,0 +1,72 @@
+<ion-header>
+  <ion-toolbar class="header">
+    <div >
+      <ion-img src="./assets/imgs/floatinglogowhite.svg" class="applogo" padding></ion-img>
+    </div>
+    <ion-buttons slot="start">
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="auth-form">
+  <ion-grid>
+    <ion-row>
+      <ion-col align-self-center>
+          <ion-button [routerLink]="" expand="block" color="primary" class="span">
+            <ion-img src="./assets/imgs/googlelogo.svg" class="google-logo"></ion-img>
+            Sign In with Google
+          </ion-button>
+          <ion-button expand="block" color="primary" (click)="authService.fbAuth()" class="span">
+            <ion-img src="./assets/imgs/facebooklogo.svg" class="fb-logo"></ion-img>
+            Sign In with Facebook
+          </ion-button>
+          <ion-button expand="block" color="primary" class="span">
+            <ion-img src="./assets/imgs/linkedinlogo.png" class="linkedin-logo"></ion-img>
+            Sign In with LinkedIn
+          </ion-button>
+        <span class="divider line one-line">or</span>
+
+        <div class="span">
+          <ion-segment [(ngModel)]="segment" (ionChange)="segmentChanged($event)">
+            <ion-segment-button value="0">
+              Mobile
+            </ion-segment-button>
+            <ion-segment-button value="1">
+              Email
+            </ion-segment-button>
+          </ion-segment>
+        </div>
+
+
+        <div [ngSwitch]="signupMethod" class="span">
+          <ion-item class="">
+          <form>
+            <ion-input *ngSwitchCase="'0'" type="text" inputmode="numeric" placeholder="Phone Number"></ion-input>
+          </form>
+          <form>
+            <ion-input *ngSwitchCase="'1'" type="text" inputmode="email" placeholder="Email Address"></ion-input>
+          </form>
+          </ion-item>
+        </div>
+
+        <ion-slides #inputmethods (ionSlideDidChange)="slideChanged()">
+          <ion-slide></ion-slide>
+          <ion-slide></ion-slide>
+        </ion-slides>
+
+        <ion-button (click)="submitForm()" expand="block" shape="round" color="primary" class="nxt-btn" padding>
+          Next
+        </ion-button>
+
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar class="footer">
+    <a class="footer-text">Already a user?</a>
+    <a routerLink="/login" routerLinkActive="active" class="signup" > Sign in</a>
+  </ion-toolbar>
+</ion-footer>

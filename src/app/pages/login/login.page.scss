@@ -33,12 +33,9 @@ ion-button {
     }
 }
 
-.custom-text {
-    color: #7E1946;
-    text-align: center;
-    font-family: 'Nunito Sans', sans-serif;
-    font-weight: 500;
-    font-style: normal;
+.roll-btn {
+  --background: #03087A;
+  --background-hover: #03087A;
 }
 
 a.password {
@@ -51,10 +48,13 @@ a.password:hover {
 }
 
 a.signup {
-  color: #fff;
+  color: #03087A;
   text-decoration: none;
+  font-family: 'Nunito Sans', sans-serif;
+  font-style: normal;
+  font-weight: 700;
 }
 
 a.signup:hover {
-  color: #fff;
+  color: #03087A;
 }
