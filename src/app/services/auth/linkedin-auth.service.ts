@@ -11,12 +11,15 @@ import { Observable } from 'rxjs';
 export class LinkedinAuthService {
 
   constructor(private httpClient: HttpClient, private afAuth: AngularFireAuth, private router: Router) {
-    // This sample code will make a request to LinkedIn's API to retrieve and print out some
-    // basic profile information for the user whose access token you provide.
+
+  }
+
+// This sample code will make a request to LinkedIn's API to retrieve and print out some
+// basic profile information for the user whose access token you provide.
 
     const https = require('https');
 
-    // Replace with access token for the r_liteprofile permission
+// Replace with access token for the r_liteprofile permission
     const accessToken = 'YOUR_ACCESS_TOKEN';
     const options = {
       host: 'api.linkedin.com',
@@ -42,11 +45,10 @@ export class LinkedinAuthService {
     });
     profileRequest.end();
 
-    redirectURL = 'https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=78mvuuw5w4j74y&redirect_uri=http://localhost:8100/home&state=arigatou&scope=r_emailaddress';
-  }
+  redirectURL = 'https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=78mvuuw5w4j74y&redirect_uri=http://localhost:8100/home&state=arigatou&scope=r_emailaddress';
 
   getRedirectURL() {
-    return this.http.get(this.redirectURL);
+    return this.httpClient.get(this.redirectURL);
   }
 
 }
