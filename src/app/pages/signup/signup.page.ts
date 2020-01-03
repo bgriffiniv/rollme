@@ -6,6 +6,7 @@ import { LinkedinAuthService } from './../../services/auth/linkedin-auth.service
 import { IonSlides } from '@ionic/angular';
 
 
+
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.page.html',
