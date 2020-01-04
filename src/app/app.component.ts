@@ -54,7 +54,7 @@ export class AppComponent {
     {
       title: 'Roll Out',
       url: '/login',
-      icon: 'log-out'
+      icon: 'log-out',
     }
     ,{
       title: 'User List',
