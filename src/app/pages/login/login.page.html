@@ -13,10 +13,10 @@
 
       <!-- Error messages -->
       <span class="error ion-padding" *ngIf="isSubmitted && errorControl.userLogin.errors?.required">
-        <ion-icon name="alert" color="danger"></ion-icon>Mobile/email is required.
+        <ion-icon name="alert" color="danger"></ion-icon>Please enter your mobile number or email address.
       </span>
-      <span class="error ion-padding" *ngIf="isSubmitted && errorControl.userLogin.errors?.minlength">
-        <ion-icon name="alert" color="danger"></ion-icon>Mobile/email should be min 2 chars long.
+      <span class="error ion-padding" *ngIf="isSubmitted && errorControl.userLogin.errors?.pattern || errorControl.userLogin.errors?.minLength">
+        <ion-icon name="alert" color="danger"></ion-icon>Please provide your complete mobile number of email address.
       </span>
 
       <ion-item class="custom-text">

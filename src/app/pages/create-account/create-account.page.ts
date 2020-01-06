@@ -4,7 +4,7 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 import { ToastController } from '@ionic/angular';
 
 import { AuthService } from 'src/app/services/auth/auth.service';
-import { PasswordValidator } from './password.validator';
+import { PasswordValidator } from '../../validators/password.validator';
 
 @Component({
   selector: 'app-create-account',
@@ -13,30 +13,41 @@ import { PasswordValidator } from './password.validator';
 })
 export class CreateAccountPage implements OnInit {
 
-  firstName: string = '';
+  firstName: '';
+  signupMethod: '';
 
+  mobile: '';
+  email: '';
+
+  signupForm: FormGroup;
   isSubmitted = false;
 
+
   constructor(private router: Router, private activatedRoute: ActivatedRoute, public formBuilder: FormBuilder, private toastCtrl: ToastController, private authService: AuthService) {
+    if (this.router.getCurrentNavigation().extras.state){
+          this.signupMethod = this.router.getCurrentNavigation().extras.state.data;
+          this.mobile = this.router.getCurrentNavigation().extras.state.mobile;
+          this.email = this.router.getCurrentNavigation().extras.state.email;
+    }
+
     this.signupForm = new FormGroup({
-      signupMethod: new FormControl('', Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$'),
-      firstName: new FormControl('', Validators.required, Validators.minLength(2)),
-      lastName: new FormControl('', Validators.required, Validators.minLength(2)),
-      password: new FormControl('', Validators.compose([
+      "firstName" : new FormControl('', [Validators.required, Validators.minLength(2)]),
+      "lastName" : new FormControl('', [Validators.required, Validators.minLength(2)]),
+      "password" : new FormControl('', Validators.compose([
         Validators.minLength(5),
         Validators.required,
-        Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$'
+        Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')
       ])),
-      confirmPassword: new FormControl('', Validators.required),
-    },(signupForm: FormGroup) => {
-	      return PasswordValidator.areEqual(signupForm);
+      "confirmPassword" : new FormControl('', Validators.required),
     });
   }
 
 
-
   get errorControl() {
     return this.signupForm.controls;
+    (signupForm: FormGroup) => {
+    	      return PasswordValidator.areEqual(signupForm);
+    }
   }
 
   ngOnInit() {

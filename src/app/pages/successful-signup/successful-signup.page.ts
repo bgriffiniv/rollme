@@ -12,7 +12,7 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 })
 export class SuccessfulSignupPage implements OnInit {
 
-  firstName: string = '';
+  firstName: '';
 
   constructor(private activatedRoute: ActivatedRoute, private router: Router, private authService: AuthService) {
     if (this.router.getCurrentNavigation().extras.state){

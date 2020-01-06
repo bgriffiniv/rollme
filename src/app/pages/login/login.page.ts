@@ -13,8 +13,17 @@ export class LoginPage implements OnInit {
 
   constructor(private router: Router, public formBuilder: FormBuilder) {
     this.signInForm = new FormGroup({
-      userLogin: new FormControl(),
-      password: new FormControl(),
+      "userLogin": new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.pattern('[0-9]+[0-9]+[0-9]+[0-9]+[0-9]+[0-9]+[0-9]+[0-9]+[0-9]+[0-9]{1,10}$'),
+        Validators.maxLength(10),
+        Validators.minLength(10)
+      ])),
+      "password": new FormControl('', Validators.compose([
+        Validators.minLength(5),
+        Validators.required,
+        Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')
+      ])),
     });
   }
 
@@ -30,10 +39,7 @@ export class LoginPage implements OnInit {
   }
 
   ngOnInit() {
-    this.signInForm = this.formBuilder.group({
-      userLogin: ['', [Validators.required, Validators.minLength(2)]],
-      password: ['', [Validators.required, Validators.minLength(5), Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')]],
-    })
+
   }
 
   get errorControl() {
