@@ -18,7 +18,6 @@
       <span class="error ion-padding" *ngIf="isSubmitted && errorControl.userLogin.errors?.pattern || errorControl.userLogin.errors?.minLength">
         <ion-icon name="alert" color="danger"></ion-icon>Please provide your complete mobile number of email address.
       </span>
-
       <ion-item class="custom-text">
         <ion-label position="stacked" class="custom-text">Password</ion-label>
         <ion-input formControlName="password" type="password" color="primary" style="margin-left:11px" required></ion-input>
@@ -36,7 +35,6 @@
     </div>
   </form>
 </ion-content>
-
 
 <ion-footer>
   <ion-toolbar class="footer">

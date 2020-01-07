@@ -41,7 +41,6 @@ export class CreateAccountPage implements OnInit {
      "confirmPassword" : ['', [Validators.required]],
   }, {validator: PasswordValidator});
 
-
   get errorControl() {
     return this.signupForm.controls;
   }

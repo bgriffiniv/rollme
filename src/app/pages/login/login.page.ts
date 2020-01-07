@@ -39,7 +39,6 @@ export class LoginPage implements OnInit {
   }
 
   ngOnInit() {
-
   }
 
   get errorControl() {
