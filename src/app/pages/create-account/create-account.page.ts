@@ -4,6 +4,7 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 import { ToastController } from '@ionic/angular';
 
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { PasswordValidator } from '../../validators/password.validator';
 
 @Component({
   selector: 'app-create-account',
@@ -12,37 +13,40 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 })
 export class CreateAccountPage implements OnInit {
 
-  firstName: string = '';
+  firstName: '';
+  signupMethod: '';
 
-  signupForm: FormGroup;
+  mobile: '';
+  email: '';
+
   isSubmitted = false;
 
+
   constructor(private router: Router, private activatedRoute: ActivatedRoute, public formBuilder: FormBuilder, private toastCtrl: ToastController, private authService: AuthService) {
-    this.signupForm = new FormGroup({
-      signupMethod: new FormControl(),
-      firstName: new FormControl(),
-      lastName: new FormControl(),
-      password: new FormControl(),
-      confirmPassword: new FormControl(),
-    });
+    if (this.router.getCurrentNavigation().extras.state){
+          this.signupMethod = this.router.getCurrentNavigation().extras.state.data;
+          this.mobile = this.router.getCurrentNavigation().extras.state.mobile;
+          this.email = this.router.getCurrentNavigation().extras.state.email;
+    }
   }
+
+  signupForm = this.formBuilder.group({
+     "firstName" : ['', [Validators.required, Validators.minLength(2)]],
+     "lastName" : ['', [Validators.required, Validators.minLength(2)]],
+     "password" : ['', Validators.compose([
+       Validators.minLength(5),
+       Validators.required,
+       Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')
+     ])],
+     "confirmPassword" : ['', [Validators.required]],
+  }, {validator: PasswordValidator});
 
   get errorControl() {
     return this.signupForm.controls;
   }
 
   ngOnInit() {
-    this.signupForm = this.formBuilder.group({
-      signupMethod: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
-      firstName: ['', [Validators.required, Validators.minLength(2)]],
-      lastName: ['', [Validators.required, Validators.minLength(2)]],
-      password: ['', Validators.compose([
-        Validators.minLength(5),
-        Validators.required,
-        Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')
-      ])],
-      confirmPassword: ['', Validators.required]
-    });
+
   }
 
   createAccount() {

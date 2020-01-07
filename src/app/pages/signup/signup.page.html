@@ -2,7 +2,6 @@
   <ion-toolbar class="header">
     <div>
       <ion-img src="./assets/imgs/floatinglogowhite.svg" class="applogo"></ion-img>
-
     </div>
     <ion-buttons slot="start">
     </ion-buttons>
@@ -29,10 +28,10 @@
 
         <div class="span">
           <ion-segment [(ngModel)]="segment" (ionChange)="segmentChanged($event)">
-            <ion-segment-button value="0">
+            <ion-segment-button value=0>
               Mobile
             </ion-segment-button>
-            <ion-segment-button value="1">
+            <ion-segment-button value=1>
               Email
             </ion-segment-button>
           </ion-segment>
@@ -41,21 +40,29 @@
 
         <div [ngSwitch]="signupMethod" class="span">
           <ion-item class="">
-          <form>
-            <ion-input *ngSwitchCase="'0'" type="text" inputmode="numeric" placeholder="Phone Number"></ion-input>
+          <form [formGroup]="registerForm">
+            <ion-input formControlName="mobile" [(ngModel)]="mobile" *ngSwitchCase="'Mobile'" type="tel" inputmode="numeric" placeholder="Phone Number"></ion-input>
           </form>
-          <form>
-            <ion-input *ngSwitchCase="'1'" type="text" inputmode="email" placeholder="Email Address"></ion-input>
+          <form [formGroup]="registerForm">
+            <ion-input formControlName="email" [(ngModel)]="email" *ngSwitchCase="'Email'" type="email" placeholder="Email Address"></ion-input>
           </form>
           </ion-item>
         </div>
-
+        <!-- Error messages -->
+        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.mobile.touched || errorControl.email.touched">
+          <ion-icon name="alert" color="danger"></ion-icon>Please enter a mobile number or email address.
+        </span>
+        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.mobile.errors?.minLength">
+          <ion-icon name="alert" color="danger"></ion-icon>Entries must be 10 digits to be valid.
+        </span>
+        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.email.errors?.pattern">
+            <ion-icon name="alert" color="danger"></ion-icon>The email address you entered is invalid.
+        </span>
         <ion-slides #inputmethods (ionSlideDidChange)="slideChanged()">
           <ion-slide></ion-slide>
           <ion-slide></ion-slide>
         </ion-slides>
-
-        <ion-button (click)="submitForm()" expand="block" shape="round" color="primary" class="nxt-btn" padding>
+        <ion-button (click)="submitForm()" expand="block" shape="round" color="primary" class="nxt-btn" [disabled]="(!mobile && !email) || (!email && !mobile)" padding>
           Next
         </ion-button>
 
@@ -69,6 +76,5 @@
   <ion-toolbar class="footer">
     <a class="footer-text">Already a user?</a>
     <a routerLink="/login" routerLinkActive="active" class="signin" > Sign in</a>
-
   </ion-toolbar>
 </ion-footer>
