@@ -27,7 +27,6 @@ export class SignupPage implements OnInit {
   constructor(private router: Router, private activatedRoute: ActivatedRoute, public formBuilder: FormBuilder, private authService: AuthService, private googleAuthService: GoogleAuthService, private linkedinAuthService: LinkedinAuthService) {
     this.registerForm = new FormGroup({
       "mobile": new FormControl('', Validators.compose([
-        Validators.required,
         Validators.pattern('[0-9]+[0-9]+[0-9]+[0-9]+[0-9]+[0-9]+[0-9]+[0-9]+[0-9]+[0-9]{1,10}$'),
         Validators.maxLength(10),
         Validators.minLength(10)

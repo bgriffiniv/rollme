@@ -53,20 +53,20 @@
 
     <ion-item lines="inset">
       <ion-label position="stacked">Confirm Password</ion-label>
-      <ion-input formControlName="confirmPassword" type="password"></ion-input>
+      <ion-input formControlName="confirmPassword" type="password" [class.is-invalid]="signupForm.errors?.misMatch"></ion-input>
     </ion-item>
     <!-- Error messages -->
     <span class="error ion-padding" *ngIf="isSubmitted && errorControl.confirmPassword.errors?.required">
         <ion-icon name="alert" color="danger"></ion-icon>Please confirm your password.
     </span>
-    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.confirmPassword.errors?.pattern">
+    <span class="error ion-padding" *ngIf="isSubmitted && signupForm.errors?.misMatch">
         <ion-icon name="alert" color="danger"></ion-icon>Passwords do not match.
     </span>
 
 
     <ion-row>
       <ion-col>
-        <ion-button type="submit" shape="round" expand="block" >Create Account</ion-button>
+        <ion-button type="submit" shape="round" expand="block">Create Account</ion-button>
       </ion-col>
     </ion-row>
   </form>

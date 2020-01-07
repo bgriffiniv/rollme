@@ -19,7 +19,6 @@ export class CreateAccountPage implements OnInit {
   mobile: '';
   email: '';
 
-  signupForm: FormGroup;
   isSubmitted = false;
 
 
@@ -29,25 +28,22 @@ export class CreateAccountPage implements OnInit {
           this.mobile = this.router.getCurrentNavigation().extras.state.mobile;
           this.email = this.router.getCurrentNavigation().extras.state.email;
     }
-
-    this.signupForm = new FormGroup({
-      "firstName" : new FormControl('', [Validators.required, Validators.minLength(2)]),
-      "lastName" : new FormControl('', [Validators.required, Validators.minLength(2)]),
-      "password" : new FormControl('', Validators.compose([
-        Validators.minLength(5),
-        Validators.required,
-        Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')
-      ])),
-      "confirmPassword" : new FormControl('', Validators.required),
-    });
   }
+
+  signupForm = this.formBuilder.group({
+     firstName : ['', [Validators.required, Validators.minLength(2)]],
+     lastName : ['', [Validators.required, Validators.minLength(2)]],
+     password : ['', Validators.compose([
+       Validators.minLength(5),
+       Validators.required,
+       Validators.pattern('^(?=*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')
+     ])],
+     confirmPassword : ['', [Validators.required]],
+  }, {validator: PasswordValidator});
 
 
   get errorControl() {
     return this.signupForm.controls;
-    (signupForm: FormGroup) => {
-    	      return PasswordValidator.areEqual(signupForm);
-    }
   }
 
   ngOnInit() {
