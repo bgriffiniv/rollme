@@ -31,14 +31,14 @@ export class CreateAccountPage implements OnInit {
   }
 
   signupForm = this.formBuilder.group({
-     firstName : ['', [Validators.required, Validators.minLength(2)]],
-     lastName : ['', [Validators.required, Validators.minLength(2)]],
-     password : ['', Validators.compose([
+     "firstName" : ['', [Validators.required, Validators.minLength(2)]],
+     "lastName" : ['', [Validators.required, Validators.minLength(2)]],
+     "password" : ['', Validators.compose([
        Validators.minLength(5),
        Validators.required,
-       Validators.pattern('^(?=*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')
+       Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')
      ])],
-     confirmPassword : ['', [Validators.required]],
+     "confirmPassword" : ['', [Validators.required]],
   }, {validator: PasswordValidator});
 
 

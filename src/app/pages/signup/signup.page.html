@@ -50,10 +50,10 @@
         </div>
 
         <!-- Error messages -->
-        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.mobile.touched">
+        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.mobile.touched || errorControl.email.touched">
           <ion-icon name="alert" color="danger"></ion-icon>Please enter a mobile number or email address.
         </span>
-        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.mobile.dirty">
+        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.mobile.errors?.minLength">
           <ion-icon name="alert" color="danger"></ion-icon>Entries must be 10 digits to be valid.
         </span>
         <span class="error ion-padding" *ngIf="isSubmitted && errorControl.email.errors?.pattern">
@@ -65,7 +65,7 @@
           <ion-slide></ion-slide>
         </ion-slides>
 
-        <ion-button (click)="submitForm()" expand="block" shape="round" color="primary" class="nxt-btn" [disabled]="((!mobile && !email) || (!email && !mobile))" padding>
+        <ion-button (click)="submitForm()" expand="block" shape="round" color="primary" class="nxt-btn" [disabled]="(!mobile && !email) || (!email && !mobile)" padding>
           Next
         </ion-button>
 
