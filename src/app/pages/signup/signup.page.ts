@@ -78,10 +78,6 @@ export class SignupPage implements OnInit {
     this.linkedinAuthService.getRedirectURL()
   }
 
-  showRedirectURL() {
-    this.linkedinAuthService.getRedirectURL()
-  }
-
   ngOnInit() {
   }
 
