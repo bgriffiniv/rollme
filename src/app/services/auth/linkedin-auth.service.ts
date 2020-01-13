@@ -9,6 +9,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class LinkedinAuthService {
+redirectURL = 'https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=78mvuuw5w4j74y&redirect_uri=http://localhost:8100/home&state=arigatou&scope=r_emailaddress';
+
 
   constructor(private httpClient: HttpClient, private afAuth: AngularFireAuth, private router: Router) {
 
