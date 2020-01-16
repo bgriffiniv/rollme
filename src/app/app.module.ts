@@ -5,6 +5,7 @@ import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { Camera } from '@ionic-native/camera/ngx';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
@@ -32,6 +33,7 @@ import { AngularFireAuth } from "@angular/fire/auth";
   providers: [
     StatusBar,
     SplashScreen,
+    Camera,
     AuthService,
     AngularFireAuth,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

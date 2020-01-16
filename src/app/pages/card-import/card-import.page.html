@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>card-import</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="card-image">
+  <ion-card>
+    <img [src]="capturedCardImg" />
+    <br>
+    <br>
+      <button>
+        <ion-icon name="camera" size="large" (click)="openCamera()"></ion-icon>
+      </button>
+    <br>
+    <br>
+  </ion-card>
+</ion-content>

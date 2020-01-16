@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "60011965732",
+    "firebase_url": "https://rollme-85d03.firebaseio.com",
+    "project_id": "rollme-85d03",
+    "storage_bucket": "rollme-85d03.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:60011965732:android:492f6433fe93f82a8dd7b1",
+        "android_client_info": {
+          "package_name": "me.idealogic.rollme"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "60011965732-rgd5h4pt320t4gpfufut7deujioiu7jm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNjUCiINdfzFXJdJsNI6dvuYMy6BAMpyA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "60011965732-rgd5h4pt320t4gpfufut7deujioiu7jm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

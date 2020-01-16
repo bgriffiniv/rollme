@@ -1,7 +1,7 @@
  <ion-content>
     <ion-card>
     <ion-avatar class="image">
-      <img src="./assets/imgs/Beach.jpg" />
+      <img [src]="capturedCardImg" />
     </ion-avatar>
     <ion-card-header>
       <ion-card-subtitle>Creative Artist</ion-card-subtitle>
@@ -23,9 +23,9 @@
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
     <ion-fab-list side="top">
-      <ion-fab-button><ion-icon name="camera"></ion-icon></ion-fab-button>
-      <ion-fab-button><ion-icon name="easel"></ion-icon></ion-fab-button>
       <ion-fab-button (click)="goToEditPage()"><ion-icon name="card"></ion-icon></ion-fab-button>
+      <ion-fab-button (click)="openCamera()"><ion-icon name="easel"></ion-icon></ion-fab-button>
+      <ion-fab-button (click)="goToCardImportPage()"><ion-icon name="camera"></ion-icon></ion-fab-button>
     </ion-fab-list>
   </ion-fab>
 </ion-content>
