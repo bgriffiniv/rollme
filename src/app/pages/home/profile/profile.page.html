@@ -1,31 +1,47 @@
- <ion-content>
-    <ion-card>
-    <ion-avatar class="image">
-      <img [src]="capturedCardImg" />
-    </ion-avatar>
-    <ion-card-header>
-      <ion-card-subtitle>Creative Artist</ion-card-subtitle>
-      <ion-card-title>Brandon Stuart</ion-card-title>
-   </ion-card-header>
-    </ion-card>
-  </ion-content>
-
 <ion-content>
+
   <ion-list>
-    <ion-item *ngFor="let key of keys" lines="none">
-      {{key.toUpperCase()}} : {{user[key]}}
-    </ion-item>
+    <ion-card button style="height:auto;width:auto;" lines="none">
+      <img ng-show="isFrontCaptured" [src]="capturedCardImgFront" alt=""/>
+    </ion-card>
+
+    <ion-card style="height:172px;" button [routerLink]="['/user', user.id]" *ngFor="let user of (users | async)" lines="none">
+      <ion-avatar class="image">
+        <img [src]="capturedCardImgFront"/>
+      </ion-avatar>
+      <ion-card-header>
+        <ion-card-subtitle>{{ user.name }}</ion-card-subtitle>
+      </ion-card-header>
+    </ion-card>
+
+    <div class="floating-fab-btn">
+      <ion-fab vertical="top" horizontal="start" edge slot="fixed" padding>
+        <ion-fab-button size="small" (click)="createACard()">
+          <ion-icon name="add" size="small"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
+    </div>
+      <ion-card padding>
+          <ion-avatar slot="start">
+            <img src="./assets/imgs/avatar.svg">
+          </ion-avatar>
+        <div style="position:relative;right:20px;bottom:43px;height:1px;">
+          <hr width="25%">
+          <hr width="35%">
+          <hr width="30%">
+        </div>
+        <ion-label>
+          <hr width="55%">
+          <hr width="50%">
+          <hr width="25%">
+          <hr width="15">
+        </ion-label>
+        <ion-icon name="square-outline" size="large"></ion-icon><ion-icon name="square-outline" size="large"></ion-icon><ion-icon name="square-outline" size="large"></ion-icon>
+      </ion-card>
   </ion-list>
 
 
-  <ion-fab vertical="bottom" horizontal="start" slot="fixed">
-    <ion-fab-button>
-      <ion-icon name="add"></ion-icon>
-    </ion-fab-button>
-    <ion-fab-list side="top">
-      <ion-fab-button (click)="goToEditPage()"><ion-icon name="card"></ion-icon></ion-fab-button>
-      <ion-fab-button (click)="openCamera()"><ion-icon name="easel"></ion-icon></ion-fab-button>
-      <ion-fab-button (click)="goToCardImportPage()"><ion-icon name="camera"></ion-icon></ion-fab-button>
-    </ion-fab-list>
-  </ion-fab>
 </ion-content>
+
+
+

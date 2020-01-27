@@ -1,18 +1,39 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>card-import</ion-title>
+    <ion-title>Import your Card!</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="card-image">
-  <ion-card>
-    <img [src]="capturedCardImg" />
-    <br>
-    <br>
-      <button>
-        <ion-icon name="camera" size="large" (click)="openCamera()"></ion-icon>
-      </button>
-    <br>
-    <br>
+    <ion-card button (click)="openCameraFront()" style="height:auto;weight:auto;">
+      <img ng-show="isFrontCaptured" [src]="capturedCardImgFront" alt=""/>
+      <div [hidden]="isFrontCaptured">
+        <br>
+        <br>
+        <ion-icon name="camera" size="large"></ion-icon>
+        <br>
+        <br>
+        <br>
+      </div>
+    </ion-card>
+</ion-content>
+
+<ion-content class="card-image">
+  <ion-card button (click)="openCameraBack()" style="height:auto;weight:auto;">
+    <img ng-show="isBackCaptured" [src]="capturedCardImgBack" alt=""/>
+    <div [hidden]="isBackCaptured">
+      <br>
+      <br>
+      <ion-icon name="camera" size="large"></ion-icon>
+      <br>
+      <br>
+      <br>
+    </div>
   </ion-card>
+</ion-content>
+
+<ion-content>
+  <ion-button (click)="saveCard()" expand="block" shape="round" color="primary" class="save-btn" [disabled]="!isFrontCaptured" padding>
+    Save
+  </ion-button>
 </ion-content>
