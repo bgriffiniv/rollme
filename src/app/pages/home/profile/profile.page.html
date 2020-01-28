@@ -5,7 +5,7 @@
       <img ng-show="isFrontCaptured" [src]="capturedCardImgFront" alt=""/>
     </ion-card>
 
-    <ion-card style="height:172px;" button [routerLink]="['/user', user.id]" *ngFor="let user of (users | async)" lines="none">
+    <ion-card button style="height:172px;" [routerLink]="['/user', user.id]" *ngFor="let user of (users | async)" lines="none">
       <ion-avatar class="image">
         <img [src]="capturedCardImgFront"/>
       </ion-avatar>

@@ -7,6 +7,7 @@ import { DataService } from './../../../services/data/data.service';
 import { UserService, User } from './../../../services/user/user.service';
 
 import { ActionSheetController } from '@ionic/angular';
+import { AlertController } from '@ionic/angular';
 
 
 @Component({
@@ -36,8 +37,8 @@ export class ProfilePage implements OnInit {
    keys;
    id;
 
-  constructor(private dataService: DataService, private userService: UserService, private route: ActivatedRoute, private router: Router, private camera: Camera, public actionSheetController: ActionSheetController) {
-    //console.log("Profile page started (constructor)");
+  constructor(private dataService: DataService, private userService: UserService, private route: ActivatedRoute, private router: Router, private camera: Camera, public actionSheetController: ActionSheetController ,public alertController: AlertController) {
+    console.log("Profile page started (constructor)");
 
     //this.id = this.userService.getUser();
 
@@ -105,6 +106,16 @@ export class ProfilePage implements OnInit {
       await actionSheet.present();
   }
 
+  async newCardAlert() {
+       const alert = await this.alertController.create({
+         header: 'Welcome!',
+         subHeader: '',
+         message: 'You currently have no cards saved. Click on the card template to create one now!',
+         buttons: ['OK']
+       });
+
+       await alert.present();
+  }
 
   ngOnInit() {
     console.log("User List page started (init)");
@@ -113,6 +124,7 @@ export class ProfilePage implements OnInit {
          this.capturedCardImgFront = this.router.getCurrentNavigation().extras.state.data;
     };
     this.isFrontCaptured = true;
+    this.newCardAlert();
   }
 
 }

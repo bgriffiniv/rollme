@@ -3,6 +3,7 @@ import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { ToastController } from '@ionic/angular';
+import { AlertController } from '@ionic/angular';
 
 
 @Component({
@@ -30,7 +31,7 @@ export class CardImportPage implements OnInit {
     targetHeight: 374
   }
 
-  constructor(private route: ActivatedRoute, private router: Router, private camera: Camera, private toastCtrl: ToastController) {
+  constructor(private route: ActivatedRoute, private router: Router, private camera: Camera, private toastCtrl: ToastController, public alertController: AlertController) {
 
   }
 
@@ -45,6 +46,8 @@ export class CardImportPage implements OnInit {
           console.log("Unable to obtain picture: " + err);
         });
         this.isFrontCaptured = true;
+        this.importCardBack();
+
   }
 
    openCameraBack() {
@@ -95,9 +98,46 @@ export class CardImportPage implements OnInit {
              }
          ]
        }).then(toast => toast.present());
-     }
+   }
+
+   async importCardFront() {
+      const alert = await this.alertController.create({
+        header: 'Great!',
+        subHeader: '',
+        message: 'To begin, tap on the first blank card to take a picture of the front side of your business card.',
+        buttons: ['OK']
+      });
+
+      await alert.present();
+   }
+
+   async importCardBack() {
+         const alert = await this.alertController.create({
+           header: 'Nice!',
+           subHeader: '',
+           message: "A picture of the front of your card has been imported. Would you like to take one of the back? If not, just click save and you're ready to roll!",
+           buttons: [
+            {
+              text: 'Yes',
+              handler: () => {
+                this.openCameraBack();
+                console.log('Camera launched');
+              }
+            }, {
+              text: 'No',
+              handler: () => {
+                console.log('Declined import');
+              }
+            },
+           ]
+         });
+
+         await alert.present();
+   }
+
 
   ngOnInit() {
+    this.importCardFront();
   }
 
 }

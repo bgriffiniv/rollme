@@ -52,7 +52,7 @@ export class UserDetailsPage implements OnInit {
 
   deleteUser() {
     this.userService.deleteUser(this.user.id).then(() => {
-      this.router.navigateByUrl('/users');
+      this.router.navigateByUrl('/profile');
       this.showToast('User deleted');
     }, err => {
       this.showToast('There was a problem deleting your user :(');
