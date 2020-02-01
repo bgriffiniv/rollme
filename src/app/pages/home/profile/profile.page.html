@@ -1,13 +1,17 @@
 <ion-content>
 
   <ion-list>
-    <ion-card button style="height:auto;width:auto;" lines="none">
-      <img ng-show="isFrontCaptured" [src]="capturedCardImgFront" alt=""/>
+
+    <ion-card button style="height:auto;width:auto;" [routerLink]="['/card', card.id]" *ngFor="let card of (cards | async)" lines="none">
+      <ion-item>
+        <img ng-show="isFrontCaptured" [src]="frontImg" alt=""/>
+      {{ card.frontImg }}
+      </ion-item>
     </ion-card>
 
     <ion-card button style="height:172px;" [routerLink]="['/user', user.id]" *ngFor="let user of (users | async)" lines="none">
       <ion-avatar class="image">
-        <img [src]="capturedCardImgFront"/>
+        <img [src]="frontImg"/>
       </ion-avatar>
       <ion-card-header>
         <ion-card-subtitle>{{ user.name }}</ion-card-subtitle>

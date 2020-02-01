@@ -1,23 +1,28 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
-import { ToastController } from '@ionic/angular';
-import { AlertController } from '@ionic/angular';
-
+import { ToastController, AlertController } from '@ionic/angular';
+import { CardService, Card } from 'src/app/services/card/card.service';
 
 @Component({
+
   selector: 'app-card-import',
   templateUrl: './card-import.page.html',
   styleUrls: ['./card-import.page.scss'],
 })
 export class CardImportPage implements OnInit {
+  id;
+  card: Card = {
+    frontImg: ''
+  };
 
   isFrontCaptured = false;
   isBackCaptured = false;
 
-  capturedCardImgFront: string;
-  capturedCardImgBack: string;
+  frontImg: string;
+  backImg: string;
 
   cameraOptions: CameraOptions = {
     // Some common settings are 20, 50, and 100
@@ -31,7 +36,7 @@ export class CardImportPage implements OnInit {
     targetHeight: 374
   }
 
-  constructor(private route: ActivatedRoute, private router: Router, private camera: Camera, private toastCtrl: ToastController, public alertController: AlertController) {
+  constructor(private route: ActivatedRoute, private router: Router, private camera: Camera, private toastCtrl: ToastController, public alertController: AlertController, private cardService: CardService, ) {
 
   }
 
@@ -41,7 +46,7 @@ export class CardImportPage implements OnInit {
           // this.camera.DestinationType.DATA_URL gives base64 URI
 
           let base64Image = 'data:image/jpeg;base64,' + imageData;
-          this.capturedCardImgFront = base64Image;
+          this.card.frontImg = base64Image;
         }, (err) => {
           console.log("Unable to obtain picture: " + err);
         });
@@ -56,7 +61,7 @@ export class CardImportPage implements OnInit {
             // this.camera.DestinationType.DATA_URL gives base64 URI
 
             let base64Image = 'data:image/jpeg;base64,' + imageData;
-            this.capturedCardImgBack = base64Image;
+            this.backImg = base64Image;
           }, (err) => {
             console.log("Unable to obtain picture: " + err);
           });
@@ -64,17 +69,28 @@ export class CardImportPage implements OnInit {
    }
 
    saveCard() {
-     this.showToast('Card saved!');
-     err => {
-       this.showToast('There was a problem saving your card :(');
-     };
-     let navigationExtras: NavigationExtras = {
-       state: {
-         data: this.capturedCardImgFront
-       }
-     };
-     this.router.navigateByUrl('/home/profile', navigationExtras);
+       this.cardService.addCard(this.card).then(() => {
+          this.router.navigateByUrl('/home/profile');
+          this.showToast('Card saved!');
+       }, err => {
+          this.showToast('There was a problem adding your card :(');
+       });
+
+       let navigationExtras: NavigationExtras = {
+             state: {
+               data: this.card.frontImg
+             }
+       };
    }
+
+    deleteCard() {
+       this.cardService.deleteCard(this.card.id).then(() => {
+         this.router.navigateByUrl('/home/profile');
+         this.showToast('Card deleted');
+       }, err => {
+         this.showToast('There was a problem deleting your card :(');
+       });
+    }
 
    showToast(msg) {
        this.toastCtrl.create({
@@ -137,7 +153,19 @@ export class CardImportPage implements OnInit {
 
 
   ngOnInit() {
-    this.importCardFront();
+     this.id = this.route.snapshot.paramMap.get('id');
+     console.log(this.id)
+
+     if (this.id) {
+       console.log("current id: ", this.id);
+       this.cardService.getCard(this.id).subscribe(card => {
+         console.log("got card: ", card);
+         this.card = card;
+       });
+     } else {
+       this.card.frontImg = "New Card";
+     };
+     this.importCardFront();
   }
 
 }

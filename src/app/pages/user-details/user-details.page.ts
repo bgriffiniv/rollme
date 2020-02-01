@@ -43,7 +43,7 @@ export class UserDetailsPage implements OnInit {
 
   addUser() {
     this.userService.addUser(this.user).then(() => {
-      this.router.navigateByUrl('/users');
+      this.router.navigateByUrl('/home/profile');
       this.showToast('User added');
     }, err => {
       this.showToast('There was a problem adding your user :(');
@@ -51,6 +51,7 @@ export class UserDetailsPage implements OnInit {
   }
 
   deleteUser() {
+  console.log('user id: ' + this.user.id);
     this.userService.deleteUser(this.user.id).then(() => {
       this.router.navigateByUrl('/profile');
       this.showToast('User deleted');

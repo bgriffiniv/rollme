@@ -35,7 +35,11 @@ const routes: Routes = [
   { path: 'contact', loadChildren: './pages/contact/contact.module#ContactPageModule' },
   { path: 'create-account', loadChildren: './pages/create-account/create-account.module#CreateAccountPageModule' },
   { path: 'successful-signup', loadChildren: './pages/successful-signup/successful-signup.module#SuccessfulSignupPageModule' },
-  { path: 'card-import', loadChildren: './pages/card-import/card-import.module#CardImportPageModule' }
+  { path: 'card-import', loadChildren: './pages/card-import/card-import.module#CardImportPageModule' },
+
+  { path: 'cards', loadChildren: './pages/home/profile/profile.module#ProfilePageModule'},
+  { path: 'card', loadChildren: './pages/card-import/card-import.module#CardImportPageModule' },
+  { path: 'card/:id', loadChildren: './pages/card-import/card-import.module#CardImportPageModule' },
 ];
 
 @NgModule({
