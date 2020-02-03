@@ -10,12 +10,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
-import { AngularFireModule } from '@angular/fire';
+import { AngularFireAuthModule } from "angularfire2/auth";
+import { AngularFireModule } from 'angularfire2';
+import { AngularFirestoreModule, FirestoreSettingsToken } from 'angularfire2/firestore';
 import { environment } from '../environments/environment';
-import { AngularFirestoreModule, FirestoreSettingsToken } from '@angular/fire/firestore';
-
-import { AuthService } from './services/auth/auth.service';
-import { AngularFireAuth } from "@angular/fire/auth";
 
 
 @NgModule({
@@ -27,13 +25,12 @@ import { AngularFireAuth } from "@angular/fire/auth";
     IonicModule.forRoot(),
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule,
     AngularFirestoreModule,
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    AuthService,
-    AngularFireAuth,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: FirestoreSettingsToken, useValue: {} }
   ],

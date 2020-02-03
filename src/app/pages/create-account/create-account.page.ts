@@ -20,7 +20,7 @@ export class CreateAccountPage implements OnInit {
   email: '';
 
   isSubmitted = false;
-
+  signupForm: FormGroup;
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute, public formBuilder: FormBuilder, private toastCtrl: ToastController, private authService: AuthService) {
     if (this.router.getCurrentNavigation().extras.state){
@@ -28,18 +28,19 @@ export class CreateAccountPage implements OnInit {
           this.mobile = this.router.getCurrentNavigation().extras.state.mobile;
           this.email = this.router.getCurrentNavigation().extras.state.email;
     }
-  }
 
-  signupForm = this.formBuilder.group({
-     "firstName" : ['', [Validators.required, Validators.minLength(2)]],
-     "lastName" : ['', [Validators.required, Validators.minLength(2)]],
-     "password" : ['', Validators.compose([
-       Validators.minLength(5),
-       Validators.required,
-       Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')
-     ])],
-     "confirmPassword" : ['', [Validators.required]],
-  }, {validator: PasswordValidator});
+    this.signupForm = this.formBuilder.group({
+         "firstName" : ['', [Validators.required, Validators.minLength(2)]],
+         "lastName" : ['', [Validators.required, Validators.minLength(2)]],
+         "password" : ['', Validators.compose([
+           Validators.minLength(5),
+           Validators.required,
+           Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')
+         ])],
+         "confirmPassword" : ['', [Validators.required]],
+      }, {validator: PasswordValidator});
+
+  }
 
   get errorControl() {
     return this.signupForm.controls;
@@ -57,10 +58,9 @@ export class CreateAccountPage implements OnInit {
     } else {
       console.log(this.signupForm.value)
     }
+    this.authService.signUp(this.email, this.signupForm.value.password);
     this.showToast('Account created!');
-    err => {
-      this.showToast('There was a problem creating your account :(');
-    };
+    
     let navigationExtras: NavigationExtras = {
       state: {
         data: this.firstName

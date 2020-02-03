@@ -8,14 +8,14 @@
       <br>
       <ion-item class="custom-text">
         <ion-label position="stacked">Mobile or email</ion-label>
-        <ion-input formControlName="userLogin" type="text" color="primary" style="margin-left:11px" required></ion-input>
+        <ion-input formControlName="username" type="text" color="primary" style="margin-left:11px" required></ion-input>
       </ion-item>
 
       <!-- Error messages -->
-      <span class="error ion-padding" *ngIf="isSubmitted && errorControl.userLogin.errors?.required">
+      <span class="error ion-padding" *ngIf="isSubmitted && errorControl.username.errors?.required">
         <ion-icon name="alert" color="danger"></ion-icon>Please enter your mobile number or email address.
       </span>
-      <span class="error ion-padding" *ngIf="isSubmitted && errorControl.userLogin.errors?.pattern || errorControl.userLogin.errors?.minLength">
+      <span class="error ion-padding" *ngIf="isSubmitted && errorControl.username.errors?.pattern || errorControl.username.errors?.minLength">
         <ion-icon name="alert" color="danger"></ion-icon>Please provide your complete mobile number of email address.
       </span>
       <ion-item class="custom-text">
@@ -30,7 +30,7 @@
         <ion-icon name="alert" color="danger"></ion-icon>Password must be min 5 chars long and contain letters (both uppercase and lowercase) and numbers.
       </span>
       <br>
-      <ion-button expand="block" (click)="goToHomePage()" shape="round" class="roll-btn">Sign in</ion-button>
+      <ion-button expand="block" (click)="signIn()" shape="round" class="roll-btn">Sign in</ion-button>
       <a routerLink="/password" routerLinkActive="active" class="password" >Forgot password?</a>
     </div>
   </form>
