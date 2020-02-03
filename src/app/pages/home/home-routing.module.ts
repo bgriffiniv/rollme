@@ -22,7 +22,8 @@ const routes: Routes = [
         path:'profile', loadChildren:'./profile/profile.module#ProfilePageModule'
       },
       {
-        path: '', redirectTo: 'rolodex',
+        path: '',
+        redirectTo: 'rolodex',
         pathMatch: 'full'
       }
     ]

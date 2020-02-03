@@ -3,9 +3,6 @@ import { AngularFireAuth } from "angularfire2/auth";
 import { Observable } from 'rxjs';
 import * as firebase from 'firebase/app';
 
-//import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
-//import { FirebaseService } from 'src/app/services/firebase/firebase.service';
-
 @Injectable({
   providedIn: 'root'
 })
