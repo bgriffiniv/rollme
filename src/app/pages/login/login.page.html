@@ -6,6 +6,11 @@
     <div padding class="span">
       <ion-img src="./assets/imgs/loginlogo.jpg"></ion-img>
       <br>
+      <!-- Error messages -->
+      <span class="error ion-padding" *ngIf="formErrors?.signIn">
+        <ion-icon name="alert" color="danger"></ion-icon>The mobile number, email, or password was incorrect.
+      </span>
+
       <ion-item class="custom-text">
         <ion-label position="stacked">Mobile or email</ion-label>
         <ion-input formControlName="username" type="text" color="primary" style="margin-left:11px" required></ion-input>

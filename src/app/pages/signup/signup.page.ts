@@ -31,7 +31,7 @@ export class SignupPage implements OnInit {
         Validators.maxLength(10),
         Validators.minLength(10)
       ])),
-      "email": new FormControl('', [Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+[.][a-zA-Z]{2,3}$')])
+      "email": new FormControl('', [Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+[.][a-zA-Z]{2,}$')])
     });
   }
 
@@ -45,14 +45,11 @@ export class SignupPage implements OnInit {
      };
 
      let navigationExtras: NavigationExtras = {
-          state: {
-            data: this.signupMethod,
-            mobile: this.mobile,
-            email: this.email
-
-
-
-          },
+        state: {
+          data: this.signupMethod,
+          mobile: this.mobile,
+          email: this.email
+        },
      };
 
      this.router.navigateByUrl('/create-account', navigationExtras);

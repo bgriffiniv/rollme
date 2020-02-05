@@ -46,6 +46,10 @@ export class CreateAccountPage implements OnInit {
     return this.signupForm.controls;
   }
 
+  get formErrors() {
+    return this.signupForm.errors;
+  }
+
   ngOnInit() {
 
   }
@@ -58,15 +62,22 @@ export class CreateAccountPage implements OnInit {
     } else {
       console.log(this.signupForm.value)
     }
-    this.authService.signUp(this.email, this.signupForm.value.password);
-    this.showToast('Account created!');
-    
-    let navigationExtras: NavigationExtras = {
-      state: {
-        data: this.firstName
+    this.authService.signUp(this.email, this.signupForm.value.password, (error, data) => {
+      if (error) {
+        console.log('Create Account Page : Sign Up Failure : setting error control');
+        this.isSubmitted = false;
+        this.signupForm.setErrors( { 'signUp' : true } );
+      } else {
+        console.log('Create Account Page : Sign Up Success : navigating to Home Page');
+        this.showToast('Account created!');
+        let navigationExtras: NavigationExtras = {
+          state: {
+            data: this.firstName
+          }
+        };
+        this.router.navigateByUrl('/home', navigationExtras);
       }
-    };
-    this.router.navigateByUrl('/successful-signup', navigationExtras);
+    });
   }
 
    showToast(msg) {

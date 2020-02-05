@@ -11,6 +11,7 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 })
 export class LoginPage implements OnInit {
   signInForm: FormGroup;
+  // NOTE: flag to suppress validation errors before submission
   isSubmitted = false;
 
   constructor(private router: Router, public formBuilder: FormBuilder, private authService: AuthService) {
@@ -37,8 +38,16 @@ export class LoginPage implements OnInit {
     } else {
       console.log(this.signInForm.value)
     };
-    this.authService.signIn(this.signInForm.value['username'], this.signInForm.value['password']);
-    this.router.navigateByUrl('/home');
+    this.authService.signIn(this.signInForm.value['username'], this.signInForm.value['password'], (error, data) => {
+      if (error) {
+        console.log('Login Page : Sign In Failure : setting error control');
+        this.isSubmitted = false;
+        this.signInForm.setErrors( { 'signIn' : true } );
+      } else {
+        console.log('Login Page : Auth Success : navigating to Home Page');
+        this.router.navigateByUrl('/home');
+      }
+    });
   }
 
   ngOnInit() {
@@ -46,6 +55,10 @@ export class LoginPage implements OnInit {
 
   get errorControl() {
     return this.signInForm.controls;
+  }
+
+  get formErrors() {
+    return this.signInForm.errors;
   }
 
 }
