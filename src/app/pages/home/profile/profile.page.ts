@@ -45,11 +45,6 @@ export class ProfilePage implements OnInit {
                 private router: Router, private camera: Camera, public actionSheetController: ActionSheetController, public alertController: AlertController, private toastCtrl: ToastController) {
     console.log("Profile page started (constructor)");
 
-    if (this.router.getCurrentNavigation().extras.state){
-         this.frontImg = this.router.getCurrentNavigation().extras.state.data;
-    }
-
-
     //this.id = this.cardService.getCard();
 
     //this.activatedRoute.data.subscribe((data) => {
@@ -66,6 +61,11 @@ export class ProfilePage implements OnInit {
 
   ngOnInit() {
       console.log("User List page started (init)");
+
+      if (this.router.getCurrentNavigation().extras.state){
+          this.card.frontImg = this.router.getCurrentNavigation().extras.state.data;
+      };
+
       this.users = this.userService.getUsers();
       this.cards = this.cardService.getCards();
 
@@ -169,7 +169,7 @@ export class ProfilePage implements OnInit {
          this.card = card;
          });
       } else {
-         this.card.frontImg = "New Card";
+         this.frontImg = "New Card";
       };
   }
 

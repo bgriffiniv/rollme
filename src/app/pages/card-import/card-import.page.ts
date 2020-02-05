@@ -36,7 +36,7 @@ export class CardImportPage implements OnInit {
     targetHeight: 374
   }
 
-  constructor(private route: ActivatedRoute, private router: Router, private camera: Camera, private toastCtrl: ToastController, public alertController: AlertController, private cardService: CardService, ) {
+  constructor(private route: ActivatedRoute, private router: Router, private camera: Camera, private toastCtrl: ToastController, public alertController: AlertController, private cardService: CardService) {
 
   }
 
@@ -69,18 +69,18 @@ export class CardImportPage implements OnInit {
    }
 
    saveCard() {
-       this.cardService.addCard(this.card).then(() => {
-          this.router.navigateByUrl('/home/profile');
-          this.showToast('Card saved!');
-       }, err => {
-          this.showToast('There was a problem adding your card :(');
-       });
-
        let navigationExtras: NavigationExtras = {
              state: {
                data: this.card.frontImg
              }
        };
+       this.cardService.addCard(this.card).then(() => {
+          this.router.navigate(["/home/profile"], navigationExtras);
+          this.showToast('Card saved!');
+       }, err => {
+           this.showToast('There was a problem adding your card :(');
+       });
+
    }
 
     deleteCard() {
@@ -128,27 +128,27 @@ export class CardImportPage implements OnInit {
    }
 
    async importCardBack() {
-         const alert = await this.alertController.create({
-           header: 'Nice!',
-           subHeader: '',
-           message: "A picture of the front of your card has been imported. Would you like to take one of the back? If not, just click save and you're ready to roll!",
-           buttons: [
-            {
-              text: 'Yes',
-              handler: () => {
-                this.openCameraBack();
-                console.log('Camera launched');
-              }
-            }, {
-              text: 'No',
-              handler: () => {
-                console.log('Declined import');
-              }
-            },
-           ]
-         });
+             const alert = await this.alertController.create({
+               header: 'Nice!',
+               subHeader: '',
+               message: "A picture of the front of your card has been imported. Would you like to take one of the back? If not, just click save and you're ready to roll!",
+               buttons: [
+                {
+                  text: 'Yes',
+                  handler: () => {
+                    this.openCameraBack();
+                    console.log('Camera launched');
+                  }
+                }, {
+                  text: 'No',
+                  handler: () => {
+                    console.log('Declined import');
+                  }
+                },
+               ]
+             });
 
-         await alert.present();
+             await alert.present();
    }
 
 
@@ -163,7 +163,7 @@ export class CardImportPage implements OnInit {
          this.card = card;
        });
      } else {
-       this.card.frontImg = "New Card";
+       this.frontImg = this.card.frontImg;
      };
      this.importCardFront();
   }

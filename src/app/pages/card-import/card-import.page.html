@@ -6,7 +6,7 @@
 
 <ion-content class="card-image">
     <ion-card button (click)="openCameraFront()" style="height:auto;weight:auto;">
-      <img ng-show="isFrontCaptured" [src]="frontImg" alt=""/>
+      <img ng-show="isFrontCaptured" [src]="card.frontImg" alt=""/>
       <div [hidden]="isFrontCaptured">
         <br>
         <br>
