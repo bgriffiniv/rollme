@@ -66,15 +66,6 @@
     "zone.js": "^0.10.2"
   },
   "devDependencies": {
-    "@angular-devkit/architect": "^0.803.22",
-    "@angular-devkit/build-angular": "^0.803.22",
-    "@angular-devkit/core": "^8.3.22",
-    "@angular-devkit/schematics": "^8.3.22",
-    "@angular/cli": "^8.3.22",
-    "@angular/compiler-cli": "^8.2.14",
-    "@angular/language-service": "~8.2.14",
-    "@ionic/angular-toolkit": "^2.1.2",
-    "@ionic/lab": "2.0.13",
     "@angular-devkit/architect": "~0.803.19",
     "@angular-devkit/build-angular": "^0.803.23",
     "@angular-devkit/core": "~8.3.19",

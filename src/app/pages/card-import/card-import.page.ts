@@ -15,7 +15,8 @@ import { CardService, Card } from 'src/app/services/card/card.service';
 export class CardImportPage implements OnInit {
   id;
   card: Card = {
-    frontImg: ''
+    frontImg: '',
+    backImg: ''
   };
 
   isFrontCaptured = false;
@@ -40,8 +41,36 @@ export class CardImportPage implements OnInit {
 
   }
 
-  openCameraFront() {
-        this.camera.getPicture(this.cameraOptions).then((imageData) => {
+   ngOnInit() {
+       this.id = this.route.snapshot.paramMap.get('id');
+       console.log(this.id)
+
+       if (this.id) {
+         console.log("current id: ", this.id);
+         this.cardService.getCard(this.id).subscribe(card => {
+           console.log("got card: ", card);
+           this.card = card;
+         });
+       } else {
+         this.frontImg = this.card.frontImg;
+         this.backImg = this.card.backImg;
+       };
+       this.importCardFront();
+   }
+
+   async importCardFront() {
+         const alert = await this.alertController.create({
+           header: 'Great!',
+           subHeader: '',
+           message: 'To begin, tap on the first blank card to take a picture of the front side of your business card.',
+           buttons: ['OK']
+         });
+
+         await alert.present();
+   }
+
+  async openCameraFront() {
+        await this.camera.getPicture(this.cameraOptions).then((imageData) => {
           // this.camera.DestinationType.FILE_URI gives file URI saved in local
           // this.camera.DestinationType.DATA_URL gives base64 URI
 
@@ -55,117 +84,99 @@ export class CardImportPage implements OnInit {
 
   }
 
-   openCameraBack() {
-          this.camera.getPicture(this.cameraOptions).then((imageData) => {
-            // this.camera.DestinationType.FILE_URI gives file URI saved in local
-            // this.camera.DestinationType.DATA_URL gives base64 URI
-
-            let base64Image = 'data:image/jpeg;base64,' + imageData;
-            this.backImg = base64Image;
-          }, (err) => {
-            console.log("Unable to obtain picture: " + err);
-          });
-          this.isBackCaptured = true;
-   }
-
-   saveCard() {
-       let navigationExtras: NavigationExtras = {
-             state: {
-               data: this.card.frontImg
+  async importCardBack() {
+        const alert = await this.alertController.create({
+           header: 'Nice!',
+           subHeader: '',
+           message: "A picture of the front of your card has been imported. Would you like to take one of the back? If not, just click save and you're ready to roll!",
+           buttons: [
+           {
+             text: 'Yes',
+             handler: () => {
+             this.openCameraBack();
+             console.log('Camera launched');
+           }
+           }, {
+             text: 'No',
+             handler: () => {
+             console.log('Declined import');
              }
-       };
-       this.cardService.addCard(this.card).then(() => {
-          this.router.navigate(["/home/profile"], navigationExtras);
-          this.showToast('Card saved!');
-       }, err => {
-           this.showToast('There was a problem adding your card :(');
-       });
+           },
+          ]
+        });
+        await alert.present();
+  }
 
-   }
+  async openCameraBack() {
+        await this.camera.getPicture(this.cameraOptions).then((imageData) => {
+          // this.camera.DestinationType.FILE_URI gives file URI saved in local
+          // this.camera.DestinationType.DATA_URL gives base64 URI
 
-    deleteCard() {
-       this.cardService.deleteCard(this.card.id).then(() => {
-         this.router.navigateByUrl('/home/profile');
-         this.showToast('Card deleted');
-       }, err => {
-         this.showToast('There was a problem deleting your card :(');
-       });
-    }
+          let base64Image = 'data:image/jpeg;base64,' + imageData;
+          this.card.backImg = base64Image;
+        }, (err) => {
+          console.log("Unable to obtain picture: " + err);
+        });
+        this.isBackCaptured = true;
+  }
 
-   showToast(msg) {
-       this.toastCtrl.create({
-         message: msg,
-         duration: 2000,
-         color: 'success',
-         position: 'top',
-         buttons: [
-             {
-               side: 'start',
-               icon: 'checkmark-circle',
-               handler: () => {
-                 console.log('Card saved');
-               }
-             },
-             {
-               role: 'cancel',
-               handler: () => {
-                 console.log('Cancel clicked');
-               }
-             }
-         ]
-       }).then(toast => toast.present());
-   }
+  saveCard() {
+      let navigationExtras: NavigationExtras = {
+            state: {
+              cardDataFront: this.card.frontImg,
+              cardDataBack: this.card.backImg
 
-   async importCardFront() {
-      const alert = await this.alertController.create({
-        header: 'Great!',
-        subHeader: '',
-        message: 'To begin, tap on the first blank card to take a picture of the front side of your business card.',
-        buttons: ['OK']
+            }
+      };
+      this.cardService.addCard(this.card).then(() => {
+         this.router.navigate(["/home/profile"], navigationExtras);
+         this.showToast('Card saved!');
+      }, err => {
+          this.showToast('There was a problem adding your card :(');
       });
 
-      await alert.present();
-   }
+  }
 
-   async importCardBack() {
-             const alert = await this.alertController.create({
-               header: 'Nice!',
-               subHeader: '',
-               message: "A picture of the front of your card has been imported. Would you like to take one of the back? If not, just click save and you're ready to roll!",
-               buttons: [
-                {
-                  text: 'Yes',
-                  handler: () => {
-                    this.openCameraBack();
-                    console.log('Camera launched');
-                  }
-                }, {
-                  text: 'No',
-                  handler: () => {
-                    console.log('Declined import');
-                  }
-                },
-               ]
-             });
+  deleteCard() {
+     this.cardService.deleteCard(this.card.id).then(() => {
+       this.router.navigateByUrl('/home/profile');
+       this.showToast('Card deleted');
+     }, err => {
+       this.showToast('There was a problem deleting your card :(');
+     });
+  }
 
-             await alert.present();
-   }
+  updateCard() {
+      this.cardService.updateCard(this.card).then(() => {
+      this.router.navigateByUrl('/home/profile');
+        this.showToast('Card updated');
+      }, err => {
+        this.showToast('There was a problem updating your card :(');
+      });
+  }
 
-
-  ngOnInit() {
-     this.id = this.route.snapshot.paramMap.get('id');
-     console.log(this.id)
-
-     if (this.id) {
-       console.log("current id: ", this.id);
-       this.cardService.getCard(this.id).subscribe(card => {
-         console.log("got card: ", card);
-         this.card = card;
-       });
-     } else {
-       this.frontImg = this.card.frontImg;
-     };
-     this.importCardFront();
+  showToast(msg) {
+      this.toastCtrl.create({
+        message: msg,
+        duration: 2000,
+        color: 'success',
+        position: 'top',
+        buttons: [
+            {
+              side: 'start',
+              icon: 'checkmark-circle',
+              handler: () => {
+                console.log('Card saved');
+              }
+            },
+            {
+              role: 'cancel',
+              handler: () => {
+                console.log('Cancel clicked');
+              }
+            }
+        ]
+      }).then(toast => toast.present());
   }
 
 }

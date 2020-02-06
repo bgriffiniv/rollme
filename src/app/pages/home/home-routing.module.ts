@@ -36,9 +36,14 @@ const routes: Routes = [
           {
             path:'',
             loadChildren:'./profile/profile.module#ProfilePageModule'
+          },
+          {
+            path:'card-import',
+            loadChildren: '../card-import/card-import.module#CardImportPageModule'
           }
         ]
       },
+
       {
         path: '',
         redirectTo: 'rolodex',

@@ -5,7 +5,8 @@ import { Observable } from 'rxjs';
 
 export interface Card {
   id?: string,
-  frontImg?: string
+  frontImg?: string,
+  backImg?: string
 }
 
 @Injectable({
@@ -48,7 +49,7 @@ export class CardService {
   }
 
   updateCard(card: Card): Promise<void> {
-    return this.cardCollection.doc(card.id).update({ frontImg: card.frontImg });
+    return this.cardCollection.doc(card.id).update({ frontImg: card.frontImg, backImg: card.backImg });
   }
 
   deleteCard(id: string): Promise<void> {

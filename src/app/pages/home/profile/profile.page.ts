@@ -21,8 +21,10 @@ export class ProfilePage implements OnInit {
 
   id;
   card: Card = {
-    frontImg: ''
+    frontImg: '',
+    backImg: ''
   };
+
   user;
   keys;
 
@@ -63,7 +65,8 @@ export class ProfilePage implements OnInit {
       console.log("User List page started (init)");
 
       if (this.router.getCurrentNavigation().extras.state){
-          this.card.frontImg = this.router.getCurrentNavigation().extras.state.data;
+          this.card.frontImg = this.router.getCurrentNavigation().extras.state.cardDataFront;
+          this.card.backImg = this.router.getCurrentNavigation().extras.state.cardDataBack;
       };
 
       this.users = this.userService.getUsers();
@@ -72,7 +75,6 @@ export class ProfilePage implements OnInit {
       this.isFrontCaptured = true;
       this.newCardAlert();
   }
-
 
   goToCardImportPage() {
       this.router.navigateByUrl('/card-import');
@@ -99,7 +101,7 @@ export class ProfilePage implements OnInit {
           text: 'Photo',
           icon: 'images',
           handler: () => {
-            this.router.navigateByUrl('/card-import');
+            this.router.navigateByUrl('/home/profile/card-import');
             console.log('Card import page loaded');
           }
         }, {

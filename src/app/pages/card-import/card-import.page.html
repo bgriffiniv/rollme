@@ -1,13 +1,8 @@
-<ion-header>
-  <ion-toolbar class="header">
-    <ion-title>Import your Card!</ion-title>
-  </ion-toolbar>
-</ion-header>
 
 <ion-content class="card-image">
     <ion-card button (click)="openCameraFront()" style="height:auto;weight:auto;">
       <img ng-show="isFrontCaptured" [src]="card.frontImg" alt=""/>
-      <div [hidden]="isFrontCaptured">
+      <div *ngIf="!card.id" [hidden]="isFrontCaptured" >
         <br>
         <br>
         <br>
@@ -19,8 +14,8 @@
       </div>
     </ion-card>
 
-  <ion-card button (click)="openCameraBack()" style="height:auto;weight:auto;">
-    <img ng-show="isBackCaptured" [src]="backImg" alt=""/>
+  <ion-card *ngIf="!card.id" button (click)="openCameraBack()" style="height:auto;weight:auto;">
+    <img ng-show="isBackCaptured" [src]="card.backImg" alt=""/>
     <div [hidden]="isBackCaptured">
       <br>
       <br>
@@ -33,7 +28,22 @@
     </div>
   </ion-card>
 
-  <ion-button size="small" (click)="saveCard()" shape="round" color="primary" class="save-btn" [disabled]="!isFrontCaptured" padding>
+  <ion-card *ngIf="card.id" button (click)="openCameraBack()" style="height:auto;weight:auto;">
+    <img ng-show="isBackCaptured" [src]="card.backImg" alt=""/>
+    <div [hidden]="isBackCaptured">
+      <br>
+      <br>
+      <br>
+      <ion-icon name="camera" size="large"></ion-icon>
+      <br>
+      <br>
+      <br>
+      <br>
+    </div>
+  </ion-card>
+
+
+  <ion-button *ngIf="!card.id" size="small" (click)="saveCard()" shape="round" color="primary" class="save-btn" [disabled]="!isFrontCaptured" padding>
     Save
   </ion-button>
 </ion-content>
