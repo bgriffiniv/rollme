@@ -15,9 +15,14 @@
     </ion-fab-button>
   </ion-fab>
 
+
   <ion-list>
     <ion-item button [routerLink]="['/user', user.id]" *ngFor="let user of (users | async)" lines="none">
-      {{ user.name }}
+      <ion-card style="width:100%;">
+        <ion-card-header>
+          <ion-card-subtitle>{{ user.name }}</ion-card-subtitle>
+        </ion-card-header>
+      </ion-card>
     </ion-item>
   </ion-list>
 
