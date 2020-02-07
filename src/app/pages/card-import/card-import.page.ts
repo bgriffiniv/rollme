@@ -19,8 +19,8 @@ export class CardImportPage implements OnInit {
     backImg: ''
   };
 
-  isFrontCaptured = false;
-  isBackCaptured = false;
+  isFrontCaptured;
+  isBackCaptured;
 
   frontImg: string;
   backImg: string;
@@ -117,7 +117,6 @@ export class CardImportPage implements OnInit {
         }, (err) => {
           console.log("Unable to obtain picture: " + err);
         });
-        this.isBackCaptured = true;
   }
 
   saveCard() {
@@ -128,13 +127,13 @@ export class CardImportPage implements OnInit {
 
             }
       };
+
       this.cardService.addCard(this.card).then(() => {
          this.router.navigate(["/home/profile"], navigationExtras);
          this.showToast('Card saved!');
       }, err => {
           this.showToast('There was a problem adding your card :(');
       });
-
   }
 
   deleteCard() {

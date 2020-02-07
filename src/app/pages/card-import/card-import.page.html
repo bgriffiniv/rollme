@@ -14,23 +14,9 @@
       </div>
     </ion-card>
 
-  <ion-card *ngIf="!card.id" button (click)="openCameraBack()" style="height:auto;weight:auto;">
-    <img ng-show="isBackCaptured" [src]="card.backImg" alt=""/>
-    <div [hidden]="isBackCaptured">
-      <br>
-      <br>
-      <br>
-      <ion-icon name="camera" size="large"></ion-icon>
-      <br>
-      <br>
-      <br>
-      <br>
-    </div>
-  </ion-card>
-
-  <ion-card *ngIf="card.id" button (click)="openCameraBack()" style="height:auto;weight:auto;">
-    <img ng-show="isBackCaptured" [src]="card.backImg" alt=""/>
-    <div [hidden]="isBackCaptured">
+  <ion-card button (click)="openCameraBack()" style="height:auto;weight:auto;">
+    <img *ngIf="!isBackCaptured || card.backImg" [src]="card.backImg" alt=""/>
+    <div *ngIf="!card.backImg">
       <br>
       <br>
       <br>
