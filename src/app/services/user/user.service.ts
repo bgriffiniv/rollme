@@ -19,10 +19,16 @@ export interface User {
 })
 export class UserService {
   private users: Observable<User[]>;
+  private staticUsers: Observable<User[]>;
   private userCollection: AngularFirestoreCollection<User>;
+  private staticUserCollection: AngularFirestoreCollection<User>;
+
+  subscription: any;
 
   constructor(private afs: AngularFirestore) {
-    this.userCollection = this.afs.collection<User>('staticusers');
+    console.log('Auth Service constructor');
+    this.userCollection = this.afs.collection<User>('users');
+    this.staticUserCollection = this.afs.collection<User>('static-users');
     console.log(this.afs);
     this.users = this.userCollection.snapshotChanges().pipe(
       map(actions => {
@@ -35,10 +41,18 @@ export class UserService {
     );
   }
 
+  ngOnInit() {
+    console.log('Auth Service init');
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
   getUsers(): Observable<User[]> {
     return this.users;
   }
-
+/*
   getUser(id: string): Observable<User> {
     return this.userCollection.doc<User>(id).valueChanges().pipe(
       take(1),
@@ -47,6 +61,20 @@ export class UserService {
         return user
       })
     );
+  }
+*/
+
+  getUser(id: string, callback) {
+    this.subscription = this.userCollection.doc<User>(id).get()
+    .subscribe(user => {
+      if (!user) {
+        console.log('Error finding user with id : ' + id);
+        callback(user);
+      }
+
+      console.log('User found with id : ' + id);
+      callback(null, user);
+    });
   }
 
   addUser(user: User): Promise<DocumentReference> {

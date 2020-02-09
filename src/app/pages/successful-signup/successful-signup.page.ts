@@ -11,13 +11,14 @@ import { AuthService } from 'src/app/services/auth/auth.service';
   styleUrls: ['./successful-signup.page.scss'],
 })
 export class SuccessfulSignupPage implements OnInit {
-  
+
+  uid: '';
   firstName: '';
 
-
   constructor(private activatedRoute: ActivatedRoute, private router: Router, private authService: AuthService) {
+    console.log('Successful Signup Page constructor');
     if (this.router.getCurrentNavigation().extras.state){
-      this.firstName = this.router.getCurrentNavigation().extras.state.data;
+      this.uid = this.router.getCurrentNavigation().extras.state.data;
     }
   }
 
@@ -26,7 +27,10 @@ export class SuccessfulSignupPage implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.firstName);
+    console.log('Successful Signup Page init');
+    let currentUser = this.authService.getCurrentUser();
+
+    console.log('user uid:' + currentUser.uid + ', arg uid:' + this.uid);
   }
 
 }
