@@ -13,7 +13,7 @@ import { UserService, User } from 'src/app/services/user/user.service';
 export class UserListPage implements OnInit {
   private users: Observable<User[]>;
 
-  constructor(private dataService: DataService, private userService: UserService, private route: ActivatedRoute, private router: Router) {
+  constructor(private userService: UserService, private route: ActivatedRoute, private router: Router) {
     console.log("User List page started (constructor)");
   }
 

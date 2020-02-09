@@ -1,7 +1,7 @@
 import { Injectable, NgZone } from '@angular/core';
 import { auth } from 'firebase/app';
 import { GoogleUser } from 'src/app/services/user/google-user.service';
-import { AngularFireAuth } from "@angular/fire/auth";
+import { AngularFireAuth } from "angularfire2/auth";
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 
 @Injectable({
@@ -10,7 +10,7 @@ import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 export class GoogleAuthService {
   googleUser: GoogleUser;
 
-  constructor(private router: Router, public afAuth: AngularFireAuth, public ngZone: NgZone, private angularFireAuth: AngularFireAuth) {
+  constructor(private router: Router, public afAuth: AngularFireAuth, public ngZone: NgZone) {
     this.afAuth.authState.subscribe(googleUser => {
             this.googleUser = googleUser;
     })

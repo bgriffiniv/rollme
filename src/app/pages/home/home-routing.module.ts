@@ -11,44 +11,25 @@ const routes: Routes = [
     component: HomePage,
     children: [
       {
-        path:'rolodex',
-        children: [
-          {
-            path:'',
-            loadChildren:'./rolodex/rolodex.module#RolodexPageModule'
-          }
-        ]
+        path:'rolodex', loadChildren:'./rolodex/rolodex.module#RolodexPageModule'
       },
 
       {
-        path:'exchange',
-        children: [
-          {
-            path:'',
-            loadChildren:'./exchange/exchange.module#ExchangePageModule'
-          }
-        ]
+        path:'exchange', loadChildren:'./exchange/exchange.module#ExchangePageModule'
       },
 
       {
-        path:'profile',
-        children: [
-          {
-            path:'',
-            loadChildren:'./profile/profile.module#ProfilePageModule'
-          }
-        ]
+        path:'profile', loadChildren:'./profile/profile.module#ProfilePageModule'
       },
       {
-        path: '',
-        redirectTo: 'rolodex',
+        path: '', redirectTo: 'rolodex',
         pathMatch: 'full'
       }
     ]
 },
   {
     path: '',
-    redirectTo: 'rolodex',
+    redirectTo: 'home/rolodex',
     pathMatch: 'full'
   }
 ];

@@ -7,10 +7,7 @@ const routes: Routes = [
       redirectTo: 'login',
       pathMatch: 'full'
   },
-  {
-    path:'',
-    loadChildren:'./pages/home/home.module#HomePageModule'
-  },
+
   { path: 'about', loadChildren: './pages/about/about.module#AboutPageModule' },
   { path: 'faq', loadChildren: './pages/faq/faq.module#FaqPageModule' },
   { path: 'license', loadChildren: './pages/license/license.module#LicensePageModule' },
@@ -22,6 +19,7 @@ const routes: Routes = [
   { path: 'signup', loadChildren: './pages/signup/signup.module#SignupPageModule' },
 
 
+  { path: 'home', loadChildren: './pages/home/home.module#HomePageModule' },
   { path: 'rolodex', loadChildren: './pages/home/rolodex/rolodex.module#RolodexPageModule' },
   { path: 'exchange', loadChildren: './pages/home/exchange/exchange.module#ExchangePageModule' },
   { path: 'profile', loadChildren: './pages/home/profile/profile.module#ProfilePageModule' },

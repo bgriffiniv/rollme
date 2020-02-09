@@ -1,16 +1,58 @@
-import { Injectable, NgZone } from '@angular/core';
-import { auth } from 'firebase/app';
-import { AngularFireAuth } from "@angular/fire/auth";
+import { Injectable } from '@angular/core';
+import { AngularFireAuth } from "angularfire2/auth";
+import { Observable } from 'rxjs';
+import * as firebase from 'firebase/app';
 
-import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
+//import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
+//import { FirebaseService } from 'src/app/services/firebase/firebase.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  user: Observable<firebase.User>;
 
-  constructor(public afAuth: AngularFireAuth, private router: Router, private activatedRoute: ActivatedRoute, public ngZone: NgZone) { }
+  constructor(private afAuth: AngularFireAuth) {
+    this.user = afAuth.authState;
+  }
 
+  signUp(email: string, password: string, callback) {
+    this.afAuth.auth.createUserWithEmailAndPassword(email, password)
+    .then(res => {
+      console.log('Successfully signed up!', res);
+      callback(null, res);
+    })
+    .catch(err => {
+      console.log('Something is wrong:', err.message);
+      callback(err);
+    });
+  }
+
+  signIn(email: string, password: string, callback) {
+    this.afAuth.auth.signInWithEmailAndPassword(email, password)
+    .then(res => {
+      console.log('Successfully signed in!', res);
+      callback(null, res);
+    })
+    .catch(err => {
+      console.log('Something is wrong:',err.message);
+      callback(err)
+    });
+  }
+
+  signOut(callback) {
+    this.afAuth.auth.signOut()
+    .then(res => {
+      console.log('Successfully signed out!', res);
+      callback(null, res);
+    })
+    .catch(err => {
+      console.log('Something is wrong:',err.message);
+      callback(err)
+    });
+  }
+
+/*
   fbAuth() {
       return this.AuthLogin(new auth.FacebookAuthProvider());
   }
@@ -26,5 +68,6 @@ export class AuthService {
           console.log(error)
       });
   }
+*/
 
 }
