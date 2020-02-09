@@ -22,12 +22,14 @@ export class UserDetailsPage implements OnInit {
 
   ngOnInit() {
     console.log("User Details page (init)");
-
     this.id = this.activatedRoute.snapshot.paramMap.get('id');
 
     if (this.id) {
       console.log("current id: ", this.id);
-      this.userService.getUser(this.id).subscribe(user => {
+      this.userService.getUser(this.id, (err, user) => {
+        if (err) {
+          console.log(err);
+        }
         console.log("got user: ", user);
         this.user = user;
       });
