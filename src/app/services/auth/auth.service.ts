@@ -8,12 +8,10 @@ import * as firebase from 'firebase/app';
 })
 export class AuthService {
   currentUser: firebase.User;
+  subscription;
 
   constructor(private afAuth: AngularFireAuth) {
     console.log('Auth Service constructor');
-    this.afAuth.authState.subscribe((user) => {
-      this.currentUser = user;
-    });
   }
 
  // Returns true if user is logged in
@@ -22,14 +20,15 @@ export class AuthService {
   }
 
   // Returns current user data
-  getCurrentUser(): firebase.User {
-    return this.isAuthenticated() ? this.currentUser : null;
+  getCurrentUser(callback) {
+    this.subscription = this.afAuth.authState
+    .subscribe(d => {callback(null, d)}, e => {callback(e)});
   }
 
   signUp(email: string, password: string, callback) {
     this.afAuth.auth.createUserWithEmailAndPassword(email, password)
     .then(res => {
-      console.log('Successfully signed up!', res);
+      console.log('Successfully signed up!');
       callback(null, res);
     })
     .catch(err => {
@@ -41,7 +40,7 @@ export class AuthService {
   signIn(email: string, password: string, callback) {
     this.afAuth.auth.signInWithEmailAndPassword(email, password)
     .then(res => {
-      console.log('Successfully signed in!', res);
+      console.log('Successfully signed in!');
       callback(null, res);
     })
     .catch(err => {
@@ -53,13 +52,17 @@ export class AuthService {
   signOut(callback) {
     this.afAuth.auth.signOut()
     .then(res => {
-      console.log('Successfully signed out!', res);
+      console.log('Successfully signed out!');
       callback(null, res);
     })
     .catch(err => {
       console.log('Something is wrong:',err.message);
       callback(err)
     });
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
 /*

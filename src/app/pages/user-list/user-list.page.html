@@ -17,7 +17,7 @@
 
 
   <ion-list>
-    <ion-item button [routerLink]="['/user', user.id]" *ngFor="let user of (users | async)" lines="none">
+    <ion-item button [routerLink]="['/user', user.id]" *ngFor="let user of (users)" lines="none">
       <ion-card style="width:100%;">
         <ion-card-header>
           <ion-card-subtitle>{{ user.name }}</ion-card-subtitle>

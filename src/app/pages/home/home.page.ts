@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 
 import { AuthService } from 'src/app/services/auth/auth.service';
@@ -9,7 +9,7 @@ import { UserService } from 'src/app/services/user/user.service';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage {
+export class HomePage implements OnInit{
 
   constructor(private route: ActivatedRoute, private router: Router, private authService: AuthService, private userService: UserService) {
     console.log("Home page started (constructor)");
@@ -17,31 +17,34 @@ export class HomePage {
 
   ngOnInit() {
     console.log("Home page started (init)");
-    // get the current user's uid
-    let currentUser = this.authService.getCurrentUser();
-
     // check for a user entry by the uid
-    let doHomePageChecks = (err, data) => {
-      if (err) {
-        console.log(err);
+    let goToSuccessfulSignupPageIfNoData =
+
+    // get the current user's uid
+    this.authService.getCurrentUser((error, currentUser) => {
+      if (!currentUser) {
+        console.log('Home Page : Currently logged out');
+        return;
       }
-
-      if (!(data && data.uid)) {
-        // go to Successful Signup Page if no user exists
-        goToSuccessfulSignupPage(currentUser.uid);
-      }
-    };
-
-    let goToSuccessfulSignupPage = (uid) => {
-
-      let navigationExtras:NavigationExtras = {
-        state: {
-          uid: uid
+      this.userService.getUser(currentUser.uid,  (err, data) => {
+        if (err) {
+          console.log(err);
         }
-      };
-      this.router.navigateByUrl('/successful-signup', navigationExtras);
-
-    }
-    this.userService.getUser(currentUser.uid, doHomePageChecks);
+        console.log(data);
+        if (!data) {
+          // go to Successful Signup Page if no user exists
+          let navigationExtras: NavigationExtras = {
+                  state: {
+                    uid: currentUser.uid,
+                    firstName: '',
+                    lastName: '',
+                    email: '',
+                    mobile: ''
+                  }
+                };
+          this.router.navigateByUrl('/successful-signup', navigationExtras);
+        }
+      });
+    });
   }
 }

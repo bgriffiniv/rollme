@@ -10,6 +10,15 @@
         </ion-toolbar>
       </ion-header>
       <ion-content>
+
+        <ion-menu-toggle auto-hide="false">
+          <ion-item button [routerDirection]="'root'" (click)="goToHomePage()">
+            <ion-icon slot="start" name="home"></ion-icon>
+            <ion-label>
+              Home
+            </ion-label>
+          </ion-item>
+        </ion-menu-toggle>
         <ion-list>
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
             <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
