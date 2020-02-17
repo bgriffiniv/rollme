@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 
-import { DataService } from './../../services/data/data.service';
+import { DataService } from 'src/app/services/data/data.service';
 
 @Component({
   selector: 'app-contact',

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 
-import { DataService } from './../../services/data/data.service';
-import { UserService } from './../../services/user/user.service';
+import { DataService } from 'src/app/services/data/data.service';
+import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
   selector: 'app-link',
