@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
-import { AuthService } from './../../services/auth/auth.service';
-import { GoogleAuthService } from './../../services/auth/google-auth.service';
-import { LinkedinAuthService } from './../../services/auth/linkedin-auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
+import { GoogleAuthService } from 'src/app/services/auth/google-auth.service';
+import { LinkedinAuthService } from 'src/app/services/auth/linkedin-auth.service';
 import { IonSlides } from '@ionic/angular';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 

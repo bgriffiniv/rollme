@@ -4,7 +4,7 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 import { ToastController } from '@ionic/angular';
 
 import { AuthService } from 'src/app/services/auth/auth.service';
-import { PasswordValidator } from '../../validators/password.validator';
+import { PasswordValidator } from 'src/app/validators/password.validator';
 
 @Component({
   selector: 'app-create-account',
