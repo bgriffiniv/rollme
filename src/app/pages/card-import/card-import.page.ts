@@ -55,7 +55,7 @@ export class CardImportPage implements OnInit {
          this.frontImg = this.card.frontImg;
          this.backImg = this.card.backImg;
        };
-       this.importCardFront();
+         this.importCardFront();
    }
 
    async importCardFront() {
@@ -143,6 +143,29 @@ export class CardImportPage implements OnInit {
      }, err => {
        this.showToast('There was a problem deleting your card :(');
      });
+  }
+
+  async deleteCardAlert() {
+        const alert = await this.alertController.create({
+           header: '',
+           subHeader: '',
+           message: 'Are you sure you want to delete this card?',
+           buttons: [
+          {
+            text: 'Yes',
+            handler: () => {
+              this.deleteCard();
+              console.log('Card deleted');
+            }
+          }, {
+            text: 'No',
+            handler: () => {
+              console.log('Card kept');
+              }
+            },
+          ]
+        });
+        await alert.present();
   }
 
   updateCard() {
