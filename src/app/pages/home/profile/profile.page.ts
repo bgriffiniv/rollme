@@ -3,8 +3,8 @@ import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 
-import { DataService } from './../../../services/data/data.service';
 import { UserService, User } from './../../../services/user/user.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { CardService, Card } from 'src/app/services/card/card.service';
 
 import { ActionSheetController, AlertController, ToastController } from '@ionic/angular';
@@ -44,9 +44,11 @@ export class ProfilePage implements OnInit {
     targetHeight: 374
   }
 
-  constructor(private dataService: DataService, private userService: UserService, private cardService: CardService, private activatedRoute: ActivatedRoute,
+  constructor(private authService: AuthService, private userService: UserService, private cardService: CardService, private activatedRoute: ActivatedRoute,
                 private router: Router, private camera: Camera, public actionSheetController: ActionSheetController, public alertController: AlertController, private toastCtrl: ToastController) {
     console.log("Profile page started (constructor)");
+
+    console.log('Is authenticated:', this.authService.isAuthenticated());
 
     //this.id = this.cardService.getCard();
 

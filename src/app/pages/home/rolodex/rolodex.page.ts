@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 
-import { DataService } from './../../../services/data/data.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { UserService } from './../../../services/user/user.service';
 
 @Component({
@@ -15,8 +15,9 @@ export class RolodexPage implements OnInit {
   index;
   id;
 
-  constructor(private dataService: DataService, private userService: UserService, private route: ActivatedRoute, private router: Router) {
-    //console.log("Rolodex page started (constructor)");
+  constructor(private authService: AuthService, private userService: UserService, private route: ActivatedRoute, private router: Router) {
+    console.log("Rolodex page started (constructor)");
+    console.log('Is authenticated:', this.authService.isAuthenticated());
 
     //this.id = userService.getUser();
 
@@ -30,7 +31,7 @@ export class RolodexPage implements OnInit {
     //});
   }
   deleteContact(index) {
-    this.dataService.setContact(this.id, index, false);
+    //this.dataService.setContact(this.id, index, false);
     this.refresh();
   }
 
@@ -46,14 +47,14 @@ export class RolodexPage implements OnInit {
   }
 
   refresh() {
-    this.user = this.dataService.getUser(this.id);
+    //this.user = this.dataService.getUser(this.id);
 
     // TODO: Page over this data when too large!
     this.contactDataList = [];
     for (let contactId in this.user.contacts) {
       let contactData = {
         id: contactId,
-        name: this.dataService.getUser(contactId).name
+        //name: this.dataService.getUser(contactId).name
       };
       this.contactDataList.push(contactData);
     }

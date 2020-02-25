@@ -23,7 +23,7 @@ export class UserService {
 
   constructor(private afs: AngularFirestore) {
     this.userCollection = this.afs.collection<User>('staticusers');
-    console.log(this.afs);
+    //console.log(this.afs);
     this.users = this.userCollection.snapshotChanges().pipe(
       map(actions => {
         return actions.map(a => {

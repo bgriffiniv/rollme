@@ -7,22 +7,28 @@ import * as firebase from 'firebase/app';
   providedIn: 'root'
 })
 export class AuthService {
-  currentUser: firebase.User;
   subscription;
 
   constructor(private afAuth: AngularFireAuth) {
     console.log('Auth Service constructor');
   }
 
- // Returns true if user is logged in
+  // Returns true if user is logged in
   isAuthenticated(): boolean {
-    return this.currentUser !== null;
+    //console.log('Current user:', firebase.auth().currentUser);
+    return firebase.auth().currentUser !== null;
   }
 
   // Returns current user data
   getCurrentUser(callback) {
     this.subscription = this.afAuth.authState
-    .subscribe(d => {callback(null, d)}, e => {callback(e)});
+    .subscribe(d => {
+      console.log('Successfully got auth state');
+      callback(null, d);
+    }, e => {
+      console.log('Somethiconsong went wrong:', e.message);
+      callback(e);
+    });
   }
 
   signUp(email: string, password: string, callback) {
