@@ -30,7 +30,7 @@ export class CardService {
       );
   }
 
-  getCards(): Observable<Card[]> {
+  listCards(): Observable<Card[]> {
       return this.cards;
   }
 

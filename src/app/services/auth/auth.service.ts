@@ -19,6 +19,10 @@ export class AuthService {
     return firebase.auth().currentUser !== null;
   }
 
+  getCurrentUserId(): string {
+    return firebase.auth().currentUser.uid;
+  }
+
   // Returns current user data
   getCurrentUser(callback) {
     this.subscription = this.afAuth.authState

@@ -35,7 +35,7 @@ export class UserService {
     );
   }
 
-  getUsers(): Observable<User[]> {
+  listUsers(): Observable<User[]> {
     return this.users;
   }
 

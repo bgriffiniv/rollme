@@ -72,8 +72,8 @@ export class ProfilePage implements OnInit {
           this.card.backImg = this.router.getCurrentNavigation().extras.state.cardDataBack;
       };
 
-      this.users = this.userService.getUsers();
-      this.cards = this.cardService.getCards();
+      this.users = this.userService.listUsers();
+      this.cards = this.cardService.listCards();
 
       this.isFrontCaptured = true;
       this.newCardAlert();
