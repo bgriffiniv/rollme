@@ -14,11 +14,14 @@ export interface Card {
 })
 export class CardService {
   private cards: Observable<Card[]>;
+  private staticCards: Observable<Card[]>;
+  private staticCardCollection: AngularFirestoreCollection<Card>;
   private cardCollection: AngularFirestoreCollection<Card>;
 
   constructor(private afs: AngularFirestore) {
-      this.cardCollection = this.afs.collection<Card>('static_cards');
-      console.log(this.afs);
+      this.staticCardCollection = this.afs.collection<Card>('static_cards');
+      this.cardCollection = this.afs.collection<Card>('cards');
+
       this.cards = this.cardCollection.snapshotChanges().pipe(
         map(actions => {
           return actions.map(a => {
@@ -29,6 +32,9 @@ export class CardService {
         })
       );
   }
+
+  listStaticCards()
+
 
   listCards(): Observable<Card[]> {
       return this.cards;
