@@ -3,6 +3,7 @@ import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { UserService } from './../../../services/user/user.service';
+import { CardService } from 'src/app/services/card/card.service';
 
 @Component({
   selector: 'app-rolodex',
@@ -15,9 +16,12 @@ export class RolodexPage implements OnInit {
   index;
   id;
 
-  constructor(private authService: AuthService, private userService: UserService, private route: ActivatedRoute, private router: Router) {
+  staticCards;
+
+  constructor(private authService: AuthService, private userService: UserService, private cardService: CardService,
+    private route: ActivatedRoute, private router: Router
+  ) {
     console.log("Rolodex page started (constructor)");
-    console.log('Is authenticated:', this.authService.isAuthenticated());
 
     //this.id = userService.getUser();
 
@@ -30,6 +34,12 @@ export class RolodexPage implements OnInit {
       //this.refresh();
     //});
   }
+
+  listStaticCards() {
+    return this.cardService.listStaticCards();
+  }
+
+
   deleteContact(index) {
     //this.dataService.setContact(this.id, index, false);
     this.refresh();
