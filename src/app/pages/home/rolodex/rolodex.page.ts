@@ -3,7 +3,7 @@ import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { UserService } from './../../../services/user/user.service';
-import { CardService } from 'src/app/services/card/card.service';
+import { CardService, Card } from 'src/app/services/card/card.service';
 
 @Component({
   selector: 'app-rolodex',
@@ -14,29 +14,23 @@ export class RolodexPage implements OnInit {
   user;
   contactDataList;
   index;
+  staticCards: Card[];
   id;
-
-  staticCards;
 
   constructor(private authService: AuthService, private userService: UserService, private cardService: CardService,
     private route: ActivatedRoute, private router: Router
   ) {
-    console.log("Rolodex page started (constructor)");
+    console.log("Rolodex Page (constructor)");
 
-    //this.id = userService.getUser();
-
-    //this.route.data.subscribe((data) => {
-      //if (this.router.getCurrentNavigation().extras.state) {
-        //let index = this.router.getCurrentNavigation().extras.state.data;
-        //this.dataService.setContact(this.id, index, true);
-      //}
-
-      //this.refresh();
-    //});
+    this.cardService.listStaticCards().subscribe((data) => {
+      if (data) {
+        this.staticCards = data;
+      }
+    });
   }
 
-  listStaticCards() {
-    return this.cardService.listStaticCards();
+  ngOnInit() {
+    console.log("Rolodex Page (init)");
   }
 
 
@@ -69,8 +63,4 @@ export class RolodexPage implements OnInit {
       this.contactDataList.push(contactData);
     }
   }
-
-  ngOnInit() {
-  }
-
 }
