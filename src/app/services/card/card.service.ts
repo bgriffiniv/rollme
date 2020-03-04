@@ -37,6 +37,10 @@ export class CardService {
     return this.staticCardCollection.valueChanges();
   }
 
+  getStaticCards(id: string): Observable<Card> {
+    return this.staticCardCollection.doc<Card>(id).valueChanges();
+  }
+
   listCards(): Observable<Card[]> {
       return this.cardCollection.valueChanges();
   }

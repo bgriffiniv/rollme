@@ -5,13 +5,16 @@
 <ion-content>
 
   <ion-list>
-    <ion-item *ngFor="let staticCard of staticCards" lines="none">
+    <ion-item *ngFor="let staticCard of staticCards | async" lines="none">
       <ion-card>
 
         <ion-card-header>
           <ion-card-title>
             {{staticCard.name}}
           </ion-card-title>
+          <ion-card-subtitle>
+          {{staticCard.id}}
+        </ion-card-subtitle>
         </ion-card-header>
 
         <ion-card-content>
