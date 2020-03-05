@@ -16,10 +16,16 @@ export class CardService {
   private staticCardCollection: AngularFirestoreCollection<Card>;
   private cardCollection: AngularFirestoreCollection<Card>;
 
+  private staticCards: Observable<Card[]>;
+  private cards: Observable<Card[]>;
+
   constructor(private afs: AngularFirestore) {
     console.log("Card Service (constructor)");
     this.staticCardCollection = this.afs.collection<Card>('static_cards');
     this.cardCollection = this.afs.collection<Card>('cards');
+    this.staticCardCollection = this.staticCardCollection.valueChanges();
+    this.cardCollection = this.cardCollection.valueChanges();
+
     /*
     this.cards = this.cardCollection.snapshotChanges().pipe(
       map(actions => {
@@ -34,36 +40,46 @@ export class CardService {
   }
 
   listStaticCards(): Observable<Card[]> {
-    return this.staticCardCollection.valueChanges();
+    return this.staticCards;
   }
 
   getStaticCards(id: string): Observable<Card> {
     return this.staticCardCollection.doc<Card>(id).valueChanges();
   }
 
+  addStaticCard(card: Card): Promise<void> {
+    let newCardId = this.afs.createId();
+    card.id = newCardId;
+    return this.staticCardCollection.doc<Card>(newCardId).set(card);
+  }
+
+  updateStaticCard(card: Card): Promise<void> {
+    return this.staticCardCollection.doc<Card>(card.id).update(card);
+  }
+
+  deleteStaticCard(id: string): Promise<void> {
+    return this.staticCardCollection.doc<Card>(id).delete();
+  }
+
   listCards(): Observable<Card[]> {
-      return this.cardCollection.valueChanges();
+      return this.cards;
   }
 
   getCard(id: string): Observable<Card> {
-     return this.cardCollection.doc<Card>(id).valueChanges().pipe(
-       take(1),
-       map(card => {
-         card.id = id;
-         return card
-       })
-     );
+     return this.cardCollection.doc<Card>(id).valueChanges();
   }
 
-  addCard(card: Card): Promise<DocumentReference> {
-    return this.cardCollection.add(card);
+  addCard(card: Card): Promise<void> {
+    let newCardId = this.afs.createId();
+    card.id = newCardId;
+    return this.cardCollection.doc<Card>(newCardId).set(card);
   }
 
   updateCard(card: Card): Promise<void> {
-    return this.cardCollection.doc(card.id).update({ frontImg: card.frontImg, backImg: card.backImg });
+    return this.cardCollection.doc<Card>(card.id).update(card);
   }
 
   deleteCard(id: string): Promise<void> {
-    return this.cardCollection.doc(id).delete();
+    return this.cardCollection.doc<Card>(id).delete();
   }
 }
