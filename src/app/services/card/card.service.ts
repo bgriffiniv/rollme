@@ -23,8 +23,8 @@ export class CardService {
     console.log("Card Service (constructor)");
     this.staticCardCollection = this.afs.collection<Card>('static_cards');
     this.cardCollection = this.afs.collection<Card>('cards');
-    this.staticCardCollection = this.staticCardCollection.valueChanges();
-    this.cardCollection = this.cardCollection.valueChanges();
+    this.staticCards = this.staticCardCollection.valueChanges();
+    this.cards = this.cardCollection.valueChanges();
 
     /*
     this.cards = this.cardCollection.snapshotChanges().pipe(

@@ -5,6 +5,8 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { UserService } from './../../../services/user/user.service';
 import { CardService, Card } from 'src/app/services/card/card.service';
 
+import { Observable } from 'rxjs';
+
 @Component({
   selector: 'app-rolodex',
   templateUrl: './rolodex.page.html',
@@ -14,7 +16,7 @@ export class RolodexPage implements OnInit {
   user;
   contactDataList;
   index;
-  staticCards: Card[];
+  staticCards: Observable<Card[]>;
   id;
 
   constructor(private authService: AuthService, private userService: UserService, private cardService: CardService,
@@ -22,11 +24,7 @@ export class RolodexPage implements OnInit {
   ) {
     console.log("Rolodex Page (constructor)");
 
-    this.cardService.listStaticCards().subscribe((data) => {
-      if (data) {
-        this.staticCards = data;
-      }
-    });
+    this.staticCards = this.cardService.listStaticCards();
   }
 
   ngOnInit() {
