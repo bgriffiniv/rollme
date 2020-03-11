@@ -17,6 +17,7 @@ export class RolodexPage implements OnInit {
   contactDataList;
   index;
   staticCards: Observable<Card[]>;
+  cards: Observable<Card[]>;
   id;
 
   constructor(private authService: AuthService, private userService: UserService, private cardService: CardService,
@@ -24,7 +25,8 @@ export class RolodexPage implements OnInit {
   ) {
     console.log("Rolodex Page (constructor)");
 
-    this.staticCards = this.cardService.listStaticCardsByOwner(this.authService.getCurrentUserId());
+    this.staticCards = this.cardService.listStaticCardsByHolder(this.authService.getCurrentUserId());
+    this.cards = this.cardService.listCardsByHolder(this.authService.getCurrentUserId());
   }
 
   ngOnInit() {
