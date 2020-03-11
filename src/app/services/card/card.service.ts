@@ -44,11 +44,11 @@ export class CardService {
   addStaticCard(card: Card): Promise<void> {
     //let newCardId = this.afs.createId();
     //card.id = newCardId;
-    return this.staticCardCollection.add(card);
+    return this.staticCardCollection.doc<Card>().set(card);
   }
 
   getStaticCards(id: string): Observable<Card> {
-    return this.staticCardCollection.doc<Card>(id).valueChanges({idField: 'id'});
+    return this.staticCardCollection.doc<Card>(id).valueChanges();
   }
 
   updateStaticCard(card: Card): Promise<void> {
@@ -74,11 +74,11 @@ export class CardService {
   addCard(card: Card): Promise<void> {
     //let newCardId = this.afs.createId();
     //card.id = newCardId;
-    return this.cardCollection.add(card);
+    return this.cardCollection.doc<Card>().set(card);
   }
 
   getCard(id: string): Observable<Card> {
-     return this.cardCollection.doc<Card>(id).valueChanges({idField: 'id'});
+     return this.cardCollection.doc<Card>(id).valueChanges();
   }
 
   updateCard(card: Card): Promise<void> {
