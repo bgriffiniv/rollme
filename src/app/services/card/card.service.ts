@@ -63,6 +63,14 @@ export class CardService {
       return this.cards;
   }
 
+  listCardsByOwner(ownerId: string): Observable<Card[]> {
+    return this.afs.collection<Card>('cards', ref => ref.where('owner', '==', ownerId)).valueChanges({idField:'id'});
+  }
+
+  listCardsByHolder(holderId: string): Observable<Card[]> {
+    return this.afs.collection<Card>('cards', ref => ref.where('holders', 'array-contains', holderId)).valueChanges({idField:'id'});
+  }
+
   addCard(card: Card): Promise<void> {
     //let newCardId = this.afs.createId();
     //card.id = newCardId;
