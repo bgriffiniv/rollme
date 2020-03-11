@@ -24,7 +24,7 @@ export class RolodexPage implements OnInit {
   ) {
     console.log("Rolodex Page (constructor)");
 
-    this.staticCards = this.cardService.listStaticCards();
+    this.staticCards = this.cardService.listStaticCardsByOwner(this.authService.getCurrentUserId());
   }
 
   ngOnInit() {
