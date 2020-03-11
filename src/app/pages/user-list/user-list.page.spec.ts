@@ -24,4 +24,11 @@ describe('UserListPage', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should list all users', () => {
+    let expected = [];
+    let actual = [];
+
+    expect(actual).toDeepEqual(expected);
+  });
 });

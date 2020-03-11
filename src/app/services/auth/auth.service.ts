@@ -34,6 +34,7 @@ export class AuthService {
       callback(e);
     });
   }
+*/
 
   signUp(email: string, password: string, callback) {
     this.afAuth.auth.createUserWithEmailAndPassword(email, password)

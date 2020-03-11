@@ -7,7 +7,6 @@ import { IonSlides } from '@ionic/angular';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 
 
-
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.page.html',
@@ -28,11 +27,11 @@ export class SignupPage implements OnInit {
   constructor(private router: Router, private activatedRoute: ActivatedRoute, public formBuilder: FormBuilder, private authService: AuthService, private googleAuthService: GoogleAuthService, private linkedinAuthService: LinkedinAuthService) {
     this.registerForm = new FormGroup({
       "mobile": new FormControl('', Validators.compose([
-        Validators.pattern('[0-9]+[0-9]+[0-9]+[0-9]+[0-9]+[0-9]+[0-9]+[0-9]+[0-9]+[0-9]{1,10}$'),
+        Validators.pattern('^[0-9]+[0-9]+[0-9]+[0-9]+[0-9]+[0-9]+[0-9]+[0-9]+[0-9]+[0-9]{1,10}$'),
         Validators.maxLength(10),
         Validators.minLength(10)
       ])),
-      "email": new FormControl('', [Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,3}$')])
+      "email": new FormControl('', [Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+[.][a-zA-Z]{2,}$')])
     });
   }
 
@@ -46,14 +45,11 @@ export class SignupPage implements OnInit {
      };
 
      let navigationExtras: NavigationExtras = {
-          state: {
-            data: this.signupMethod,
-            mobile: this.mobile,
-            email: this.email
-
-
-
-          },
+        state: {
+          data: this.signupMethod,
+          mobile: this.mobile,
+          email: this.email
+        },
      };
 
      this.router.navigateByUrl('/create-account', navigationExtras);
