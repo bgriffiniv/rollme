@@ -48,7 +48,7 @@ export class CardService {
   }
 
   listStaticCardsByHolder(holderId: string): Observable<Card[]> {
-    return this.staticCardCollection.where('holder', '==', ownerId);
+    return this.staticCardCollection.where('holder', '==', holderId);
   }
 
   addStaticCard(card: Card): Promise<void> {
