@@ -18,9 +18,6 @@ export class SignupPage implements OnInit {
   segment = 0;
   signupMethod = "Mobile";
 
-  mobile: '';
-  email: '';
-
   registerForm: FormGroup;
   isSubmitted = false;
 
@@ -47,8 +44,8 @@ export class SignupPage implements OnInit {
      let navigationExtras: NavigationExtras = {
         state: {
           data: this.signupMethod,
-          mobile: this.mobile,
-          email: this.email
+          mobile: this.registerForm.value.mobile,
+          email: this.registerForm.value.email
         },
      };
 

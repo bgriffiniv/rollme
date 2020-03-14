@@ -89,11 +89,15 @@ export class AppComponent {
   rollout() {
     this.authService.signOut((error, data) => {
       if (error) {
-        console.log('Login Page : Sign Out Failure');
+        console.log('Menu : Sign Out Failure');
       } else {
-        console.log('Login Page : Sign Out Success');
+        console.log('Menu : Sign Out Success');
       }
       this.router.navigateByUrl('/login');
     });
+  }
+
+  goToHomePage() {
+    this.router.navigateByUrl('/home');
   }
 }

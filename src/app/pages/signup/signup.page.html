@@ -41,28 +41,33 @@
         <div [ngSwitch]="signupMethod" class="span">
           <ion-item class="">
           <form [formGroup]="registerForm">
-            <ion-input formControlName="mobile" [(ngModel)]="mobile" *ngSwitchCase="'Mobile'" type="tel" inputmode="numeric" placeholder="Phone Number"></ion-input>
+            <ion-input formControlName="mobile" *ngSwitchCase="'Mobile'" type="tel" inputmode="numeric" placeholder="Phone Number"></ion-input>
           </form>
           <form [formGroup]="registerForm">
-            <ion-input formControlName="email" [(ngModel)]="email" *ngSwitchCase="'Email'" type="email" placeholder="Email Address"></ion-input>
+            <ion-input formControlName="email" *ngSwitchCase="'Email'" type="email" placeholder="Email Address"></ion-input>
           </form>
           </ion-item>
         </div>
         <!-- Error messages -->
-        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.mobile.touched || errorControl.email.touched">
+        <span class="error ion-padding" *ngIf="isSubmitted &&
+        (signupMethod=='Mobile' && errorControl.mobile.touched && errorControl.mobile.value.length==0) ||
+        (signupMethod=='Email' && errorControl.email.touched && errorControl.email.value.length==0)">
           <ion-icon name="alert" color="danger"></ion-icon>Please enter a mobile number or email address.
         </span>
-        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.mobile.errors?.minLength">
+        <span class="error ion-padding" *ngIf="isSubmitted && signupMethod=='Mobile' && errorControl.mobile.errors?.minLength">
           <ion-icon name="alert" color="danger"></ion-icon>Entries must be 10 digits to be valid.
         </span>
-        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.email.errors?.pattern">
+        <span class="error ion-padding" *ngIf="isSubmitted && signupMethod=='Email' && errorControl.email.errors?.pattern">
             <ion-icon name="alert" color="danger"></ion-icon>The email address you entered is invalid.
         </span>
         <ion-slides #inputmethods (ionSlideDidChange)="slideChanged()">
           <ion-slide></ion-slide>
           <ion-slide></ion-slide>
         </ion-slides>
-        <ion-button (click)="submitForm()" expand="block" shape="round" color="primary" class="nxt-btn" [disabled]="(!mobile && !email)" padding>
+        <ion-button (click)="submitForm()" expand="block" shape="round" color="primary" class="nxt-btn"
+        [disabled]="(signupMethod=='Mobile' && !errorControl.mobile.errors?.minLength) &&
+        (signupMethod=='Email' && !errorControl.email.errors?.pattern)"
+        padding>
           Next
         </ion-button>
 

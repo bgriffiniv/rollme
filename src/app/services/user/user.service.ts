@@ -18,8 +18,12 @@ export interface User {
   providedIn: 'root'
 })
 export class UserService {
-  private users: Observable<User[]>;
+  //private users: Observable<User[]>;
+  //private staticUsers: Observable<User[]>;
   private userCollection: AngularFirestoreCollection<User>;
+  private staticUserCollection: AngularFirestoreCollection<User>;
+
+  subscription: any;
 
   constructor(private afs: AngularFirestore) {
     this.userCollection = this.afs.collection<User>('staticusers');
@@ -39,25 +43,30 @@ export class UserService {
     return this.users;
   }
 
-  getUser(id: string): Observable<User> {
-    return this.userCollection.doc<User>(id).valueChanges().pipe(
-      take(1),
-      map(user => {
-        user.id = id;
-        return user
-      })
-    );
+  getUser(id: string, callback) {
+    this.userCollection.doc<User>(id).get()
+    .subscribe(d => {
+      let user = d.data() as User;
+      user.id = d.id;
+      callback(null, user);
+    }, e => {callback(e);});
   }
 
-  addUser(user: User): Promise<DocumentReference> {
-    return this.userCollection.add(user);
+  addUser(user: User, callback) {
+    this.userCollection.doc<User>(user.id).set(user)
+    .then(d => {callback(null,d);})
+    .catch(e => {callback(e);});
   }
 
-  updateUser(user: User): Promise<void> {
-    return this.userCollection.doc(user.id).update({ name: user.name, bio: user.bio });
+  updateUser(user: User, callback) {
+    this.userCollection.doc<User>(user.id).update(user)
+    .then(d => {callback(null,d);})
+    .catch(e => {callback(e);});
   }
 
-  deleteUser(id: string): Promise<void> {
-    return this.userCollection.doc(id).delete();
+  deleteUser(user: User, callback) {
+    return this.userCollection.doc(user.id).delete()
+    .then(d => {callback(null,d);})
+    .catch(e => {callback(e);});
   }
 }

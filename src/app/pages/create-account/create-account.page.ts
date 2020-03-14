@@ -13,7 +13,6 @@ import { PasswordValidator } from '../../validators/password.validator';
 })
 export class CreateAccountPage implements OnInit {
 
-  firstName: '';
   signupMethod: '';
 
   mobile: '';
@@ -68,14 +67,19 @@ export class CreateAccountPage implements OnInit {
         this.isSubmitted = false;
         this.signupForm.setErrors( { 'signUp' : true } );
       } else {
-        console.log('Create Account Page : Sign Up Success : navigating to Home Page');
+        console.log('Create Account Page : Sign Up Success : navigating to Successful Signup Page');
         this.showToast('Account created!');
-        let navigationExtras: NavigationExtras = {
+        this.authService.getCurrentUser((error, currentUser) => {
+          let navigationExtras: NavigationExtras = {
           state: {
-            data: this.firstName
+            uid: currentUser.uid,
+            firstName: this.signupForm.value.firstName,
+            lastName: this.signupForm.value.lastName,
+            email: this.email,
+            mobile: this.mobile
           }
         };
-        this.router.navigateByUrl('/home', navigationExtras);
+        this.router.navigateByUrl('/successful-signup', navigationExtras);        });
       }
     });
   }
