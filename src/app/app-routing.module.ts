@@ -37,7 +37,6 @@ const routes: Routes = [
   { path: 'edit', loadChildren: './pages/edit/edit.module#EditPageModule'},
 
   { path: 'card-import', loadChildren: './pages/card-import/card-import.module#CardImportPageModule' },
-  { path: 'profile/:frontimg', loadChildren: './pages/home/profile/profile.module#ProfilePageModule' },
 
   { path: 'cards', loadChildren: './pages/home/profile/profile.module#ProfilePageModule'},
   { path: 'card', loadChildren: './pages/card-import/card-import.module#CardImportPageModule' },

@@ -18,8 +18,7 @@ export interface User {
   providedIn: 'root'
 })
 export class UserService {
-  //private users: Observable<User[]>;
-  //private staticUsers: Observable<User[]>;
+  private users: Observable<User[]>;
   private userCollection: AngularFirestoreCollection<User>;
   private staticUserCollection: AngularFirestoreCollection<User>;
 
@@ -39,7 +38,7 @@ export class UserService {
     this.subscription.unsubscribe();
   }
 
-  getStaticUsers(callback) {
+  listStaticUsers(callback) {
     this.staticUserCollection.get()
     .subscribe(a => {
       let staticUsers = [];
@@ -77,6 +76,10 @@ export class UserService {
     return this.staticUserCollection.doc(user.id).delete()
     .then(d => {callback(null,d);})
     .catch(e => {callback(e);});
+  }
+
+  listUsers(): Observable<User[]> {
+    return this.users;
   }
 
   getUser(id: string, callback) {

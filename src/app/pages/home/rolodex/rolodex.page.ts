@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 
-import { DataService } from './../../../services/data/data.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { UserService } from './../../../services/user/user.service';
+import { CardService, Card } from 'src/app/services/card/card.service';
+
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-rolodex',
@@ -13,24 +16,26 @@ export class RolodexPage implements OnInit {
   user;
   contactDataList;
   index;
+  staticCards: Observable<Card[]>;
+  cards: Observable<Card[]>;
   id;
 
-  constructor(private dataService: DataService, private userService: UserService, private route: ActivatedRoute, private router: Router) {
-    //console.log("Rolodex page started (constructor)");
+  constructor(private authService: AuthService, private userService: UserService, private cardService: CardService,
+    private route: ActivatedRoute, private router: Router
+  ) {
+    console.log("Rolodex Page (constructor)");
 
-    //this.id = userService.getUser();
-
-    //this.route.data.subscribe((data) => {
-      //if (this.router.getCurrentNavigation().extras.state) {
-        //let index = this.router.getCurrentNavigation().extras.state.data;
-        //this.dataService.setContact(this.id, index, true);
-      //}
-
-      //this.refresh();
-    //});
+    this.staticCards = this.cardService.listStaticCardsByHolder(this.authService.getCurrentUserId());
+    this.cards = this.cardService.listCardsByHolder(this.authService.getCurrentUserId());
   }
+
+  ngOnInit() {
+    console.log("Rolodex Page (init)");
+  }
+
+
   deleteContact(index) {
-    this.dataService.setContact(this.id, index, false);
+    //this.dataService.setContact(this.id, index, false);
     this.refresh();
   }
 
@@ -46,20 +51,16 @@ export class RolodexPage implements OnInit {
   }
 
   refresh() {
-    this.user = this.dataService.getUser(this.id);
+    //this.user = this.dataService.getUser(this.id);
 
     // TODO: Page over this data when too large!
     this.contactDataList = [];
     for (let contactId in this.user.contacts) {
       let contactData = {
         id: contactId,
-        name: this.dataService.getUser(contactId).name
+        //name: this.dataService.getUser(contactId).name
       };
       this.contactDataList.push(contactData);
     }
   }
-
-  ngOnInit() {
-  }
-
 }
