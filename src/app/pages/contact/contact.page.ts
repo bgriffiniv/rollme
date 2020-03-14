@@ -22,7 +22,7 @@ export class ContactPage implements OnInit {
       contactId = this.router.getCurrentNavigation().extras.state.data;
     }
 
-    this.contact = this.userService.getUser(contactId);
+    this.contact = this.userService.getUser(contactId, () => {});
     this.keys = Object.keys(this.contact);
     this.keys.splice(this.keys.indexOf("contacts"), 1);
 

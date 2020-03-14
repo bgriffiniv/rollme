@@ -14,7 +14,6 @@ import { ActionSheetController, AlertController, ToastController } from '@ionic/
   templateUrl: './profile.page.html',
   styleUrls: ['./profile.page.scss'],
 })
-
 export class ProfilePage implements OnInit {
   private users: Observable<User[]>;
   private cards: Observable<Card[]>;
@@ -24,12 +23,11 @@ export class ProfilePage implements OnInit {
     frontImg: '',
     backImg: ''
   };
-
   user;
   keys;
 
   frontImg: string;
-  isFrontCaptured;
+  isFrontCaptured = false;
 
   cameraOptions: CameraOptions = {
     // Some common settings are 20, 50, and 100
@@ -76,7 +74,6 @@ export class ProfilePage implements OnInit {
 
       this.isFrontCaptured = true;
       this.newCardAlert();
-
   }
 
   goToCardImportPage() {

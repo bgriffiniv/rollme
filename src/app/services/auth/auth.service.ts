@@ -7,10 +7,12 @@ import * as firebase from 'firebase/app';
   providedIn: 'root'
 })
 export class AuthService {
+  user: Observable<firebase.User>;
   subscription;
 
   constructor(private afAuth: AngularFireAuth) {
     console.log('Auth Service constructor');
+    this.user = afAuth.authState;
   }
 
   // Returns true if user is logged in
@@ -34,7 +36,6 @@ export class AuthService {
       callback(e);
     });
   }
-*/
 
   signUp(email: string, password: string, callback) {
     this.afAuth.auth.createUserWithEmailAndPassword(email, password)

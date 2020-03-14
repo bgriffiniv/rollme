@@ -8,6 +8,12 @@ const routes: Routes = [
       pathMatch: 'full'
   },
 
+  // authentication pages
+  { path: 'login', loadChildren: './pages/authentication/login/login.module#LoginPageModule' },
+  { path: 'signup', loadChildren: './pages/authentication/signup/signup.module#SignupPageModule' },
+  { path: 'create-account', loadChildren: './pages/authentication/create-account/create-account.module#CreateAccountPageModule' },
+  { path: 'successful-signup', loadChildren: './pages/authentication/successful-signup/successful-signup.module#SuccessfulSignupPageModule' },
+
   { path: 'about', loadChildren: './pages/about/about.module#AboutPageModule' },
   { path: 'faq', loadChildren: './pages/faq/faq.module#FaqPageModule' },
   { path: 'license', loadChildren: './pages/license/license.module#LicensePageModule' },
@@ -15,9 +21,6 @@ const routes: Routes = [
   { path: 'feedback', loadChildren: './pages/feedback/feedback.module#FeedbackPageModule' },
   { path: 'invite', loadChildren: './pages/invite/invite.module#InvitePageModule' },
   { path: 'password', loadChildren: './pages/password/password.module#PasswordPageModule' },
-  { path: 'login', loadChildren: './pages/login/login.module#LoginPageModule' },
-  { path: 'signup', loadChildren: './pages/signup/signup.module#SignupPageModule' },
-
 
   { path: 'home', loadChildren: './pages/home/home.module#HomePageModule' },
   { path: 'rolodex', loadChildren: './pages/home/rolodex/rolodex.module#RolodexPageModule' },
@@ -31,8 +34,6 @@ const routes: Routes = [
 
   { path: 'link', loadChildren: './pages/link/link.module#LinkPageModule' },
   { path: 'contact', loadChildren: './pages/contact/contact.module#ContactPageModule' },
-  { path: 'create-account', loadChildren: './pages/create-account/create-account.module#CreateAccountPageModule' },
-  { path: 'successful-signup', loadChildren: './pages/successful-signup/successful-signup.module#SuccessfulSignupPageModule' },
   { path: 'card-import', loadChildren: './pages/card-import/card-import.module#CardImportPageModule' },
 
   { path: 'cards', loadChildren: './pages/home/profile/profile.module#ProfilePageModule'},
