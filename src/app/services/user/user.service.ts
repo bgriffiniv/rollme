@@ -23,8 +23,6 @@ export class UserService {
   private userCollection: AngularFirestoreCollection<User>;
   private staticUserCollection: AngularFirestoreCollection<User>;
 
-  filteredUsers: Observable<User[]>;
-
   constructor(private afs: AngularFirestore) {
     console.log('Auth Service constructor');
     this.userCollection = this.afs.collection<User>('users');

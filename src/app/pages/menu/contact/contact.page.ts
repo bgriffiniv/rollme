@@ -12,7 +12,11 @@ export class ContactPage implements OnInit {
   contact;
   keys;
 
-  constructor(private userService: UserService, private route: ActivatedRoute, private router: Router) {
+  constructor(
+    private userService: UserService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
     console.log("Contact page started (constructor)");
 
     let contactId;
@@ -22,7 +26,11 @@ export class ContactPage implements OnInit {
       contactId = this.router.getCurrentNavigation().extras.state.data;
     }
 
-    this.contact = this.userService.getUser(contactId, () => {});
+    this.userService.getUser(contactId, (err, data) => {
+      if (!err) {
+        this.card = data;
+      }
+    });
     this.keys = Object.keys(this.contact);
     this.keys.splice(this.keys.indexOf("contacts"), 1);
 

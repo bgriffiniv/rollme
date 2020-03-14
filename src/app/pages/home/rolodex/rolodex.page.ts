@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 
 import { AuthService } from 'src/app/services/auth/auth.service';
-import { UserService, User } from './../../../services/user/user.service';
+import { UserService, User } from 'src/app/services/user/user.service';
 import { CardService, Card } from 'src/app/services/card/card.service';
 
 import { Observable } from 'rxjs';
