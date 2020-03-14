@@ -6,15 +6,6 @@
         <img ng-show="isFrontCaptured" [src]="card.frontImg" alt=""/>
     </ion-card>
 
-    <ion-card button style="height:172px;" [routerLink]="['/user', user.id]" *ngFor="let user of (users | async)" lines="none">
-      <ion-avatar class="image">
-        <img [src]="frontImg"/>
-      </ion-avatar>
-      <ion-card-header>
-        <ion-card-subtitle>{{ user.name }}</ion-card-subtitle>
-      </ion-card-header>
-    </ion-card>
-
     <div class="floating-fab-btn">
       <ion-fab vertical="top" horizontal="start" edge slot="fixed" padding>
         <ion-fab-button size="small" (click)="createACard()">

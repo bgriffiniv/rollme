@@ -19,7 +19,6 @@ export class LoginPage implements OnInit {
       "username": new FormControl('', Validators.compose([
         Validators.required,
         Validators.pattern('^([(]?[0-9]{3}[)]?[. -]?[0-9]{3}[. -]?[0-9]{4})|([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+[.][a-zA-Z]{2,})$'),
-        Validators.maxLength(20),
         Validators.minLength(10)
       ])),
       "password": new FormControl('', Validators.compose([

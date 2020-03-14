@@ -22,12 +22,13 @@ export class UserDetailsPage implements OnInit {
 
   ngOnInit() {
     console.log("User Details page (init)");
-
     this.id = this.activatedRoute.snapshot.paramMap.get('id');
-
     if (this.id) {
       console.log("current id: ", this.id);
-      this.userService.getUser(this.id).subscribe(user => {
+      this.userService.getStaticUser(this.id, (err, user) => {
+        if (err) {
+          console.log(err);
+        }
         console.log("got user: ", user);
         this.user = user;
       });
@@ -42,29 +43,37 @@ export class UserDetailsPage implements OnInit {
   }
 
   addUser() {
-    this.userService.addUser(this.user).then(() => {
-      this.router.navigateByUrl('/home/profile');
-      this.showToast('User added');
-    }, err => {
-      this.showToast('There was a problem adding your user :(');
+    this.userService.addStaticUser(this.user, (error, data) => {
+      if (error) {
+        this.showToast('There was a problem adding your user :(');
+      } else {
+        this.showToast('User added!');
+      }
+
+      this.router.navigateByUrl('/users');
     });
   }
 
   deleteUser() {
-  console.log('user id: ' + this.user.id);
-    this.userService.deleteUser(this.user.id).then(() => {
-      this.router.navigateByUrl('/profile');
-      this.showToast('User deleted');
-    }, err => {
-      this.showToast('There was a problem deleting your user :(');
+    console.log('user id: ' + this.user.id);
+    this.userService.deleteStaticUser(this.user, (error, data) => {
+      if (error) {
+        this.showToast('There was a problem deleting your user :(');
+      } else {
+        this.showToast('User deleted');
+      }
+      this.router.navigateByUrl('/users');
     });
   }
 
   updateUser() {
-    this.userService.updateUser(this.user).then(() => {
-      this.showToast('User updated');
-    }, err => {
-      this.showToast('There was a problem updating your user :(');
+    this.userService.updateStaticUser(this.user, (error, data) => {
+      if (error) {
+        this.showToast('There was a problem updating your user :(');
+      } else {
+        this.showToast('User updated!');
+      }
+      this.router.navigateByUrl('/users');
     });
   }
 

@@ -11,7 +11,8 @@ import { UserService, User } from 'src/app/services/user/user.service';
   styleUrls: ['./user-list.page.scss'],
 })
 export class UserListPage implements OnInit {
-  private users: Observable<User[]>;
+
+  users:any[];
 
   constructor(private userService: UserService, private route: ActivatedRoute, private router: Router) {
     console.log("User List page started (constructor)");
@@ -19,7 +20,13 @@ export class UserListPage implements OnInit {
 
   ngOnInit() {
     console.log("User List page started (init)");
-    this.users = this.userService.getUsers();
+    this.userService.getStaticUsers((error, staticUsers) => {
+      if (error) {
+        console.log(error);
+      }
+      this.users = staticUsers;
+      console.log(staticUsers);
+    });
   }
 
 }
