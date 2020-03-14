@@ -26,57 +26,21 @@ export class UserService {
   subscription: any;
 
   constructor(private afs: AngularFirestore) {
-    console.log('Auth Service constructor');
-    this.userCollection = this.afs.collection<User>('users');
-    this.staticUserCollection = this.afs.collection<User>('static_users');
+    this.userCollection = this.afs.collection<User>('staticusers');
+    //console.log(this.afs);
+    this.users = this.userCollection.snapshotChanges().pipe(
+      map(actions => {
+        return actions.map(a => {
+          const data = a.payload.doc.data();
+          const id = a.payload.doc.id;
+          return { id, ...data };
+        });
+      })
+    );
   }
 
-  ngOnInit() {
-    console.log('Auth Service init');
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
-
-  getStaticUsers(callback) {
-    this.staticUserCollection.get()
-    .subscribe(a => {
-      let staticUsers = [];
-      a.forEach(b => {
-        let staticUser = b.data() as User;
-        staticUser.id = b.id;
-        staticUsers.push(staticUser);
-      });
-      callback(null, staticUsers);
-    }, e => {callback(e);});
-  }
-
-  getStaticUser(id: string, callback) {
-    this.staticUserCollection.doc<User>(id).get()
-    .subscribe(d => {
-      let staticUser = d.data() as User;
-      staticUser.id = d.id;
-      callback(null, staticUser);
-    }, e => {callback(e);});
-  }
-
-  addStaticUser(user: User, callback) {
-    this.staticUserCollection.add(user)
-    .then(d => {callback(null,d);})
-    .catch(e => {callback(e);});
-  }
-
-  updateStaticUser(user: User, callback) {
-    this.staticUserCollection.doc<User>(user.id).update(user)
-    .then(d => {callback(null,d);})
-    .catch(e => {callback(e);});
-  }
-
-  deleteStaticUser(user: User, callback) {
-    return this.staticUserCollection.doc(user.id).delete()
-    .then(d => {callback(null,d);})
-    .catch(e => {callback(e);});
+  listUsers(): Observable<User[]> {
+    return this.users;
   }
 
   getUser(id: string, callback) {

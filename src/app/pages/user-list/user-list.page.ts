@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 
-import { DataService } from './../../services/data/data.service';
 import { UserService, User } from 'src/app/services/user/user.service';
 
 @Component({
@@ -20,13 +19,7 @@ export class UserListPage implements OnInit {
 
   ngOnInit() {
     console.log("User List page started (init)");
-    this.userService.getStaticUsers((error, staticUsers) => {
-      if (error) {
-        console.log(error);
-      }
-      this.users = staticUsers;
-      console.log(staticUsers);
-    });
+    this.users = this.userService.listUsers();
   }
 
 }

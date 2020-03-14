@@ -97,7 +97,7 @@ export class DataService {
   listUsers() {
     console.log("list users!");
 
-    console.log(this.users);
+    //console.log(this.users);
     let userDataList = [];
     for (let user in this.users) {
       if (user === this.id) {

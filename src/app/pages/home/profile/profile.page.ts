@@ -3,8 +3,8 @@ import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 
-import { AuthService } from './../../../services/auth/auth.service';
 import { UserService, User } from './../../../services/user/user.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { CardService, Card } from 'src/app/services/card/card.service';
 
 import { ActionSheetController, AlertController, ToastController } from '@ionic/angular';
@@ -14,19 +14,22 @@ import { ActionSheetController, AlertController, ToastController } from '@ionic/
   templateUrl: './profile.page.html',
   styleUrls: ['./profile.page.scss'],
 })
+
 export class ProfilePage implements OnInit {
   private users: Observable<User[]>;
   private cards: Observable<Card[]>;
 
   id;
   card: Card = {
-    frontImg: ''
+    frontImg: '',
+    backImg: ''
   };
+
   user;
   keys;
 
   frontImg: string;
-  isFrontCaptured = false;
+  isFrontCaptured;
 
   cameraOptions: CameraOptions = {
     // Some common settings are 20, 50, and 100
@@ -43,6 +46,8 @@ export class ProfilePage implements OnInit {
   constructor(private authService: AuthService, private userService: UserService, private cardService: CardService, private activatedRoute: ActivatedRoute,
                 private router: Router, private camera: Camera, public actionSheetController: ActionSheetController, public alertController: AlertController, private toastCtrl: ToastController) {
     console.log("Profile page started (constructor)");
+
+    console.log('Is authenticated:', this.authService.isAuthenticated());
 
     //this.id = this.cardService.getCard();
 
@@ -62,15 +67,17 @@ export class ProfilePage implements OnInit {
       console.log("User List page started (init)");
 
       if (this.router.getCurrentNavigation().extras.state){
-          this.card.frontImg = this.router.getCurrentNavigation().extras.state.data;
+          this.card.frontImg = this.router.getCurrentNavigation().extras.state.cardDataFront;
+          this.card.backImg = this.router.getCurrentNavigation().extras.state.cardDataBack;
       };
 
-      this.cards = this.cardService.getCards();
+      this.users = this.userService.listUsers();
+      this.cards = this.cardService.listCards();
 
       this.isFrontCaptured = true;
       this.newCardAlert();
-  }
 
+  }
 
   goToCardImportPage() {
       this.router.navigateByUrl('/card-import');
@@ -97,7 +104,7 @@ export class ProfilePage implements OnInit {
           text: 'Photo',
           icon: 'images',
           handler: () => {
-            this.router.navigateByUrl('/card-import');
+            this.router.navigateByUrl('/home/profile/card-import');
             console.log('Card import page loaded');
           }
         }, {
@@ -134,41 +141,6 @@ export class ProfilePage implements OnInit {
          buttons: ['OK']
        });
        await alert.present();
-  }
-
-  async deleteCardAlert() {
-      const alert = await this.alertController.create({
-         header: '',
-         subHeader: '',
-         message: 'Do you want to delete this card?',
-         buttons: [
-        {
-          text: 'Yes',
-          handler: () => {
-            this.deleteCard();
-            console.log('Card deleted');
-          }
-        }, {
-          text: 'No',
-          handler: () => {
-            console.log('Card kept');
-            }
-          },
-        ]
-      });
-      await alert.present();
-
-      this.id = this.activatedRoute.snapshot.paramMap.get('id');
-
-      if (this.id) {
-         console.log("current id: ", this.id);
-         this.cardService.getCard(this.id).subscribe(card => {
-           console.log("got card: ", card);
-         this.card = card;
-         });
-      } else {
-         this.frontImg = "New Card";
-      };
   }
 
    deleteCard() {

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 
-import { DataService } from './../../services/data/data.service';
-import { UserService } from './../../services/user/user.service';
+import { UserService, User } from './../../services/user/user.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
   selector: 'app-link',
@@ -14,14 +14,14 @@ id;
 userDataList;
 parent;
 
-  constructor(private dataService: DataService, private userService: UserService, private route: ActivatedRoute, private router: Router) {
+  constructor(private authService: AuthService, private userService: UserService, private route: ActivatedRoute, private router: Router) {
 
     if (this.router.getCurrentNavigation().extras.state) {
       this.parent = this.router.getCurrentNavigation().extras.state.parent;
     }
 
-    this.id = this.dataService.getUserId();
-    this.userDataList = this.dataService.listUsers();
+    this.id = this.authService.getCurrentUserId();
+    this.userDataList = this.userService.listUsers();
 
   }
 
