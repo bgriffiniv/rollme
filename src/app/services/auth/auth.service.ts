@@ -7,8 +7,7 @@ import * as firebase from 'firebase/app';
   providedIn: 'root'
 })
 export class AuthService {
-  user: Observable<firebase.User>;
-  subscription;
+  currentUser: firebase.User;
 
   constructor(private afAuth: AngularFireAuth) {
     console.log('Auth Service constructor');
@@ -29,7 +28,7 @@ export class AuthService {
   getCurrentUser(callback) {
     this.subscription = this.afAuth.authState
     .subscribe(d => {
-      console.log('Successfully got auth state');
+      console.log('Successfully got auth state', d);
       callback(null, d);
     }, e => {
       console.log('Somethiconsong went wrong:', e.message);
@@ -40,7 +39,7 @@ export class AuthService {
   signUp(email: string, password: string, callback) {
     this.afAuth.auth.createUserWithEmailAndPassword(email, password)
     .then(res => {
-      console.log('Successfully signed up!');
+      console.log('Successfully signed up!', res);
       callback(null, res);
     })
     .catch(err => {
@@ -52,7 +51,7 @@ export class AuthService {
   signIn(email: string, password: string, callback) {
     this.afAuth.auth.signInWithEmailAndPassword(email, password)
     .then(res => {
-      console.log('Successfully signed in!');
+      console.log('Successfully signed in!', res);
       callback(null, res);
     })
     .catch(err => {
@@ -64,16 +63,12 @@ export class AuthService {
   signOut(callback) {
     this.afAuth.auth.signOut()
     .then(res => {
-      console.log('Successfully signed out!');
+      console.log('Successfully signed out!', res);
       callback(null, res);
     })
     .catch(err => {
       console.log('Something is wrong:',err.message);
       callback(err)
     });
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
   }
 }

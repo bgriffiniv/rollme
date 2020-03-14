@@ -10,19 +10,22 @@ import { ToastController } from '@ionic/angular';
 })
 export class UserDetailsPage implements OnInit {
   id;
-  user: User = {
-    name: '',
-    bio: ''
-  };
+  user: User;
 
-  constructor(private activatedRoute: ActivatedRoute, private userService: UserService,
-                  private toastCtrl: ToastController, private router: Router) {
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private userService: UserService,
+    private toastCtrl: ToastController,
+    private router: Router
+  ) {
     console.log("User Details page (constructor)");
   }
 
   ngOnInit() {
     console.log("User Details page (init)");
+
     this.id = this.activatedRoute.snapshot.paramMap.get('id');
+
     if (this.id) {
       console.log("current id: ", this.id);
       this.userService.getUser(this.id, (err, user) => {
@@ -47,7 +50,7 @@ export class UserDetailsPage implements OnInit {
       if (error) {
         this.showToast('There was a problem adding your user :(');
       } else {
-        this.showToast('User added!');
+        this.showToast('User added');
       }
 
       this.router.navigateByUrl('/users');

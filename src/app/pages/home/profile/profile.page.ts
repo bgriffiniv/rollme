@@ -3,7 +3,7 @@ import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 
-import { UserService, User } from './../../../services/user/user.service';
+import { UserService, User } from 'src/app/services/user/user.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { CardService, Card } from 'src/app/services/card/card.service';
 
@@ -19,10 +19,7 @@ export class ProfilePage implements OnInit {
   private cards: Observable<Card[]>;
 
   id;
-  card: Card = {
-    frontImg: '',
-    backImg: ''
-  };
+  card: Card;
   user;
   keys;
 
@@ -41,8 +38,17 @@ export class ProfilePage implements OnInit {
     targetHeight: 374
   }
 
-  constructor(private authService: AuthService, private userService: UserService, private cardService: CardService, private activatedRoute: ActivatedRoute,
-                private router: Router, private camera: Camera, public actionSheetController: ActionSheetController, public alertController: AlertController, private toastCtrl: ToastController) {
+  constructor(
+    private authService: AuthService,
+    private userService: UserService,
+    private cardService: CardService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private camera: Camera,
+    public actionSheetController: ActionSheetController,
+    public alertController: AlertController,
+    private toastCtrl: ToastController
+  ) {
     console.log("Profile page started (constructor)");
 
     console.log('Is authenticated:', this.authService.isAuthenticated());
@@ -138,6 +144,41 @@ export class ProfilePage implements OnInit {
          buttons: ['OK']
        });
        await alert.present();
+  }
+
+  async deleteCardAlert() {
+      const alert = await this.alertController.create({
+         header: '',
+         subHeader: '',
+         message: 'Do you want to delete this card?',
+         buttons: [
+        {
+          text: 'Yes',
+          handler: () => {
+            this.deleteCard();
+            console.log('Card deleted');
+          }
+        }, {
+          text: 'No',
+          handler: () => {
+            console.log('Card kept');
+            }
+          },
+        ]
+      });
+      await alert.present();
+
+      this.id = this.activatedRoute.snapshot.paramMap.get('id');
+
+      if (this.id) {
+         console.log("current id: ", this.id);
+         this.cardService.getCard(this.id).subscribe(card => {
+           console.log("got card: ", card);
+         this.card = card;
+         });
+      } else {
+         this.frontImg = "New Card";
+      };
   }
 
    deleteCard() {
