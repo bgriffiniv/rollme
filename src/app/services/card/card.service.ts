@@ -72,9 +72,9 @@ export class CardService {
   }
 
   addCard(card: Card): Promise<void> {
-    //let newCardId = this.afs.createId();
-    //card.id = newCardId;
-    return this.cardCollection.doc<Card>().set(card);
+    let newCardId = this.afs.createId();
+    card.id = newCardId;
+     return this.cardCollection.doc<Card>(card.id).set(card);
   }
 
   getCard(id: string): Observable<Card> {

@@ -129,7 +129,7 @@ export class CardImportPage implements OnInit {
       };
 
       this.cardService.addCard(this.card).then(() => {
-         this.router.navigate(["/home/profile"], navigationExtras);
+         this.router.navigate(["/profile"], navigationExtras);
          this.showToast('Card saved!');
       }, err => {
           this.showToast('There was a problem adding your card :(');
@@ -138,7 +138,7 @@ export class CardImportPage implements OnInit {
 
   deleteCard() {
      this.cardService.deleteCard(this.card.id).then(() => {
-       this.router.navigateByUrl('/home/profile');
+       this.router.navigateByUrl('/profile');
        this.showToast('Card deleted');
      }, err => {
        this.showToast('There was a problem deleting your card :(');
@@ -170,7 +170,7 @@ export class CardImportPage implements OnInit {
 
   updateCard() {
       this.cardService.updateCard(this.card).then(() => {
-      this.router.navigateByUrl('/home/profile');
+      this.router.navigateByUrl('/profile');
         this.showToast('Card updated');
       }, err => {
         this.showToast('There was a problem updating your card :(');
