@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { FbAuthService } from 'src/app/services/auth/fb-auth.service';
 import { GoogleAuthService } from 'src/app/services/auth/google-auth.service';
 import { LinkedinAuthService } from 'src/app/services/auth/linkedin-auth.service';
 import { IonSlides } from '@ionic/angular';
@@ -21,7 +22,7 @@ export class SignupPage implements OnInit {
   registerForm: FormGroup;
   isSubmitted = false;
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute, public formBuilder: FormBuilder, private authService: AuthService, private googleAuthService: GoogleAuthService, private linkedinAuthService: LinkedinAuthService) {
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, public formBuilder: FormBuilder, private authService: AuthService, private fbAuthService: FbAuthService, private googleAuthService: GoogleAuthService, private linkedinAuthService: LinkedinAuthService) {
     this.registerForm = new FormGroup({
       "mobile": new FormControl('', Validators.compose([
         Validators.pattern('^[0-9]+[0-9]+[0-9]+[0-9]+[0-9]+[0-9]+[0-9]+[0-9]+[0-9]+[0-9]{1,10}$'),

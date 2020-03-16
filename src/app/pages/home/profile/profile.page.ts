@@ -101,7 +101,7 @@ export class ProfilePage implements OnInit {
           text: 'Photo',
           icon: 'images',
           handler: () => {
-            this.router.navigateByUrl('/home/profile/card-import');
+            this.router.navigateByUrl('/card-import');
             console.log('Card import page loaded');
           }
         }, {
