@@ -15,7 +15,6 @@ import { CardService, Card } from 'src/app/services/card/card.service';
   styleUrls: ['./card-import.page.scss'],
 })
 export class CardImportPage implements OnInit {
-
   id;
   card: Card;
 
@@ -141,7 +140,7 @@ export class CardImportPage implements OnInit {
     this.cardService.addCard(this.card).then(data => {
       this.router.navigateByUrl('/home/profile');
       this.showToast('Card saved!');
-    }).catch(error => {
+    }, error => {
       this.showToast('There was a problem adding your card :(');
     });
   }
@@ -151,9 +150,9 @@ export class CardImportPage implements OnInit {
     console.log('Card ID: ', this.id);
 
     this.cardService.deleteCard(this.id).then(data => {
-      this.router.navigateByUrl('/profile');
+      this.router.navigateByUrl('/home/profile');
       this.showToast('Card deleted');
-    }).catch(error => {
+    }, error => {
       this.showToast('There was a problem deleting your card :(');
     });
   }
@@ -183,9 +182,9 @@ export class CardImportPage implements OnInit {
 
   updateCard() {
     this.cardService.updateCard(this.id, this.card).then(data => {
-      this.router.navigateByUrl('/profile');
+      this.router.navigateByUrl('/home/profile');
       this.showToast('Card updated');
-    }).catch(error => {
+    }, error => {
       this.showToast('There was a problem updating your card :(');
     });
   }
