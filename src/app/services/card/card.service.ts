@@ -47,7 +47,7 @@ export class CardService {
     return this.staticCardCollection.doc<Card>().set(card);
   }
 
-  getStaticCards(id: string): Observable<Card> {
+  getStaticCard(id: string): Observable<Card> {
     return this.staticCardCollection.doc<Card>(id).valueChanges();
   }
 

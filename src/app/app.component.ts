@@ -86,15 +86,9 @@ export class AppComponent {
     });
   }
 
-  rollout() {
-    this.authService.signOut((error, data) => {
-      if (error) {
-        console.log('Menu : Sign Out Failure');
-      } else {
-        console.log('Menu : Sign Out Success');
-      }
-      this.router.navigateByUrl('/login');
-    });
+  async rollout() {
+    await this.authService.signOut();
+    this.router.navigateByUrl('/login');
   }
 
   goToHomePage() {

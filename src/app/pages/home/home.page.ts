@@ -11,40 +11,50 @@ import { UserService } from 'src/app/services/user/user.service';
 })
 export class HomePage implements OnInit{
 
+  currentUser;
+
   constructor(private route: ActivatedRoute, private router: Router, private authService: AuthService, private userService: UserService) {
     console.log("Home page started (constructor)");
   }
 
-  ngOnInit() {
+  async getCurrentUserCallback() {
+    try {
+      let user = await this.userService.getUser(this.currentUser.uid);
+      console.log('Home Page : Get User Data Success', user);
+
+      if (!user) {
+        // go to Successful Signup Page if no user exists
+        let navigationExtras: NavigationExtras = {
+          state: {
+            uid: this.currentUser.uid,
+            firstName: '',
+            lastName: '',
+            email: '',
+            mobile: ''
+          }
+        };
+        this.router.navigateByUrl('/successful-signup', navigationExtras);
+      }
+      return;
+    } catch(error) {
+      console.log('Home Page : Get User Data Failure', error.message);
+    }
+  }
+
+  async ngOnInit() {
     console.log("Home page started (init)");
-    // check for a user entry by the uid
-    let goToSuccessfulSignupPageIfNoData =
 
     // get the current user's uid
-    this.authService.getCurrentUser((error, currentUser) => {
-      if (!currentUser) {
+    try {
+      this.currentUser = await this.authService.getCurrentUser();
+      if (!this.currentUser) {
         console.log('Home Page : Currently logged out');
-        return;
+        this.router.navigateByUrl('/login');
       }
-      this.userService.getUser(currentUser.uid,  (err, data) => {
-        if (err) {
-          console.log(err);
-        }
-        console.log(data);
-        if (!data) {
-          // go to Successful Signup Page if no user exists
-          let navigationExtras: NavigationExtras = {
-                  state: {
-                    uid: currentUser.uid,
-                    firstName: '',
-                    lastName: '',
-                    email: '',
-                    mobile: ''
-                  }
-                };
-          this.router.navigateByUrl('/successful-signup', navigationExtras);
-        }
-      });
-    });
+
+      this.getCurrentUserCallback();
+    } catch(error) {
+      console.log('Home Page : Get Current User Failure', error.message);
+    }
   }
 }

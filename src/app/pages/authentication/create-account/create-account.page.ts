@@ -20,6 +20,7 @@ export class CreateAccountPage implements OnInit {
 
   isSubmitted = false;
   signupForm: FormGroup;
+  errorMessage;
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute, public formBuilder: FormBuilder, private toastCtrl: ToastController, private authService: AuthService) {
     if (this.router.getCurrentNavigation().extras.state){
@@ -53,7 +54,7 @@ export class CreateAccountPage implements OnInit {
 
   }
 
-  createAccount() {
+  async createAccount() {
     this.isSubmitted = true;
     if (!this.signupForm.valid) {
       console.log('Please provide all the required values!')
@@ -61,27 +62,30 @@ export class CreateAccountPage implements OnInit {
     } else {
       console.log(this.signupForm.value)
     }
-    this.authService.signUp(this.email, this.signupForm.value.password, (error, data) => {
-      if (error) {
-        console.log('Create Account Page : Sign Up Failure : setting error control');
-        this.isSubmitted = false;
-        this.signupForm.setErrors( { 'signUp' : true } );
-      } else {
-        console.log('Create Account Page : Sign Up Success : navigating to Successful Signup Page');
-        this.showToast('Account created!');
-        this.authService.getCurrentUser((error, currentUser) => {
-          let navigationExtras: NavigationExtras = {
-          state: {
-            uid: currentUser.uid,
-            firstName: this.signupForm.value.firstName,
-            lastName: this.signupForm.value.lastName,
-            email: this.email,
-            mobile: this.mobile
-          }
-        };
-        this.router.navigateByUrl('/successful-signup', navigationExtras);        });
-      }
-    });
+
+    try {
+      let credentials = await this.authService.signUp(this.email, this.signupForm.value.password);
+      console.log('Create Account Page : Sign Up Success : ', credentials.user.providerData[0]);
+      this.showToast('Account created!');
+
+      let navigationExtras: NavigationExtras = {
+        state: {
+          uid: credentials.user.uid,
+          firstName: this.signupForm.value.firstName,
+          lastName: this.signupForm.value.lastName,
+          email: this.email,
+          mobile: this.mobile
+        }
+      };
+
+      console.log('Navigating to Successful Signup Page');
+      this.router.navigateByUrl('/successful-signup', navigationExtras);
+    } catch (error) {
+      console.log('Create Account Page : Sign Up Failure', error.message);
+      this.isSubmitted = false;
+      this.signupForm.setErrors( { 'signUp' : true } );
+      this.errorMessage = error.message;
+    }
   }
 
    showToast(msg) {

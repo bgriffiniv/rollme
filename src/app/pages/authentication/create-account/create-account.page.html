@@ -8,7 +8,7 @@
 
     <!-- Error messages -->
     <span class="error ion-padding" *ngIf="formErrors?.signUp">
-        <ion-icon name="alert" color="danger"></ion-icon>There was a problem with registration.
+        <ion-icon name="alert" color="danger"></ion-icon>There was a problem with registration: {{errorMessage}}
     </span>
 
     <ion-item lines="none">

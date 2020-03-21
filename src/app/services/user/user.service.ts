@@ -18,16 +18,19 @@ export interface User {
   providedIn: 'root'
 })
 export class UserService {
-  private users: Observable<User[]>;
   private userCollection: AngularFirestoreCollection<User>;
   private staticUserCollection: AngularFirestoreCollection<User>;
+  private users: Observable<User[]>;
+  private staticUsers: Observable<User[]>;
 
   subscription: any;
 
   constructor(private afs: AngularFirestore) {
     console.log('Auth Service constructor');
-    this.userCollection = this.afs.collection<User>('users');
     this.staticUserCollection = this.afs.collection<User>('static_users');
+    this.userCollection = this.afs.collection<User>('users');
+    this.staticUsers = this.staticUserCollection.valueChanges({idField: 'id'});
+    this.users = this.userCollection.valueChanges({idField: 'id'});
   }
 
   ngOnInit() {
@@ -82,7 +85,11 @@ export class UserService {
     return this.users;
   }
 
-  getUser(id: string, callback) {
+  getUser(id: string): Observable<User> {
+    return this.userCollection.doc<User>(id).valueChanges();
+  }
+
+  getUserCb(id: string, callback) {
     this.userCollection.doc<User>(id).get()
     .subscribe(d => {
       let user = d.data() as User;
@@ -91,10 +98,8 @@ export class UserService {
     }, e => {callback(e);});
   }
 
-  addUser(user: User, callback) {
-    this.userCollection.doc<User>(user.id).set(user)
-    .then(d => {callback(null,d);})
-    .catch(e => {callback(e);});
+  addUser(user: User): Promise<void> {
+    return this.userCollection.doc<User>(user.id).set(user);
   }
 
   updateUser(user: User, callback) {

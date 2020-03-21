@@ -8,7 +8,6 @@ import * as firebase from 'firebase/app';
 })
 export class AuthService {
   user: Observable<firebase.User>;
-  subscription;
 
   constructor(private afAuth: AngularFireAuth) {
     console.log('Auth Service constructor');
@@ -26,54 +25,19 @@ export class AuthService {
   }
 
   // Returns current user data
-  getCurrentUser(callback) {
-    this.subscription = this.afAuth.authState
-    .subscribe(d => {
-      console.log('Successfully got auth state');
-      callback(null, d);
-    }, e => {
-      console.log('Somethiconsong went wrong:', e.message);
-      callback(e);
-    });
+  getCurrentUser(): Observable<firebase.User> {
+    return this.user;
   }
 
-  signUp(email: string, password: string, callback) {
-    this.afAuth.auth.createUserWithEmailAndPassword(email, password)
-    .then(res => {
-      console.log('Successfully signed up!');
-      callback(null, res);
-    })
-    .catch(err => {
-      console.log('Something is wrong:', err.message);
-      callback(err);
-    });
+  signUp(email: string, password: string) {
+    return this.afAuth.auth.createUserWithEmailAndPassword(email, password);
   }
 
-  signIn(email: string, password: string, callback) {
-    this.afAuth.auth.signInWithEmailAndPassword(email, password)
-    .then(res => {
-      console.log('Successfully signed in!');
-      callback(null, res);
-    })
-    .catch(err => {
-      console.log('Something is wrong:',err.message);
-      callback(err)
-    });
+  signIn(email: string, password: string) {
+    return this.afAuth.auth.signInWithEmailAndPassword(email, password);
   }
 
-  signOut(callback) {
-    this.afAuth.auth.signOut()
-    .then(res => {
-      console.log('Successfully signed out!');
-      callback(null, res);
-    })
-    .catch(err => {
-      console.log('Something is wrong:',err.message);
-      callback(err)
-    });
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
+  signOut() {
+    return this.afAuth.auth.signOut();
   }
 }

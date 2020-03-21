@@ -40,23 +40,29 @@ export class SuccessfulSignupPage implements OnInit {
     this.router.navigateByUrl('/home');
   }
 
+  async createNewUserDataEntry(currentUser) {
+    let newUser = {
+      id: currentUser.uid,
+      name: this.firstName + ' ' + this.lastName,
+      email: this.email
+    };
+    try {
+      this.userService.addUser(newUser);
+    } catch (error) {
+      console.log('Successful Signup : Create New Card Data', error.message);
+    }
+  }
+
   ngOnInit() {
     console.log('Successful Signup Page init');
     // maybe we can get a whole user?
-    this.authService.getCurrentUser((error, currentUser) => {
-      console.log('user uid:' + currentUser.uid + ',\n arg uid:' + this.uid);
-      // create new user and card entries here?
-      let newUser = {
-        id: this.uid,
-        name: this.firstName + ' ' + this.lastName,
-        email: this.email
-      };
-      this.userService.addUser(newUser, (err, data) => {
-        if (err) {
-          console.log(err);
-          return;
-        }
-      });
+    this.authService.getCurrentUser().subscribe(user => {
+      if (user) {
+        console.log('user uid:' + user.uid + ',\n arg uid:' + this.uid);
+          this.createNewUserDataEntry(user);
+      } else {
+        console.log('Successful Signup : Get User Failure');
+      }
     });
   }
 
