@@ -25,6 +25,7 @@ export class UserService {
 
   subscription: any;
 
+  filteredUsers: Observable<User[]>;
 
   constructor(private afs: AngularFirestore) {
     console.log('Auth Service constructor');
@@ -42,14 +43,12 @@ export class UserService {
     this.staticUserCollection = this.afs.collection<User>('users');
   }
 
-  filterUsers(searchTerm) {
-      return this.users.pipe(filter(user => {
-        return user.map.name.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1;
-      }));
-  }
-
   ngOnInit() {
     console.log('Auth Service init');
+    this.afs.collection('users').valueChanges()
+        .subscribe(users => {
+          this.users = this.filteredUsers;
+      });
 
   }
 
@@ -102,7 +101,6 @@ export class UserService {
   }
 
   getUser(id: any, callback) {
-
     this.userCollection.doc<User>(id).get()
     .subscribe(d => {
       let user = d.data() as User;

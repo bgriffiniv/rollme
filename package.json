@@ -52,6 +52,7 @@
     "core-js": "^3.6.4",
     "firebase": "^7.9.1",
     "ng2-cordova-oauth": "0.0.8",
+    "ng2-search-filter": "^0.5.1",
     "oauth": "^0.9.15",
     "passport": "^0.4.1",
     "passport-linkedin-oauth2": "^2.0.0",

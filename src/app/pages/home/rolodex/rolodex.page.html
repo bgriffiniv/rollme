@@ -1,11 +1,12 @@
 <ion-toolbar>
-   <ion-searchbar animated="false" placeholder="Search cards" [formControl]="searchControl"></ion-searchbar>
+   <ion-searchbar animated="false" placeholder="Search cards" [(ngModel)]="searchTerm"></ion-searchbar>
 </ion-toolbar>
 
 <ion-content class="card-background-page">
   <ion-slides pager="false" [options]="slideOpts" class="rolodex-container">
-    <ion-slide button [routerLink]="['/user', user.id]" *ngFor="let user of (users | async)" lines="none">
-      <ion-item>
+    <ion-item button [routerLink]="['/user', user.id]" *ngFor="let user of (users | async | filter:searchTerm)" lines="none">
+    <ion-slide >
+
         <ion-card>
             <ion-item lines="none">
             <ion-avatar slot="start">
@@ -32,8 +33,9 @@
           </ion-card-content>
 
         </ion-card>
-      </ion-item>
+
     </ion-slide>
+    </ion-item>
 
 
     <ion-item *ngFor="let card of cards | async" lines="none">

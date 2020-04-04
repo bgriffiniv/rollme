@@ -6,8 +6,6 @@ import { UserService, User } from './../../../services/user/user.service';
 import { CardService, Card } from 'src/app/services/card/card.service';
 
 import { Observable } from 'rxjs';
-import { FormControl } from "@angular/forms";
-import { debounceTime } from 'rxjs/operators';
 
 
 @Component({
@@ -24,9 +22,9 @@ export class RolodexPage implements OnInit {
   cards: Observable<Card[]>;
   id;
 
-  private users: Observable<User[]>;
-  private searchControl: FormControl;
-  public searchTerm: string = "";
+  users: Observable<User[]>;
+  filteredUsers: any[];
+  searchTerm = '';
 
   slideOpts = {
       scrollbar: {el: ''},
@@ -45,7 +43,7 @@ export class RolodexPage implements OnInit {
         slideShadows: false
       },
       freeMode: true,
-      freeModeSticky: true,
+      freeModeSticky: false,
       freeModeMomentum: true,
       freeModeMomentumRatio: 1,
       freeModeMomentumVelocityRatio: 1,
@@ -136,25 +134,12 @@ export class RolodexPage implements OnInit {
 
     this.staticCards = this.cardService.listStaticCardsByHolder(this.authService.getCurrentUserId());
     this.cards = this.cardService.listCardsByHolder(this.authService.getCurrentUserId());
-    this.searchControl = new FormControl;
   }
 
   ngOnInit() {
     console.log("Rolodex Page (init)");
     this.users = this.userService.listUsers();
-    this.setFilteredUsers("");
-
-     this.searchControl.valueChanges
-          .pipe(debounceTime(700))
-          .subscribe(search => {
-            this.setFilteredUsers(search);
-          });
   }
-
-  setFilteredUsers(searchTerm) {
-    this.users = this.userService.filterUsers(this.searchTerm);
-  }
-
 
   deleteContact(index) {
     //this.dataService.setContact(this.id, index, false);
