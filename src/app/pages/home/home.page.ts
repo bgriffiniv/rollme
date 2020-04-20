@@ -26,7 +26,7 @@ export class HomePage implements OnInit{
         console.log('Home Page : Currently logged out');
         return;
       }
-      this.userService.getUser(currentUser.uid,  (err, data) => {
+      this.userService.getUser(currentUser.uid, (err, data) => {
         if (err) {
           console.log(err);
         }

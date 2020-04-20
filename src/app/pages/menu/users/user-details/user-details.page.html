@@ -1,4 +1,4 @@
-<ion-header>
+ <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/users" ></ion-back-button>
@@ -12,7 +12,10 @@
     <ion-label position="stacked">Name</ion-label>
     <ion-input [(ngModel)]="user.name"></ion-input>
   </ion-item>
-
+  <ion-item>
+    <ion-label position="stacked">Email</ion-label>
+    <ion-input [(ngModel)]="user.email"></ion-input>
+  </ion-item>
   <ion-item>
     <ion-label position="stacked">Bio</ion-label>
     <ion-textarea [(ngModel)]="user.bio" rows="8"></ion-textarea>
