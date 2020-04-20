@@ -28,8 +28,8 @@ export class CardService {
     this.cards = this.cardCollection.valueChanges({idField: 'id'});
   }
 
-   listCards(): Observable<Card[]> {
-      return this.cards;
+  listCards(): Observable<Card[]> {
+    return this.cards;
   }
 
   listCardsByOwner(ownerId: string): Observable<Card[]> {

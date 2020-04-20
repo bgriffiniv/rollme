@@ -47,7 +47,7 @@ export class CardImportPage implements OnInit {
 
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');
-    console.log(this.id)
+    console.log(this.id);
 
     if (this.id) {
       console.log("current id: ", this.id);
