@@ -1,10 +1,43 @@
- <ion-toolbar>
-   <ion-searchbar></ion-searchbar>
-  </ion-toolbar>
+<ion-toolbar>
+   <ion-searchbar animated="false" placeholder="Search cards" [(ngModel)]="searchTerm"></ion-searchbar>
+</ion-toolbar>
 
-<ion-content>
+<ion-content class="card-background-page">
+  <ion-slides pager="false" [options]="slideOpts" class="rolodex-container">
+    <ion-item button [routerLink]="['/user', user.id]" *ngFor="let user of (users | async | filter:searchTerm)" lines="none">
+    <ion-slide >
 
-  <ion-list>
+        <ion-card>
+            <ion-item lines="none">
+            <ion-avatar slot="start">
+              <img src="./assets/imgs/Beach.jpg">
+            </ion-avatar>
+                <ion-card-subtitle>
+                  <h1>{{ user.name }}</h1>
+                    Mutant Consultant
+                    <br>
+                    {{ user.email }} | (313) 777-9311
+                    <br>
+                    www.Xmen.com
+                </ion-card-subtitle>
+            </ion-item>
+          <div class="icon-format">
+          <ion-icon name="logo-instagram" size="large"></ion-icon>
+          <ion-icon name="logo-facebook" size="large"></ion-icon>
+          <ion-icon name="logo-linkedin" size="large"></ion-icon>
+          </div>
+
+          <ion-card-content class="card-subtitle">
+            <p style="text-align:left">You choose to believe what you believe in because your soul when it’s unwhole is uneven.</p>
+              <p style="color:#0C62BB;">#RealityFromBelief #BeliefFromReality.</p>
+          </ion-card-content>
+
+        </ion-card>
+
+    </ion-slide>
+    </ion-item>
+
+
     <ion-item *ngFor="let card of cards | async" lines="none">
       <ion-card>
 
@@ -57,8 +90,8 @@
         </ion-card-content>
       </ion-card>
     </ion-item>
-  </ion-list>
 
+  </ion-slides>
 </ion-content>
 
 

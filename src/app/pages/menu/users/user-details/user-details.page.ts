@@ -25,7 +25,7 @@ export class UserDetailsPage implements OnInit {
     this.id = this.activatedRoute.snapshot.paramMap.get('id');
     if (this.id) {
       console.log("current id: ", this.id);
-      this.userService.getStaticUser(this.id, (err, user) => {
+      this.userService.getUser(this.id, (err, user) => {
         if (err) {
           console.log(err);
         }
@@ -43,7 +43,7 @@ export class UserDetailsPage implements OnInit {
   }
 
   addUser() {
-    this.userService.addStaticUser(this.user, (error, data) => {
+    this.userService.addUser(this.user, (error, data) => {
       if (error) {
         this.showToast('There was a problem adding your user :(');
       } else {
@@ -56,7 +56,7 @@ export class UserDetailsPage implements OnInit {
 
   deleteUser() {
     console.log('user id: ' + this.user.id);
-    this.userService.deleteStaticUser(this.user, (error, data) => {
+    this.userService.deleteUser(this.user, (error, data) => {
       if (error) {
         this.showToast('There was a problem deleting your user :(');
       } else {
@@ -67,7 +67,7 @@ export class UserDetailsPage implements OnInit {
   }
 
   updateUser() {
-    this.userService.updateStaticUser(this.user, (error, data) => {
+    this.userService.updateUser(this.user, (error, data) => {
       if (error) {
         this.showToast('There was a problem updating your user :(');
       } else {

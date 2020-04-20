@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument, DocumentReference } from 'angularfire2/firestore';
-import { map, take } from 'rxjs/operators';
+import { map, take, filter } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+
 
 export interface User {
   id?: string,
@@ -24,14 +25,31 @@ export class UserService {
 
   subscription: any;
 
+  filteredUsers: Observable<User[]>;
+
   constructor(private afs: AngularFirestore) {
     console.log('Auth Service constructor');
     this.userCollection = this.afs.collection<User>('users');
-    this.staticUserCollection = this.afs.collection<User>('static_users');
+    this.users = this.userCollection.snapshotChanges().pipe(
+          map(actions => {
+            return actions.map(a => {
+              const data = a.payload.doc.data();
+              const id = a.payload.doc.id;
+              return { id, ...data };
+            });
+          })
+
+    );
+    this.staticUserCollection = this.afs.collection<User>('users');
   }
 
   ngOnInit() {
     console.log('Auth Service init');
+    this.afs.collection('users').valueChanges()
+        .subscribe(users => {
+          this.users = this.filteredUsers;
+      });
+
   }
 
   ngOnDestroy() {
@@ -67,7 +85,7 @@ export class UserService {
   }
 
   updateStaticUser(user: User, callback) {
-    this.staticUserCollection.doc<User>(user.id).update(user)
+    this.staticUserCollection.doc<User>(user.id).update({ name: user.name, bio: user.bio })
     .then(d => {callback(null,d);})
     .catch(e => {callback(e);});
   }
@@ -82,7 +100,7 @@ export class UserService {
     return this.users;
   }
 
-  getUser(id: string, callback) {
+  getUser(id: any, callback) {
     this.userCollection.doc<User>(id).get()
     .subscribe(d => {
       let user = d.data() as User;
@@ -92,7 +110,7 @@ export class UserService {
   }
 
   addUser(user: User, callback) {
-    this.userCollection.doc<User>(user.id).set(user)
+    this.userCollection.add(user)
     .then(d => {callback(null,d);})
     .catch(e => {callback(e);});
   }
@@ -108,4 +126,5 @@ export class UserService {
     .then(d => {callback(null,d);})
     .catch(e => {callback(e);});
   }
+
 }
