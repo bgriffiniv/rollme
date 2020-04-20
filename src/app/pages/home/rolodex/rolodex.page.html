@@ -4,9 +4,8 @@
 
 <ion-content class="card-background-page">
   <ion-slides pager="false" [options]="slideOpts" class="rolodex-container">
-    <ion-item button [routerLink]="['/user', user.id]" *ngFor="let user of (users | async | filter:searchTerm)" lines="none">
-    <ion-slide >
-
+    <ion-slide button [routerLink]="['/user', user.id]" *ngFor="let user of (users | async | filter:searchTerm)" lines="none">
+      <ion-item>
         <ion-card>
             <ion-item lines="none">
             <ion-avatar slot="start">
@@ -33,9 +32,9 @@
           </ion-card-content>
 
         </ion-card>
-
+      </ion-item>
     </ion-slide>
-    </ion-item>
+
 
 
     <ion-item *ngFor="let card of cards | async" lines="none">
