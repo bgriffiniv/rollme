@@ -1,11 +1,15 @@
-<ion-content>
+<ion-content class="card-background-page">
+  <ion-slides pager="false" [options]="slideOpts" class="card-container">
+    <ion-item button [routerLink]="['/card', card.id]" *ngFor="let card of (cards | async)" lines="none">
+      <ion-slide>
+        <ion-card>
+          <img ng-show="isFrontCaptured" [src]="card.frontImg" alt=""/>
+        </ion-card>
+      </ion-slide>
+    </ion-item>
+  </ion-slides>
 
   <ion-list>
-
-    <ion-card button style="height:auto;width:auto;" [routerLink]="['/card', card.id]" *ngFor="let card of (cards | async)" lines="none">
-        <img ng-show="isFrontCaptured" [src]="card.frontImg" alt=""/>
-    </ion-card>
-
     <div class="floating-fab-btn">
       <ion-fab vertical="top" horizontal="start" edge slot="fixed" padding>
         <ion-fab-button size="small" (click)="createACard()">

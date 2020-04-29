@@ -5,7 +5,7 @@
 <ion-content class="card-background-page">
   <ion-slides pager="false" [options]="slideOpts" class="rolodex-container">
     <ion-slide button [routerLink]="['/user', user.id]" *ngFor="let user of (users | async | filter:searchTerm)" lines="none">
-      <ion-item>
+      <ion-item lines="none">
         <ion-card>
             <ion-item lines="none">
             <ion-avatar slot="start">

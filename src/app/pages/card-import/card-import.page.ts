@@ -51,11 +51,13 @@ export class CardImportPage implements OnInit {
            console.log("got card: ", card);
            this.card = card;
          });
-       } else {
+       } else if (this.id) {
          this.frontImg = this.card.frontImg;
          this.backImg = this.card.backImg;
-       };
+       } else {
          this.importCardFront();
+       }
+
    }
 
    async importCardFront() {
@@ -129,7 +131,7 @@ export class CardImportPage implements OnInit {
       };
 
       this.cardService.addCard(this.card).then(() => {
-         this.router.navigate(["/profile"], navigationExtras);
+         this.router.navigate(["/home/home/profile"], navigationExtras);
          this.showToast('Card saved!');
       }, err => {
           this.showToast('There was a problem adding your card :(');
@@ -138,7 +140,7 @@ export class CardImportPage implements OnInit {
 
   deleteCard() {
      this.cardService.deleteCard(this.card.id).then(() => {
-       this.router.navigateByUrl('/profile');
+       this.router.navigateByUrl('/home/home/profile');
        this.showToast('Card deleted');
      }, err => {
        this.showToast('There was a problem deleting your card :(');
@@ -170,11 +172,21 @@ export class CardImportPage implements OnInit {
 
   updateCard() {
       this.cardService.updateCard(this.card).then(() => {
-      this.router.navigateByUrl('/profile');
+      this.router.navigateByUrl('/home/home/profile');
         this.showToast('Card updated');
       }, err => {
         this.showToast('There was a problem updating your card :(');
       });
+  }
+
+  sendCard() {
+     let navigationExtras: NavigationExtras = {
+        state: {
+            cardDataFront: this.card.frontImg,
+            cardDataBack: this.card.backImg
+        }
+     };
+     this.router.navigate(["/home/home/exchange"], navigationExtras);
   }
 
   showToast(msg) {

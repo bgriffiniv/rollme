@@ -38,7 +38,7 @@
 <ion-footer *ngIf="card.id">
   <ion-row no-padding text-center>
     <ion-col size="6">
-      <ion-button expand="block" fill="outline" color="danger" (click)="deleteCardAlert()">
+      <ion-button expand="block" fill="solid" color="danger" (click)="deleteCardAlert()">
         <ion-icon name="trash" slot="start"></ion-icon>
         Delete
       </ion-button>
@@ -50,5 +50,9 @@
       </ion-button>
     </ion-col>
   </ion-row>
+    <ion-button expand="full" fill="solid" color="secondary" (click)="sendCard()">
+      <ion-icon name="paper-plane" slot="start"></ion-icon>
+        SEND
+    </ion-button>
 </ion-footer>
 

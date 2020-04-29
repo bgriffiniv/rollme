@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Component } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -16,6 +16,8 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule, FirestoreSettingsToken } from 'angularfire2/firestore';
 import { environment } from '../environments/environment';
 
+import { CardRollPageModule } from 'src/app/pages/card-roll/card-roll/card-roll.module';
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,6 +27,7 @@ import { environment } from '../environments/environment';
     HttpClientModule,
     IonicModule.forRoot(),
     AppRoutingModule,
+    CardRollPageModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFirestoreModule,

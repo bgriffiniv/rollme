@@ -37,10 +37,12 @@ const routes: Routes = [
   { path: 'edit', loadChildren: './pages/edit/edit.module#EditPageModule'},
 
   { path: 'card-import', loadChildren: './pages/card-import/card-import.module#CardImportPageModule' },
+  { path: 'card-roll', loadChildren: './pages/card-roll/card-roll/card-roll.module#CardRollPageModule' },
 
   { path: 'cards', loadChildren: './pages/home/profile/profile.module#ProfilePageModule'},
   { path: 'card', loadChildren: './pages/card-import/card-import.module#CardImportPageModule' },
   { path: 'card/:id', loadChildren: './pages/card-import/card-import.module#CardImportPageModule' },
+
 
 ];
 
