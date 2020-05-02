@@ -7,22 +7,22 @@ import * as firebase from 'firebase/app';
   providedIn: 'root'
 })
 export class AuthService {
-  currentUser: firebase.User;
-  subscription;
+  currentUser: Observable<firebase.User>;
 
   constructor(private afAuth: AngularFireAuth) {
     console.log('Auth Service constructor');
+
+
   }
 
- // Returns true if user is logged in
+  // Returns true if user is logged in
   isAuthenticated(): boolean {
     return this.currentUser !== null;
   }
 
-  // Returns current user data
-  getCurrentUser(callback) {
-    this.subscription = this.afAuth.authState
-    .subscribe(d => {callback(null, d)}, e => {callback(e)});
+  // Returns current user
+  getCurrentUser(): Observable<firebase.User> {
+    return this.afAuth.authState;
   }
 
   signUp(email: string, password: string, callback) {
@@ -59,10 +59,6 @@ export class AuthService {
       console.log('Something is wrong:',err.message);
       callback(err)
     });
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
   }
 
 /*

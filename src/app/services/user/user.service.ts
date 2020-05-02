@@ -23,20 +23,11 @@ export class UserService {
   private userCollection: AngularFirestoreCollection<User>;
   private staticUserCollection: AngularFirestoreCollection<User>;
 
-  subscription: any;
-
   constructor(private afs: AngularFirestore) {
-    console.log('Auth Service constructor');
+    console.log('User Service constructor');
+
     this.userCollection = this.afs.collection<User>('users');
     this.staticUserCollection = this.afs.collection<User>('static_users');
-  }
-
-  ngOnInit() {
-    console.log('Auth Service init');
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
   }
 
   getStaticUsers(callback) {

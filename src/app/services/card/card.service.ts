@@ -16,17 +16,19 @@ export class CardService {
   private cardCollection: AngularFirestoreCollection<Card>;
 
   constructor(private afs: AngularFirestore) {
-      this.cardCollection = this.afs.collection<Card>('static_cards');
-      console.log(this.afs);
-      this.cards = this.cardCollection.snapshotChanges().pipe(
-        map(actions => {
-          return actions.map(a => {
-            const data = a.payload.doc.data();
-            const id = a.payload.doc.id;
-            return { id, ...data };
-          });
-        })
-      );
+    console.log('Card Service constructor');
+
+    this.cardCollection = this.afs.collection<Card>('static_cards');
+    console.log(this.afs);
+    this.cards = this.cardCollection.snapshotChanges().pipe(
+      map(actions => {
+        return actions.map(a => {
+          const data = a.payload.doc.data();
+          const id = a.payload.doc.id;
+          return { id, ...data };
+        });
+      })
+    );
   }
 
   getCards(): Observable<Card[]> {
