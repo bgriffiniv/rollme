@@ -22,16 +22,16 @@ export class AuthService {
     return this.afAuth.authState;
   }
 
-  signUp(email: string, password: string): Promise(firebase.UserCredential) {
-    this.afAuth.createUserWithEmailAndPassword(email, password);
+  signUp(email: string, password: string): Promise<firebase.UserCredential> {
+    return this.afAuth.createUserWithEmailAndPassword(email, password);
   }
 
-  signIn(email: string, password: string, callback): Promise(firebase.UserCredential) {
-    this.afAuth.auth.signInWithEmailAndPassword(email, password);
+  signIn(email: string, password: string): Promise<firebase.UserCredential> {
+    return this.afAuth.auth.signInWithEmailAndPassword(email, password);
   }
 
-  signOut(callback): Promise(void) {
-    this.afAuth.auth.signOut();
+  signOut(): Promise<void> {
+    return this.afAuth.auth.signOut();
   }
 
 /*
