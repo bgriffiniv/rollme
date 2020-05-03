@@ -11,14 +11,16 @@ import { UserService } from 'src/app/services/user/user.service';
 })
 export class HomePage implements OnInit{
 
-  currentUser;
-
   constructor(private route: ActivatedRoute, private router: Router, private authService: AuthService, private userService: UserService) {
     console.log("Home page started (constructor)");
   }
 
-  async getCurrentUserCallback() {
+  async getCurrentUserCallback(currentUserObservable) {
     try {
+      let currentUser = await currentUserObservable.toPromise();
+      if (!currentUser) {
+        console.log('Blah');
+      }
       let user = await this.userService.getUser(this.currentUser.uid);
       console.log('Home Page : Get User Data Success', user);
 
@@ -41,18 +43,18 @@ export class HomePage implements OnInit{
     }
   }
 
-  async ngOnInit() {
+  ngOnInit() {
     console.log("Home page started (init)");
 
     // get the current user's uid
     try {
-      this.currentUser = await this.authService.getCurrentUser();
-      if (!this.currentUser) {
+      let currentUser = this.authService.getCurrentUser();
+      if (!currentUser) {
         console.log('Home Page : Currently logged out');
         this.router.navigateByUrl('/login');
       }
 
-      this.getCurrentUserCallback();
+      this.getCurrentUserCallback(currentUser);
     } catch(error) {
       console.log('Home Page : Get Current User Failure', error.message);
     }

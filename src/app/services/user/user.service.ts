@@ -34,7 +34,7 @@ export class UserService {
   }
 
   ngOnInit() {
-    console.log('Auth Service init');
+    console.log('User Service init');
   }
 
   ngOnDestroy() {

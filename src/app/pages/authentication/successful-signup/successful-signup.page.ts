@@ -53,17 +53,16 @@ export class SuccessfulSignupPage implements OnInit {
     }
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     console.log('Successful Signup Page init');
     // maybe we can get a whole user?
-    this.authService.getCurrentUser().subscribe(user => {
-      if (user) {
-        console.log('user uid:' + user.uid + ',\n arg uid:' + this.uid);
-          this.createNewUserDataEntry(user);
-      } else {
-        console.log('Successful Signup : Get User Failure');
-      }
-    });
+    try {
+      let user = await this.authService.getCurrentUser().toPromise();
+      console.log('Successful Signup : Get User Success', user);
+      console.log('user uid:' + user.uid + ',\n arg uid:' + this.uid);
+      this.createNewUserDataEntry(user);
+     } catch(error) {
+      console.log('Successful Signup : Get User Failure', error.message);
+    }
   }
-
 }

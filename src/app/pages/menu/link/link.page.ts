@@ -10,7 +10,7 @@ import { AuthService } from 'src/app/services/auth/auth.service';
   styleUrls: ['./link.page.scss'],
 })
 export class LinkPage implements OnInit {
-id;
+
 userDataList;
 parent;
 
@@ -20,12 +20,13 @@ parent;
       this.parent = this.router.getCurrentNavigation().extras.state.parent;
     }
 
-    this.id = this.authService.getCurrentUserId();
-    this.userDataList = this.userService.listUsers();
 
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+
+    this.userDataList = this.userService.listUsers();
+
   }
 
 

@@ -11,17 +11,19 @@ export class AuthService {
 
   constructor(private afAuth: AngularFireAuth) {
     console.log('Auth Service constructor');
-    this.user = afAuth.authState;
   }
+
+  ngOnInit() {
+    console.log('Auth Service init');
+    this.user = this.afAuth.authState;
+    console.log(this.user);
+  }
+
 
   // Returns true if user is logged in
   isAuthenticated(): boolean {
     //console.log('Current user:', firebase.auth().currentUser);
-    return firebase.auth().currentUser !== null;
-  }
-
-  getCurrentUserId(): string {
-    return firebase.auth().currentUser.uid;
+    return this.user !== null;
   }
 
   // Returns current user data

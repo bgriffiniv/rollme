@@ -24,13 +24,19 @@ export class RolodexPage implements OnInit {
     private route: ActivatedRoute, private router: Router
   ) {
     console.log("Rolodex Page (constructor)");
-
-    this.staticCards = this.cardService.listStaticCardsByHolder(this.authService.getCurrentUserId());
-    this.cards = this.cardService.listCardsByHolder(this.authService.getCurrentUserId());
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     console.log("Rolodex Page (init)");
+
+    try {
+      this.user = await this.authService.getCurrentUser().toPromise();
+
+      this.staticCards = this.cardService.listStaticCardsByHolder(this.user.uid);
+      this.cards = this.cardService.listCardsByHolder(this.user.uid);
+    } catch (error) {
+      console.log("Failed to fetch cards by holder!", error);
+    }
   }
 
 
