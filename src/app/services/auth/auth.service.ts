@@ -7,58 +7,31 @@ import * as firebase from 'firebase/app';
   providedIn: 'root'
 })
 export class AuthService {
-  currentUser: Observable<firebase.User>;
 
   constructor(private afAuth: AngularFireAuth) {
     console.log('Auth Service constructor');
-
-
   }
 
   // Returns true if user is logged in
   isAuthenticated(): boolean {
-    return this.currentUser !== null;
+    return this.afAuth.currentUser !== null;
   }
 
-  // Returns current user
+  // Returns current auth state (Observable)
   getCurrentUser(): Observable<firebase.User> {
     return this.afAuth.authState;
   }
 
-  signUp(email: string, password: string, callback) {
-    this.afAuth.auth.createUserWithEmailAndPassword(email, password)
-    .then(res => {
-      console.log('Successfully signed up!');
-      callback(null, res);
-    })
-    .catch(err => {
-      console.log('Something is wrong:', err.message);
-      callback(err);
-    });
+  signUp(email: string, password: string): Promise(firebase.UserCredential) {
+    this.afAuth.createUserWithEmailAndPassword(email, password);
   }
 
-  signIn(email: string, password: string, callback) {
-    this.afAuth.auth.signInWithEmailAndPassword(email, password)
-    .then(res => {
-      console.log('Successfully signed in!');
-      callback(null, res);
-    })
-    .catch(err => {
-      console.log('Something is wrong:',err.message);
-      callback(err)
-    });
+  signIn(email: string, password: string, callback): Promise(firebase.UserCredential) {
+    this.afAuth.auth.signInWithEmailAndPassword(email, password);
   }
 
-  signOut(callback) {
-    this.afAuth.auth.signOut()
-    .then(res => {
-      console.log('Successfully signed out!');
-      callback(null, res);
-    })
-    .catch(err => {
-      console.log('Something is wrong:',err.message);
-      callback(err)
-    });
+  signOut(callback): Promise(void) {
+    this.afAuth.auth.signOut();
   }
 
 /*

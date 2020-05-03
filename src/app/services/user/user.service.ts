@@ -18,82 +18,58 @@ export interface User {
   providedIn: 'root'
 })
 export class UserService {
-  //private users: Observable<User[]>;
-  //private staticUsers: Observable<User[]>;
   private userCollection: AngularFirestoreCollection<User>;
   private staticUserCollection: AngularFirestoreCollection<User>;
+  //private users: Observable<User[]>;
+  //private staticUsers: Observable<User[]>;
 
   constructor(private afs: AngularFirestore) {
     console.log('User Service constructor');
 
     this.userCollection = this.afs.collection<User>('users');
     this.staticUserCollection = this.afs.collection<User>('static_users');
+
+    //this.users = this.userCollection.valueChanges({idField: 'id'});
+    //this.staticUsers = this.staticUserCollection.valueChanges({idField: 'id'});
   }
 
-  getStaticUsers(callback) {
-    this.staticUserCollection.get()
-    .subscribe(a => {
-      let staticUsers = [];
-      a.forEach(b => {
-        let staticUser = b.data() as User;
-        staticUser.id = b.id;
-        staticUsers.push(staticUser);
-      });
-      callback(null, staticUsers);
-    }, e => {callback(e);});
+  getUsers(): Observable<User[]> {
+    return this.userCollection.valueChanges({idField: 'id'});
   }
 
-  getStaticUser(id: string, callback) {
-    this.staticUserCollection.doc<User>(id).get()
-    .subscribe(d => {
-      let staticUser = d.data() as User;
-      staticUser.id = d.id;
-      callback(null, staticUser);
-    }, e => {callback(e);});
+  getUser(id: string): Observable<User> {
+    return this.userCollection.doc<User>(id).valueChanges();
   }
 
-  addStaticUser(user: User, callback) {
-    this.staticUserCollection.add(user)
-    .then(d => {callback(null,d);})
-    .catch(e => {callback(e);});
+  addUser(user: User): Promise<DocumentReference> {
+    return this.userCollection.add(user);
   }
 
-  updateStaticUser(user: User, callback) {
-    this.staticUserCollection.doc<User>(user.id).update(user)
-    .then(d => {callback(null,d);})
-    .catch(e => {callback(e);});
+  updateUser(user: User): Promise<void> {
+    return this.userCollection.doc<User>(user.id).update(user);
   }
 
-  deleteStaticUser(user: User, callback) {
-    return this.staticUserCollection.doc(user.id).delete()
-    .then(d => {callback(null,d);})
-    .catch(e => {callback(e);});
+  deleteUser(user: User): Promise<void> {
+    return this.userCollection.doc<User>(user.id).delete();
   }
 
-  getUser(id: string, callback) {
-    this.userCollection.doc<User>(id).get()
-    .subscribe(d => {
-      let user = d.data() as User;
-      user.id = d.id;
-      callback(null, user);
-    }, e => {callback(e);});
+  getStaticUsers(): Observable<User[]> {
+    return this.staticUserCollection.valueChanges({idField: 'id'});
   }
 
-  addUser(user: User, callback) {
-    this.userCollection.doc<User>(user.id).set(user)
-    .then(d => {callback(null,d);})
-    .catch(e => {callback(e);});
+  getStaticUser(id: string): Observable<User> {
+    return this.staticUserCollection.doc<User>(id).valueChanges();
   }
 
-  updateUser(user: User, callback) {
-    this.userCollection.doc<User>(user.id).update(user)
-    .then(d => {callback(null,d);})
-    .catch(e => {callback(e);});
+  addStaticUser(user: User): Promise<DocumentReference> {
+    return this.staticUserCollection.add(user);
   }
 
-  deleteUser(user: User, callback) {
-    return this.userCollection.doc(user.id).delete()
-    .then(d => {callback(null,d);})
-    .catch(e => {callback(e);});
+  updateStaticUser(user: User): Promise<void> {
+    return this.staticUserCollection.doc<User>(user.id).update(user);
+  }
+
+  deleteStaticUser(user: User): Promise<void> {
+    return this.staticUserCollection.doc<User>(user.id).delete();
   }
 }
