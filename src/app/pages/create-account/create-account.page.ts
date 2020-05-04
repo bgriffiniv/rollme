@@ -6,6 +6,8 @@ import { ToastController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { PasswordValidator } from '../../validators/password.validator';
 
+import { tap } from 'rxjs/operators'
+
 @Component({
   selector: 'app-create-account',
   templateUrl: './create-account.page.html',
@@ -61,26 +63,29 @@ export class CreateAccountPage implements OnInit {
     } else {
       console.log(this.signupForm.value)
     }
-    this.authService.signUp(this.email, this.signupForm.value.password, (error, data) => {
-      if (error) {
-        console.log('Create Account Page : Sign Up Failure : setting error control');
-        this.isSubmitted = false;
-        this.signupForm.setErrors( { 'signUp' : true } );
-      } else {
-        console.log('Create Account Page : Sign Up Success : navigating to Successful Signup Page');
-        this.showToast('Account created!');
-        this.authService.getCurrentUser((error, currentUser) => {
+    this.authService.signUp(this.email, this.signupForm.value.password)
+    .then(data => {
+      console.log('Create Account Page : Sign Up Success : navigating to Successful Signup Page');
+      this.showToast('Account created!');
+      this.authService.getCurrentUser().pipe(
+        tap(currentUser => {
           let navigationExtras: NavigationExtras = {
-          state: {
-            uid: currentUser.uid,
-            firstName: this.signupForm.value.firstName,
-            lastName: this.signupForm.value.lastName,
-            email: this.email,
-            mobile: this.mobile
-          }
-        };
-        this.router.navigateByUrl('/successful-signup', navigationExtras);        });
-      }
+            state: {
+              uid: currentUser.uid,
+              firstName: this.signupForm.value.firstName,
+              lastName: this.signupForm.value.lastName,
+              email: this.email,
+              mobile: this.mobile
+            }
+          };
+          this.router.navigateByUrl('/successful-signup', navigationExtras);
+        })
+      ).subscribe();
+    })
+    .catch(error => {
+      console.log('Create Account Page : Sign Up Failure : setting error control');
+      this.isSubmitted = false;
+      this.signupForm.setErrors( { 'signUp' : true } );
     });
   }
 

@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 import { DataService } from './../../services/data/data.service';
 import { UserService, User } from 'src/app/services/user/user.service';
 
+import { tap, catchError } from 'rxjs/operators'
+
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.page.html',
@@ -20,13 +22,17 @@ export class UserListPage implements OnInit {
 
   ngOnInit() {
     console.log("User List page started (init)");
-    this.userService.getStaticUsers((error, staticUsers) => {
-      if (error) {
-        console.log(error);
-      }
-      this.users = staticUsers;
-      console.log(staticUsers);
-    });
+    this.userService.getStaticUsers().pipe(
+      tap(staticUsers => {
+        this.users = staticUsers;
+        console.log(staticUsers);
+      }),
+      catchError((error, caught) => {
+        if (error) {
+          console.log(error);
+        }
+        return null;
+      })
+    ).subscribe();
   }
-
 }

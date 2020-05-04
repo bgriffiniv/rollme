@@ -6,6 +6,8 @@ import { NgModule } from '@angular/core';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { UserService } from 'src/app/services/user/user.service';
 
+import { tap, catchError } from 'rxjs/operators'
+
 @Component({
   selector: 'app-successful-signup',
   templateUrl: './successful-signup.page.html',
@@ -43,21 +45,29 @@ export class SuccessfulSignupPage implements OnInit {
   ngOnInit() {
     console.log('Successful Signup Page init');
     // maybe we can get a whole user?
-    this.authService.getCurrentUser((error, currentUser) => {
-      console.log('user uid:' + currentUser.uid + ',\n arg uid:' + this.uid);
-      // create new user and card entries here?
-      let newUser = {
-        id: this.uid,
-        name: this.firstName + ' ' + this.lastName,
-        email: this.email
-      };
-      this.userService.addUser(newUser, (err, data) => {
-        if (err) {
-          console.log(err);
-          return;
-        }
-      });
-    });
-  }
+    this.authService.getCurrentUser().pipe(
+      tap(currentUser => {
+        console.log('user uid:' + currentUser.uid + ',\n arg uid:' + this.uid);
+        // create new user and card entries here?
+        let newUser = {
+          id: this.uid,
+          name: this.firstName + ' ' + this.lastName,
+          email: this.email
+        };
+        this.userService.addUser(newUser)
+        .then(data => {
 
+        })
+        .catch(err => {
+          if (err) {
+            console.log(err);
+            return;
+          }
+        });
+      }),
+      catchError((error, caught) => {
+        return null;
+      })
+    ).subscribe();
+  }
 }

@@ -14,7 +14,7 @@ export class AuthService {
 
   // Returns true if user is logged in
   isAuthenticated(): boolean {
-    return this.afAuth.currentUser !== null;
+    return this.afAuth.auth.currentUser !== null;
   }
 
   // Returns current auth state (Observable)
@@ -22,11 +22,11 @@ export class AuthService {
     return this.afAuth.authState;
   }
 
-  signUp(email: string, password: string): Promise<firebase.UserCredential> {
-    return this.afAuth.createUserWithEmailAndPassword(email, password);
+  signUp(email: string, password: string): Promise<any> {
+    return this.afAuth.auth.createUserWithEmailAndPassword(email, password);
   }
 
-  signIn(email: string, password: string): Promise<firebase.UserCredential> {
+  signIn(email: string, password: string): Promise<any> {
     return this.afAuth.auth.signInWithEmailAndPassword(email, password);
   }
 

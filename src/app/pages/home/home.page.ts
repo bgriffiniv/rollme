@@ -4,6 +4,8 @@ import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { UserService } from 'src/app/services/user/user.service';
 
+import { tap, catchError } from 'rxjs/operators'
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -18,33 +20,42 @@ export class HomePage implements OnInit{
   ngOnInit() {
     console.log("Home page started (init)");
     // check for a user entry by the uid
-    let goToSuccessfulSignupPageIfNoData =
+    let goToSuccessfulSignupPageIfNoData = false;
 
     // get the current user's uid
-    this.authService.getCurrentUser((error, currentUser) => {
-      if (!currentUser) {
-        console.log('Home Page : Currently logged out');
-        return;
-      }
-      this.userService.getUser(currentUser.uid,  (err, data) => {
-        if (err) {
-          console.log(err);
+    this.authService.getCurrentUser().pipe(
+      tap(currentUser => {
+        if (!currentUser) {
+          console.log('Home Page : Currently logged out');
+          return;
         }
-        console.log(data);
-        if (!data) {
-          // go to Successful Signup Page if no user exists
-          let navigationExtras: NavigationExtras = {
-                  state: {
-                    uid: currentUser.uid,
-                    firstName: '',
-                    lastName: '',
-                    email: '',
-                    mobile: ''
-                  }
-                };
-          this.router.navigateByUrl('/successful-signup', navigationExtras);
-        }
-      });
-    });
+
+        this.userService.getUser(currentUser.uid).pipe(
+
+          tap(data => {
+            console.log(data);
+            if (!data) {
+              // go to Successful Signup Page if no user exists
+              let navigationExtras: NavigationExtras = {
+                      state: {
+                        uid: currentUser.uid,
+                        firstName: '',
+                        lastName: '',
+                        email: '',
+                        mobile: ''
+                      }
+                    };
+              this.router.navigateByUrl('/successful-signup', navigationExtras);
+            }
+          }),
+          catchError((error, caught) => {
+            console.log(error);
+            return null;
+          })
+
+        ).subscribe();
+
+      })
+    ).subscribe();
   }
 }
