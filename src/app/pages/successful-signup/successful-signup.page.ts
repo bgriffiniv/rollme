@@ -46,28 +46,29 @@ export class SuccessfulSignupPage implements OnInit {
     console.log('Successful Signup Page init');
     // maybe we can get a whole user?
     this.authService.getCurrentUser().pipe(
-      tap(currentUser => {
-        console.log('user uid:' + currentUser.uid + ',\n arg uid:' + this.uid);
-        // create new user and card entries here?
-        let newUser = {
-          id: this.uid,
-          name: this.firstName + ' ' + this.lastName,
-          email: this.email
-        };
-        this.userService.addUser(newUser)
-        .then(data => {
+      tap(
+        currentUser => {
+          console.log('user uid:' + currentUser.uid + ',\n arg uid:' + this.uid);
+          // create new user and card entries here?
+          let newUser = {
+            id: this.uid,
+            name: this.firstName + ' ' + this.lastName,
+            email: this.email
+          };
+          this.userService.addUser(newUser)
+          .then(data => {
 
-        })
-        .catch(err => {
-          if (err) {
-            console.log(err);
-            return;
-          }
-        });
-      }),
-      catchError((error, caught) => {
-        return null;
-      })
+          })
+          .catch(err => {
+            if (err) {
+              console.log(err);
+              return;
+            }
+          });
+        },
+        error => {
+        }
+      )
     ).subscribe();
   }
 }

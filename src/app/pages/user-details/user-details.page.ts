@@ -28,16 +28,18 @@ export class UserDetailsPage implements OnInit {
     if (this.id) {
       console.log("current id: ", this.id);
       this.userService.getStaticUser(this.id).pipe(
-        tap(user => {
-          console.log("got user: ", user);
-          this.user = user;
-        }),
-        catchError(err => {
-          if (err) {
-            console.log(err);
+        tap(
+          user => {
+            console.log("got user: ", user);
+            this.user = user;
+          },
+          err => {
+            if (err) {
+              console.log(err);
+            }
+            return null;
           }
-          return null;
-        })
+        )
       ).subscribe();
     } else {
       this.user.name = "New User";

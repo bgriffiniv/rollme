@@ -14,11 +14,11 @@ import { tap, catchError } from 'rxjs/operators'
 export class HomePage implements OnInit{
 
   constructor(private route: ActivatedRoute, private router: Router, private authService: AuthService, private userService: UserService) {
-    console.log("Home page started (constructor)");
+    console.log("Home page started constructor");
   }
 
   ngOnInit() {
-    console.log("Home page started (init)");
+    console.log("Home page started init");
     // check for a user entry by the uid
     let goToSuccessfulSignupPageIfNoData = false;
 
@@ -27,14 +27,13 @@ export class HomePage implements OnInit{
       tap(currentUser => {
         if (!currentUser) {
           console.log('Home Page : Currently logged out');
-          return;
+          this.router.navigateByUrl('/login');
         }
 
         this.userService.getUser(currentUser.uid).pipe(
-
-          tap(data => {
-            console.log(data);
-            if (!data) {
+          tap(
+            data => {
+              console.log(data);
               // go to Successful Signup Page if no user exists
               let navigationExtras: NavigationExtras = {
                       state: {
@@ -46,13 +45,11 @@ export class HomePage implements OnInit{
                       }
                     };
               this.router.navigateByUrl('/successful-signup', navigationExtras);
+            },
+            error => {
+              console.log(error);
             }
-          }),
-          catchError((error, caught) => {
-            console.log(error);
-            return null;
-          })
-
+          )
         ).subscribe();
 
       })
