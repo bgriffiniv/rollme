@@ -2,6 +2,7 @@
 
   ion-card {
     position: relative;
+    text-align: center;
   }
 
   .card-title {
@@ -15,21 +16,42 @@
 
   .card-subtitle {
     font-size: 1.0em;
+    width: 100%;
+    text-align: center;
     position: relative;
-    right: -300px;
+    bottom: 10px;
+  }
+
+  .icon-format-portrait {
+    width: 100%;
+    text-align: center;
+    position: relative;
+    top: 5px;
+  }
+
+  .icon-format-landscape {
+    position: relative;
+    bottom: -100px;
+    right: 75px;
     width: 50%;
   }
 
-   .icon-format {
-      position: relative;
-      bottom: -100px;
-      right: -40px;
-      width: 50%;
-    }
+  .art-of-the-day {
+     font-size: 1.0em;
+     position: relative;
+     right: -300px;
+     width: 50%;
+
+  }
 
   .rolodex-container {
     height: 100%;
     width: 100%;
+  }
+
+  .card-size {
+    height: auto;
+    width: auto;
   }
 
 }

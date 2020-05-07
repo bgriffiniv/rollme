@@ -141,11 +141,13 @@ export class ExchangePage implements OnInit {
     console.log('Is authenticated:', this.authService.isAuthenticated());
 
      this.subscription = this.route.params.subscribe(val => {
+            console.log('val:', val);
         if (this.router.getCurrentNavigation().extras.state){
                 this.cancelRoll = false;
                 this.card.frontImg = this.router.getCurrentNavigation().extras.state.cardDataFront;
                 this.card.backImg = this.router.getCurrentNavigation().extras.state.cardDataBack;
         };
+
      });
 
      this.users = this.userService.listUsers();

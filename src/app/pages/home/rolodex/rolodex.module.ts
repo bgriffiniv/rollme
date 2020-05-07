@@ -8,6 +8,7 @@ import { IonicModule } from '@ionic/angular';
 import { RolodexPage } from './rolodex.page';
 
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+
 const routes: Routes = [
   {
     path: '',

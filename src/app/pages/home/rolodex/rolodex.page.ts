@@ -6,7 +6,9 @@ import { UserService, User } from './../../../services/user/user.service';
 import { CardService, Card } from 'src/app/services/card/card.service';
 
 import { Observable } from 'rxjs';
-
+import { Platform } from '@ionic/angular';
+import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
+import { Gyroscope, GyroscopeOrientation, GyroscopeOptions } from '@ionic-native/gyroscope/ngx';
 
 @Component({
   selector: 'app-rolodex',
@@ -26,6 +28,9 @@ export class RolodexPage implements OnInit {
   filteredUsers: any[];
   searchTerm = '';
 
+  mobileOrientation: string;
+  portraitCardView = true;
+
   slideOpts = {
       scrollbar: {el: ''},
       effect: 'coverflow',
@@ -37,7 +42,7 @@ export class RolodexPage implements OnInit {
       slidesPerView: 3,
       coverflowEffect: {
         rotate: 25,
-        stretch: 450,
+        stretch: 350,
         depth: 225,
         modifier: 1,
         slideShadows: false
@@ -128,17 +133,55 @@ export class RolodexPage implements OnInit {
   }
 
   constructor(private authService: AuthService, private userService: UserService, private cardService: CardService,
-    private route: ActivatedRoute, private router: Router
-  ) {
+              private route: ActivatedRoute, private router: Router, platform: Platform, private screenOrientation: ScreenOrientation,
+              private gyroscope: Gyroscope) {
     console.log("Rolodex Page (constructor)");
 
     this.staticCards = this.cardService.listStaticCardsByHolder(this.authService.getCurrentUserId());
     this.cards = this.cardService.listCardsByHolder(this.authService.getCurrentUserId());
+    this.users = this.userService.listUsers();
+
+    platform.ready().then(() => {
+      this.mobileOrientation = this.screenOrientation.type;
+      console.log('Orientation is ' + this.mobileOrientation);
+
+      let options: GyroscopeOptions = {
+         frequency: 1000
+      }
+
+      this.gyroscope.getCurrent(options)
+        .then((orientation: GyroscopeOrientation) => {
+           console.log(orientation.x, orientation.y, orientation.z, orientation.timestamp);
+         })
+        .catch()
+
+      this.gyroscope.watch()
+         .subscribe((orientation: GyroscopeOrientation) => {
+            console.log(orientation.x, orientation.y, orientation.z, orientation.timestamp);
+            if (orientation.z > 0) {
+                this.mobileOrientation == "landscape-primary";
+                this.portraitCardView = false;
+            }
+         });
+
+      this.screenOrientation.onChange().subscribe(() => {
+       this.mobileOrientation = this.screenOrientation.type;
+          if (this.mobileOrientation == "portrait-primary") {
+              this.portraitCardView = true;
+              console.log('Orientation is ' + this.mobileOrientation);
+
+          } else if (this.mobileOrientation == "landscape-primary") {
+              this.portraitCardView = false;
+              console.log('Orientation is ' + this.mobileOrientation);
+          };
+      });
+    }).catch(err => {
+         console.log('Error while loading platform', err);
+    });
   }
 
   ngOnInit() {
     console.log("Rolodex Page (init)");
-    this.users = this.userService.listUsers();
   }
 
   deleteContact(index) {

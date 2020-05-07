@@ -4,7 +4,9 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 import { Observable } from 'rxjs';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { ToastController, AlertController } from '@ionic/angular';
+
 import { CardService, Card } from 'src/app/services/card/card.service';
+import { UserService, User } from 'src/app/services/user/user.service';
 
 @Component({
 
@@ -18,6 +20,11 @@ export class CardImportPage implements OnInit {
     frontImg: '',
     backImg: ''
   };
+  owner: string;
+  holders: string[];
+
+  user;
+  users: Observable<User[]>;
 
   isFrontCaptured;
   isBackCaptured;

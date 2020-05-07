@@ -32,7 +32,7 @@ export class AuthService {
       console.log('Successfully got auth state');
       callback(null, d);
     }, e => {
-      console.log('Somethiconsong went wrong:', e.message);
+      console.log('Something went wrong:', e.message);
       callback(e);
     });
   }

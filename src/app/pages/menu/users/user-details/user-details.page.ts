@@ -42,6 +42,10 @@ export class UserDetailsPage implements OnInit {
 
   }
 
+  addCard() {
+
+  }
+
   addUser() {
     this.userService.addUser(this.user, (error, data) => {
       if (error) {

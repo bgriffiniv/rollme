@@ -1,3 +1,5 @@
+@import '~@loadingio/loading.css/dist/loading.css';
+
 .image {
   height: 75px;
   width: 75px;
@@ -7,8 +9,7 @@
 
 .floating-fab-btn {
   position: relative;
-  right: 30px;
-  bottom: 5px;
+  bottom: 40px;
 }
 
 hr {

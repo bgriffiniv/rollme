@@ -1,14 +1,11 @@
-<ion-header>
-  <ion-toolbar class="header">
+<ion-toolbar class="header" *ngIf="portraitCardView">
     <ion-buttons slot="primary">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+</ion-toolbar>
 
-<ion-content padding>
+
+<ion-content class="ion-padding">
   <ion-tabs>
     <ion-tab-bar slot="bottom">
       <ion-tab-button tab="rolodex">

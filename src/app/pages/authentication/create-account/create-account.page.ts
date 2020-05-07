@@ -79,7 +79,8 @@ export class CreateAccountPage implements OnInit {
             mobile: this.mobile
           }
         };
-        this.router.navigateByUrl('/successful-signup', navigationExtras);        });
+        this.router.navigateByUrl('/successful-signup', navigationExtras);
+        });
       }
     });
   }
