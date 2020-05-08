@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument, DocumentReference } from 'angularfire2/firestore';
-import { map, take } from 'rxjs/operators';
+
+import { tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 export interface User {
@@ -33,43 +34,95 @@ export class UserService {
     //this.staticUsers = this.staticUserCollection.valueChanges({idField: 'id'});
   }
 
-  getUsers(): Observable<User[]> {
-    return this.userCollection.valueChanges({idField: 'id'});
+  getUsers(callback: (error, data) => void) {
+    this.userCollection.valueChanges({idField: 'id'}, callback: (error, data) => void) // Observable<User[]>
+    .pipe(
+      tap(
+        data => {callback(null, data)},
+        error => {callback(error)}
+      )
+    )
+    .subscribe();
   }
 
-  getUser(id: string): Observable<User> {
-    return this.userCollection.doc<User>(id).valueChanges();
+  getUser(id: string, callback: (error, data) => void) {
+    this.userCollection.doc<User>(id).valueChanges() // Observable<User>
+    .pipe(
+      tap(
+        data => {callback(null, data)},
+        error => {callback(error)}
+      )
+    )
+    .subscribe();
   }
 
-  addUser(user: User): Promise<DocumentReference> {
-    return this.userCollection.add(user);
+  addUser(user: User, callback: (error, data) => void) {
+    this.userCollection.add(user) // Promise<DocumentReference>
+    .then(
+      data => {callback(null, data)},
+      error => {callback(error)}
+    );
   }
 
-  updateUser(user: User): Promise<void> {
-    return this.userCollection.doc<User>(user.id).update(user);
+  updateUser(user: User, callback: (error, data) => void) {
+    this.userCollection.doc<User>(user.id).update(user) // Promise<void>
+    .then(
+      data => {callback(null, data)},
+      error => {callback(error)}
+    );
   }
 
-  deleteUser(user: User): Promise<void> {
-    return this.userCollection.doc<User>(user.id).delete();
+  deleteUser(user: User, callback: (error, data) => void) {
+    this.userCollection.doc<User>(user.id).delete() // Promise<void>
+    .then(
+      data => {callback(null, data)},
+      error => {callback(error)}
+    );
   }
 
-  getStaticUsers(): Observable<User[]> {
-    return this.staticUserCollection.valueChanges({idField: 'id'});
+  getStaticUsers(callback: (error, data) => void) {
+    this.staticUserCollection.valueChanges({idField: 'id'}) // Observable<User[]>
+    .pipe(
+      tap(
+        data => {callback(null, data)},
+        error => {callback(error)}
+      )
+    )
+    .subscribe();
   }
 
-  getStaticUser(id: string): Observable<User> {
-    return this.staticUserCollection.doc<User>(id).valueChanges();
+  getStaticUser(id: string, callback: (error, data) => void)  {
+    this.staticUserCollection.doc<User>(id).valueChanges() // Observable<User>
+    .pipe(
+      tap(
+        data => {callback(null, data)},
+        error => {callback(error)}
+      )
+    )
+    .subscribe();
   }
 
-  addStaticUser(user: User): Promise<DocumentReference> {
-    return this.staticUserCollection.add(user);
+  addStaticUser(user: User, callback: (error, data) => void) {
+    this.staticUserCollection.add(user) // Promise<DocumentReference>
+    .then(
+      data => {callback(null, data)},
+      error => {callback(error)}
+    );
   }
 
-  updateStaticUser(user: User): Promise<void> {
-    return this.staticUserCollection.doc<User>(user.id).update(user);
+  updateStaticUser(user: User, callback: (error, data) => void) {
+    this.staticUserCollection.doc<User>(user.id).update(user) // Promise<void>
+    .then(
+      data => {callback(null, data)},
+      error => {callback(error)}
+    );
   }
 
-  deleteStaticUser(user: User): Promise<void> {
-    return this.staticUserCollection.doc<User>(user.id).delete();
+  deleteStaticUser(user: User, callback: (error, data) => void) {
+    this.staticUserCollection.doc<User>(user.id).delete() // Promise<void>
+    .then(
+      data => {callback(null, data)},
+      error => {callback(error)}
+    );
   }
 }
