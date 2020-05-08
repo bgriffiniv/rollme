@@ -20,8 +20,6 @@ export class CardImportPage implements OnInit {
     frontImg: '',
     backImg: ''
   };
-  owner: string;
-  holders: string[];
 
   user;
   users: Observable<User[]>;

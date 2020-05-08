@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-chip padding color="danger" class="chip-btn">
+      <ion-label (click)="dismissModal()">Cancel</ion-label>
+  </ion-chip>
+</ion-header>
+
+<ion-content>
+  <div class="card-position">
+  <ion-slides pager="false" [options]="slideOpts">
+      <ion-slide>
+        <ion-card>
+          <img [src]="cardDataFront" alt=""/>
+        </ion-card>
+      </ion-slide>
+
+      <ion-slide *ngIf="cardDataBack">
+        <ion-card>
+          <img [src]="cardDataBack" alt=""/>
+        </ion-card>
+      </ion-slide>
+
+        <ion-slide *ngIf="!cardDataBack">
+          <ion-card>
+            <img src="./assets/imgs/blankBackground.jpg" class="blank-card" alt=""/>
+            <div class="no-data-msg">No image saved</div>
+          </ion-card>
+        </ion-slide>
+
+  </ion-slides>
+  </div>
+</ion-content>

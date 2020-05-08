@@ -48,7 +48,7 @@ export class RolodexPage implements OnInit {
         slideShadows: false
       },
       freeMode: true,
-      freeModeSticky: false,
+      freeModeSticky: true,
       freeModeMomentum: true,
       freeModeMomentumRatio: 1,
       freeModeMomentumVelocityRatio: 1,
