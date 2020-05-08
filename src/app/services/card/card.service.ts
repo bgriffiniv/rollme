@@ -31,7 +31,7 @@ export class CardService {
     //this.staticCards = this.staticCardCollection.valueChanges({idField: 'id'});
   }
 
-  getCards(callback: (error, data) => void) {
+  getCards(callback: (error, data?) => void) {
     this.cardCollection.valueChanges({idField: 'id'}) // Observable<Card[]>
     .pipe(
       tap(
@@ -42,7 +42,7 @@ export class CardService {
     .subscribe();
   }
 
-  getCard(id: string, callback: (error, data) => void) {
+  getCard(id: string, callback: (error, data?) => void) {
     this.cardCollection.doc<Card>(id).valueChanges() // Observable<Card>
     .pipe(
       tap(
@@ -53,7 +53,7 @@ export class CardService {
     .subscribe();
   }
 
-  addCard(card: Card, callback: (error, data) => void) {
+  addCard(card: Card, callback: (error, data?) => void) {
     this.cardCollection.add(card) // Promise<DocumentReference>
     .then(
       data => {callback(null, data)},
@@ -61,7 +61,7 @@ export class CardService {
     );
   }
 
-  updateCard(card: Card, callback: (error, data) => void) {
+  updateCard(card: Card, callback: (error, data?) => void) {
     this.cardCollection.doc<Card>(card.id).update(card) // Promise<void>
     .then(
       data => {callback(null, data)}, // data will be null
@@ -69,7 +69,7 @@ export class CardService {
     );
   }
 
-  deleteCard(id: string, callback: (error, data) => void) {
+  deleteCard(id: string, callback: (error, data?) => void) {
     this.cardCollection.doc<Card>(id).delete() // Promise<void>
     .then(
       data => {callback(null, data)}, // data will be null
@@ -77,7 +77,7 @@ export class CardService {
     );
   }
 
-  getStaticCards(callback: (error, data) => void) {
+  getStaticCards(callback: (error, data?) => void) {
     this.staticCardCollection.valueChanges({idField: 'id'}) // Observable<Card[]>
     .pipe(
       tap(
@@ -88,7 +88,7 @@ export class CardService {
     .subscribe();
   }
 
-  getStaticCard(id: string, callback: (error, data) => void) {
+  getStaticCard(id: string, callback: (error, data?) => void) {
     this.staticCardCollection.doc<Card>(id).valueChanges() // Observable<Card>
     .pipe(
       tap(
@@ -99,7 +99,7 @@ export class CardService {
     .subscribe();
   }
 
-  addStaticCard(card: Card, callback: (error, data) => void) {
+  addStaticCard(card: Card, callback: (error, data?) => void) {
     this.staticCardCollection.add(card) // Promise<DocumentReference>
     .then(
       data => {callback(null, data)},
@@ -107,7 +107,7 @@ export class CardService {
     );
   }
 
-  updateStaticCard(card: Card, callback: (error, data) => void) {
+  updateStaticCard(card: Card, callback: (error, data?) => void) {
     this.staticCardCollection.doc<Card>(card.id).update(card) // Promise<void>
     .then(
       data => {callback(null, data)},
@@ -115,7 +115,7 @@ export class CardService {
     );
   }
 
-  deleteStaticCard(id: string, callback: (error, data) => void) {
+  deleteStaticCard(id: string, callback: (error, data?) => void) {
     this.staticCardCollection.doc<Card>(id).delete() // Promise<void>
     .then(
       data => {callback(null, data)},

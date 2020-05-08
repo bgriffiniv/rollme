@@ -34,8 +34,8 @@ export class UserService {
     //this.staticUsers = this.staticUserCollection.valueChanges({idField: 'id'});
   }
 
-  getUsers(callback: (error, data) => void) {
-    this.userCollection.valueChanges({idField: 'id'}, callback: (error, data) => void) // Observable<User[]>
+  getUsers(callback: (error, data?) => void) {
+    this.userCollection.valueChanges({idField: 'id'}) // Observable<User[]>
     .pipe(
       tap(
         data => {callback(null, data)},
@@ -45,7 +45,7 @@ export class UserService {
     .subscribe();
   }
 
-  getUser(id: string, callback: (error, data) => void) {
+  getUser(id: string, callback: (error, data?) => void) {
     this.userCollection.doc<User>(id).valueChanges() // Observable<User>
     .pipe(
       tap(
@@ -56,7 +56,7 @@ export class UserService {
     .subscribe();
   }
 
-  addUser(user: User, callback: (error, data) => void) {
+  addUser(user: User, callback: (error, data?) => void) {
     this.userCollection.add(user) // Promise<DocumentReference>
     .then(
       data => {callback(null, data)},
@@ -64,7 +64,7 @@ export class UserService {
     );
   }
 
-  updateUser(user: User, callback: (error, data) => void) {
+  updateUser(user: User, callback: (error, data?) => void) {
     this.userCollection.doc<User>(user.id).update(user) // Promise<void>
     .then(
       data => {callback(null, data)},
@@ -72,7 +72,7 @@ export class UserService {
     );
   }
 
-  deleteUser(user: User, callback: (error, data) => void) {
+  deleteUser(user: User, callback: (error, data?) => void) {
     this.userCollection.doc<User>(user.id).delete() // Promise<void>
     .then(
       data => {callback(null, data)},
@@ -80,7 +80,7 @@ export class UserService {
     );
   }
 
-  getStaticUsers(callback: (error, data) => void) {
+  getStaticUsers(callback: (error, data?) => void) {
     this.staticUserCollection.valueChanges({idField: 'id'}) // Observable<User[]>
     .pipe(
       tap(
@@ -91,7 +91,7 @@ export class UserService {
     .subscribe();
   }
 
-  getStaticUser(id: string, callback: (error, data) => void)  {
+  getStaticUser(id: string, callback: (error, data?) => void)  {
     this.staticUserCollection.doc<User>(id).valueChanges() // Observable<User>
     .pipe(
       tap(
@@ -102,7 +102,7 @@ export class UserService {
     .subscribe();
   }
 
-  addStaticUser(user: User, callback: (error, data) => void) {
+  addStaticUser(user: User, callback: (error, data?) => void) {
     this.staticUserCollection.add(user) // Promise<DocumentReference>
     .then(
       data => {callback(null, data)},
@@ -110,7 +110,7 @@ export class UserService {
     );
   }
 
-  updateStaticUser(user: User, callback: (error, data) => void) {
+  updateStaticUser(user: User, callback: (error, data?) => void) {
     this.staticUserCollection.doc<User>(user.id).update(user) // Promise<void>
     .then(
       data => {callback(null, data)},
@@ -118,7 +118,7 @@ export class UserService {
     );
   }
 
-  deleteStaticUser(user: User, callback: (error, data) => void) {
+  deleteStaticUser(user: User, callback: (error, data?) => void) {
     this.staticUserCollection.doc<User>(user.id).delete() // Promise<void>
     .then(
       data => {callback(null, data)},

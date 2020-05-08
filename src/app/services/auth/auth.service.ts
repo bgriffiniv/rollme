@@ -16,7 +16,7 @@ export class AuthService {
   }
 
   // Returns true if user is logged in
-  isAuthenticated(callback: (error, data) => void) {
+  isAuthenticated(callback: (error, data?) => void) {
     getCurrentUser((error, data) => {
       if (error) {
         callback(error);
@@ -26,7 +26,7 @@ export class AuthService {
     });
   }
 
-  getCurrentUser(callback: (error, data) => void) {
+  getCurrentUser(callback: (error, data?) => void) {
     this.afAuth.authState // Observable<firebase.User>
     .pipe(
       tap(
@@ -36,7 +36,7 @@ export class AuthService {
     ).subscribe();
   }
 
-  signUp(email: string, password: string, callback: (error, data) => void) {
+  signUp(email: string, password: string, callback: (error, data?) => void) {
     this.afAuth.auth.createUserWithEmailAndPassword(email, password) // Promise<any>
     .then(
       data => {callback(null, data)},
@@ -44,7 +44,7 @@ export class AuthService {
     );
   }
 
-  signIn(email: string, password: string, callback: (error, data) => void) {
+  signIn(email: string, password: string, callback: (error, data?) => void) {
     this.afAuth.auth.signInWithEmailAndPassword(email, password) // Promise<any>
     .then(
       data => {callback(null, data)},
@@ -52,7 +52,7 @@ export class AuthService {
     );
   }
 
-  signOut(callback: (error, data) => void) {
+  signOut(callback: (error, data?) => void) {
     this.afAuth.auth.signOut() // Promise<void>
     .then(
       data => {callback(null, data)},
