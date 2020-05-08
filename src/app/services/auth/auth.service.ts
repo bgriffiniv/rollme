@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from "angularfire2/auth";
+
+import { tap } from 'rxjs/operators'
 import { Observable } from 'rxjs';
+
 import * as firebase from 'firebase/app';
 
 @Injectable({
@@ -13,25 +16,48 @@ export class AuthService {
   }
 
   // Returns true if user is logged in
-  isAuthenticated(): boolean {
-    return this.afAuth.auth.currentUser !== null;
+  isAuthenticated(callback: (error, data) => void) {
+    getCurrentUser((error, data) => {
+      if (error) {
+        callback(error);
+      } else {
+        callback(null, (data !== null)); // boolean
+      }
+    });
   }
 
-  // Returns current auth state (Observable)
-  getCurrentUser(): Observable<firebase.User> {
-    return this.afAuth.authState;
+  getCurrentUser(callback: (error, data) => void) {
+    this.afAuth.authState // Observable<firebase.User>
+    .pipe(
+      tap(
+        data => {callback(null, data)},
+        error => {callback(error)}
+      )
+    ).subscribe();
   }
 
-  signUp(email: string, password: string): Promise<any> {
-    return this.afAuth.auth.createUserWithEmailAndPassword(email, password);
+  signUp(email: string, password: string, callback: (error, data) => void) {
+    this.afAuth.auth.createUserWithEmailAndPassword(email, password) // Promise<any>
+    .then(
+      data => {callback(null, data)},
+      error => {callback(error)}
+    );
   }
 
-  signIn(email: string, password: string): Promise<any> {
-    return this.afAuth.auth.signInWithEmailAndPassword(email, password);
+  signIn(email: string, password: string, callback: (error, data) => void) {
+    this.afAuth.auth.signInWithEmailAndPassword(email, password) // Promise<any>
+    .then(
+      data => {callback(null, data)},
+      error => {callback(error)}
+    );
   }
 
-  signOut(): Promise<void> {
-    return this.afAuth.auth.signOut();
+  signOut(callback: (error, data) => void) {
+    this.afAuth.auth.signOut() // Promise<void>
+    .then(
+      data => {callback(null, data)},
+      error => {callback(error)}
+    );
   }
 
 /*

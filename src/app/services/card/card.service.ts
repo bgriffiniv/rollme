@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument, DocumentReference } from '@angular/fire/firestore';
-import { map, take } from 'rxjs/operators';
+
+import { tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 export interface Card {
@@ -30,43 +31,95 @@ export class CardService {
     //this.staticCards = this.staticCardCollection.valueChanges({idField: 'id'});
   }
 
-  getCards(): Observable<Card[]> {
-    return this.cardCollection.valueChanges({idField: 'id'});
+  getCards(callback: (error, data) => void) {
+    this.cardCollection.valueChanges({idField: 'id'}) // Observable<Card[]>
+    .pipe(
+      tap(
+        data => {callback(null, data)},
+        error => {callback(error)}
+      )
+    )
+    .subscribe();
   }
 
-  getCard(id: string): Observable<Card> {
-    return this.cardCollection.doc<Card>(id).valueChanges();
+  getCard(id: string, callback: (error, data) => void) {
+    this.cardCollection.doc<Card>(id).valueChanges() // Observable<Card>
+    .pipe(
+      tap(
+        data => {callback(null, data)},
+        error => {callback(error)}
+      )
+    )
+    .subscribe();
   }
 
-  addCard(card: Card): Promise<DocumentReference> {
-    return this.cardCollection.add(card);
+  addCard(card: Card, callback: (error, data) => void) {
+    this.cardCollection.add(card) // Promise<DocumentReference>
+    .then(
+      data => {callback(null, data)},
+      error => {callback(error)}
+    );
   }
 
-  updateCard(card: Card): Promise<void> {
-    return this.cardCollection.doc<Card>(card.id).update(card);
+  updateCard(card: Card, callback: (error, data) => void) {
+    this.cardCollection.doc<Card>(card.id).update(card) // Promise<void>
+    .then(
+      data => {callback(null, data)}, // data will be null
+      error => {callback(error)}
+    );
   }
 
-  deleteCard(id: string): Promise<void> {
-    return this.cardCollection.doc<Card>(id).delete();
+  deleteCard(id: string, callback: (error, data) => void) {
+    this.cardCollection.doc<Card>(id).delete() // Promise<void>
+    .then(
+      data => {callback(null, data)}, // data will be null
+      error => {callback(error)}
+    );
   }
 
-  getStaticCards(): Observable<Card[]> {
-    return this.staticCardCollection.valueChanges({idField: 'id'});
+  getStaticCards(callback: (error, data) => void) {
+    this.staticCardCollection.valueChanges({idField: 'id'}) // Observable<Card[]>
+    .pipe(
+      tap(
+        data => {callback(null, data)},
+        error => {callback(error)}
+      )
+    )
+    .subscribe();
   }
 
-  getStaticCard(id: string): Observable<Card> {
-    return this.staticCardCollection.doc<Card>(id).valueChanges();
+  getStaticCard(id: string, callback: (error, data) => void) {
+    this.staticCardCollection.doc<Card>(id).valueChanges() // Observable<Card>
+    .pipe(
+      tap(
+        data => {callback(null, data)},
+        error => {callback(error)}
+      )
+    )
+    .subscribe();
   }
 
-  addStaticCard(card: Card): Promise<DocumentReference> {
-    return this.staticCardCollection.add(card);
+  addStaticCard(card: Card, callback: (error, data) => void) {
+    this.staticCardCollection.add(card) // Promise<DocumentReference>
+    .then(
+      data => {callback(null, data)},
+      error => {callback(error)}
+    );
   }
 
-  updateStaticCard(card: Card): Promise<void> {
-    return this.staticCardCollection.doc<Card>(card.id).update(card);
+  updateStaticCard(card: Card, callback: (error, data) => void) {
+    this.staticCardCollection.doc<Card>(card.id).update(card) // Promise<void>
+    .then(
+      data => {callback(null, data)},
+      error => {callback(error)}
+    );
   }
 
-  deleteStaticCard(id: string): Promise<void> {
-    return this.staticCardCollection.doc<Card>(id).delete();
+  deleteStaticCard(id: string, callback: (error, data) => void) {
+    this.staticCardCollection.doc<Card>(id).delete() // Promise<void>
+    .then(
+      data => {callback(null, data)},
+      error => {callback(error)}
+    );
   }
 }
