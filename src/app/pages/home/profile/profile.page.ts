@@ -8,7 +8,7 @@ import { CardService, Card } from 'src/app/services/card/card.service';
 import { ActionSheetController, AlertController, ToastController } from '@ionic/angular';
 
 import { Observable } from 'rxjs';
-import { isEmpty } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-profile',
@@ -17,7 +17,7 @@ import { isEmpty } from 'rxjs/operators';
 })
 export class ProfilePage implements OnInit {
 
-  private cards: Observable<Card[]>;
+  private cards: Card[];
 
   cameraOptions: CameraOptions = {
     // Some common settings are 20, 50, and 100
@@ -50,15 +50,20 @@ export class ProfilePage implements OnInit {
     let uid = this.authService.getCurrentUserId();
     console.log('Current User ID: ', uid);
 
-    this.cards = this.cardService.listCardsByOwner(uid);
-    this.cards.pipe(isEmpty()).subscribe(
-      isEmpty => {
-        if (isEmpty) {
+    this.cardService.listCardsByOwner(uid).pipe(
+      tap(data => {
+        let count = data.length;
+        if (count === 0) {
+          // alert if owned card list is empty
           console.log('No owned cards');
           this.newCardAlert();
+        } else {
+          // get an observable card list for the view
+          console.log('Owned cards count: ', count);
+          this.cards = data;
         }
-      }
-    );
+      })
+    ).subscribe();
   }
 
   async createCard() {
