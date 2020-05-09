@@ -23,8 +23,10 @@ export class UserListPage implements OnInit {
     this.userService.getStaticUsers((error, data) => {
       if (error) {
         console.log(error);
+      } else {
+        console.log(data);
+        this.users = data;
       }
-      this.users = data;
     });
   }
 }
