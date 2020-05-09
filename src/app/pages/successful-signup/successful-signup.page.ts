@@ -43,7 +43,9 @@ export class SuccessfulSignupPage implements OnInit {
   ngOnInit() {
     console.log('Successful Signup Page init');
     // maybe we can get a whole user?
-    this.authService.getCurrentUser((error, data) => {
+    this.authService.getCurrentUser(getCurrentUserCallback);
+
+    var getCurrentUserCallback = (error, data) => {
       if (error) {
         console.log(error);
       } else {
@@ -54,8 +56,16 @@ export class SuccessfulSignupPage implements OnInit {
           name: this.firstName + ' ' + this.lastName,
           email: this.email
         };
-        this.userService.addUser(newUser, (error, data) => {});
+        this.userService.addUser(newUser, addUserCallback);
       }
-    });
+    };
+
+    var addUserCallback = (error, data) => {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log(data);
+      }
+    };
   }
 }
