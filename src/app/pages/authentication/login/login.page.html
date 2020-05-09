@@ -1,0 +1,50 @@
+<ion-toolbar class="header"></ion-toolbar>
+
+<ion-content>
+  <form [formGroup]="signInForm" (ngSubmit)="submitForm()" novalidate>
+
+    <div padding class="span">
+      <ion-img src="./assets/imgs/loginlogo.jpg"></ion-img>
+      <br>
+      <!-- Error messages -->
+      <span class="error ion-padding" *ngIf="formErrors?.signIn">
+        <ion-icon name="alert" color="danger"></ion-icon>The mobile number, email, or password was incorrect.
+      </span>
+
+      <ion-item class="custom-text">
+        <ion-label position="stacked">Mobile or Email</ion-label>
+        <ion-input formControlName="username" type="text" color="primary" style="margin-left:11px" required></ion-input>
+      </ion-item>
+
+      <!-- Error messages -->
+      <span class="error ion-padding" *ngIf="isSubmitted && errorControl.username.errors?.required">
+        <ion-icon name="alert" color="danger"></ion-icon>Please enter your mobile number or email address.
+      </span>
+      <span class="error ion-padding" *ngIf="isSubmitted && errorControl.username.errors?.pattern || errorControl.username.errors?.minLength">
+        <ion-icon name="alert" color="danger"></ion-icon>Please provide your complete mobile number of email address.
+      </span>
+      <ion-item class="custom-text">
+        <ion-label position="stacked" class="custom-text">Password</ion-label>
+        <ion-input formControlName="password" type="password" color="primary" style="margin-left:11px" required></ion-input>
+      </ion-item>
+      <!-- Error messages -->
+      <span class="error ion-padding" *ngIf="isSubmitted && errorControl.password.errors?.required">
+        <ion-icon name="alert" color="danger"></ion-icon>Password is required.
+      </span>
+      <span class="error ion-padding" *ngIf="isSubmitted && errorControl.password.errors?.pattern">
+        <ion-icon name="alert" color="danger"></ion-icon>Password must be min 5 chars long and contain letters (both uppercase and lowercase) and numbers.
+      </span>
+      <br>
+      <ion-button expand="block" (click)="signIn()" shape="round" class="roll-btn">Sign in</ion-button>
+      <a routerLink="/password" routerLinkActive="active" class="password" >Forgot password?</a>
+    </div>
+  </form>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar class="footer">
+    <a class="footer-text">Don't have an account?</a>
+    <a routerLink="/signup" routerLinkActive="active" class="signup"> Sign up</a>
+  </ion-toolbar>
+</ion-footer>
+

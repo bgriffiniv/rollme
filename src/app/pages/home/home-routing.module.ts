@@ -19,8 +19,19 @@ const routes: Routes = [
       },
 
       {
-        path:'profile', loadChildren:'./profile/profile.module#ProfilePageModule'
+        path:'profile',
+        children: [
+          {
+            path:'',
+            loadChildren:'./profile/profile.module#ProfilePageModule'
+          },
+          {
+            path:'card-import',
+            loadChildren: '../card-import/card-import.module#CardImportPageModule'
+          }
+        ]
       },
+
       {
         path: '', redirectTo: 'rolodex',
         pathMatch: 'full'

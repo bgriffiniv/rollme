@@ -1,0 +1,86 @@
+<ion-header>
+  <ion-toolbar class="header">
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="signupForm" (ngSubmit)="createAccount()" novalidate>
+
+    <!-- Error messages -->
+    <span class="error ion-padding" *ngIf="formErrors?.signUp">
+        <ion-icon name="alert" color="danger"></ion-icon>There was a problem with registration.
+    </span>
+
+    <ion-item lines="none">
+      <ion-label position="stacked">{{signupMethod}}</ion-label>
+      {{mobile}}{{email}}
+    </ion-item>
+
+    <a routerLink="/signup" routerLinkActive="active" position="relative" class="try-again" padding>Not Correct? Try again</a>
+
+    <ion-item lines="inset">
+      <ion-label position="stacked">First name</ion-label>
+      <ion-input formControlName="firstName" type="text" required></ion-input>
+    </ion-item>
+
+    <!-- Error messages -->
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.firstName.errors?.required">
+        <ion-icon name="alert" color="danger"></ion-icon>Please provide your first name.
+    </span>
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.firstName.errors?.minLength">
+        <ion-icon name="alert" color="danger"></ion-icon>Entry should be min at least 2 chars long.
+    </span>
+
+    <ion-item lines="inset">
+      <ion-label position="stacked">Last name</ion-label>
+      <ion-input formControlName="lastName" type="text" required></ion-input>
+    </ion-item>
+
+    <!-- Error messages -->
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.lastName.errors?.required">
+        <ion-icon name="alert" color="danger"></ion-icon>Please provide your last name.
+    </span>
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.lastName.errors?.minLength">
+        <ion-icon name="alert" color="danger"></ion-icon>Entry should be min 2 chars long.
+    </span>
+
+    <ion-item lines="inset">
+      <ion-label position="stacked">Password</ion-label>
+      <ion-input formControlName="password" type="password"></ion-input>
+    </ion-item>
+    <!-- Error messages -->
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.password.errors?.required">
+        <ion-icon name="alert" color="danger"></ion-icon>Password is required.
+      </span>
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.password.errors?.pattern">
+        <ion-icon name="alert" color="danger"></ion-icon>Password must be min 5 chars long and contain letters (both uppercase and lowercase) and numbers.
+    </span>
+
+    <ion-item lines="inset">
+      <ion-label position="stacked">Confirm Password</ion-label>
+      <ion-input formControlName="confirmPassword" type="password" [class.is-invalid]="signupForm.errors?.misMatch"></ion-input>
+    </ion-item>
+    <!-- Error messages -->
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.confirmPassword.errors?.required">
+        <ion-icon name="alert" color="danger"></ion-icon>Please confirm your password.
+    </span>
+    <span class="error ion-padding" *ngIf="isSubmitted && signupForm.errors?.misMatch">
+        <ion-icon name="alert" color="danger"></ion-icon>Passwords do not match.
+    </span>
+
+
+    <ion-row>
+      <ion-col>
+        <ion-button type="submit" shape="round" expand="block">Create Account</ion-button>
+      </ion-col>
+    </ion-row>
+  </form>
+</ion-content>
+
+
+
+<ion-footer>
+  <ion-toolbar class="footer">
+  </ion-toolbar>
+</ion-footer>
+

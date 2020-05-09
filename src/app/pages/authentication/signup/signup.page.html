@@ -1,0 +1,85 @@
+<ion-header>
+  <ion-toolbar class="header">
+    <div>
+      <ion-img src="./assets/imgs/floatinglogowhite.svg" class="applogo"></ion-img>
+    </div>
+    <ion-buttons slot="start">
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="auth-form">
+  <ion-grid>
+    <ion-row>
+      <ion-col align-self-center>
+          <ion-button class="google-icon" fill="clear" (click)="googleAuthService.SigninWithGoogle()">
+            <ion-img src="./assets/imgs/googlelogo.svg" class="google-logo"></ion-img>
+            <div class="google-btn-txt">Sign In with Google</div>
+          </ion-button>
+          <ion-button class="fb-icon" (click)="fbAuthService.fbAuth()">
+            <ion-img src="./assets/imgs/facebooklogo.svg" class="fb-logo"></ion-img>
+            <div class="fb-btn-txt">Sign In with Facebook</div>
+          </ion-button>
+          <ion-button class="linkedin-icon" href="https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=78mvuuw5w4j74y&redirect_uri=http://localhost:8100/home/home/rolodex&state=arigatou&scope=r_emailaddress">
+            <ion-img src="./assets/imgs/linkedinlogo.png" class="linkedin-logo"></ion-img>
+            <div class="linkedin-btn-txt">Sign In with LinkedIn</div>
+          </ion-button>
+        <span class="divider line one-line">or</span>
+
+        <div class="span">
+          <ion-segment [(ngModel)]="segment" (ionChange)="segmentChanged($event)">
+            <ion-segment-button value=0>
+              Mobile
+            </ion-segment-button>
+            <ion-segment-button value=1>
+              Email
+            </ion-segment-button>
+          </ion-segment>
+        </div>
+
+
+        <div [ngSwitch]="signupMethod" class="span">
+          <ion-item class="">
+          <form [formGroup]="registerForm">
+            <ion-input formControlName="mobile" *ngSwitchCase="'Mobile'" type="tel" inputmode="numeric" placeholder="Phone Number"></ion-input>
+          </form>
+          <form [formGroup]="registerForm">
+            <ion-input formControlName="email" *ngSwitchCase="'Email'" type="email" placeholder="Email Address"></ion-input>
+          </form>
+          </ion-item>
+        </div>
+        <!-- Error messages -->
+        <span class="error ion-padding" *ngIf="isSubmitted &&
+        (signupMethod=='Mobile' && errorControl.mobile.touched && errorControl.mobile.value.length==0) ||
+        (signupMethod=='Email' && errorControl.email.touched && errorControl.email.value.length==0)">
+          <ion-icon name="alert" color="danger"></ion-icon>Please enter a mobile number or email address.
+        </span>
+        <span class="error ion-padding" *ngIf="isSubmitted && signupMethod=='Mobile' && errorControl.mobile.errors?.minLength">
+          <ion-icon name="alert" color="danger"></ion-icon>Entries must be 10 digits to be valid.
+        </span>
+        <span class="error ion-padding" *ngIf="isSubmitted && signupMethod=='Email' && errorControl.email.errors?.pattern">
+            <ion-icon name="alert" color="danger"></ion-icon>The email address you entered is invalid.
+        </span>
+        <ion-slides #inputmethods (ionSlideDidChange)="slideChanged()">
+          <ion-slide></ion-slide>
+          <ion-slide></ion-slide>
+        </ion-slides>
+        <ion-button (click)="submitForm()" expand="block" shape="round" color="primary" class="nxt-btn"
+        [disabled]="(signupMethod=='Mobile' && !errorControl.mobile.errors?.minLength) &&
+        (signupMethod=='Email' && !errorControl.email.errors?.pattern)"
+        padding>
+          Next
+        </ion-button>
+
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar class="footer">
+    <a class="footer-text">Already a user?</a>
+    <a routerLink="/login" routerLinkActive="active" class="signin" > Sign in</a>
+  </ion-toolbar>
+</ion-footer>

@@ -1,69 +1,96 @@
- <ion-toolbar>
-   <ion-searchbar></ion-searchbar>
-  </ion-toolbar>
+<ion-toolbar>
+   <ion-searchbar animated="false" placeholder="Search cards" [(ngModel)]="searchTerm"></ion-searchbar>
+</ion-toolbar>
 
-<ion-content>
+<ion-content class="card-background-page">
+  <ion-slides pager="false" [options]="slideOpts" class="rolodex-container">
+    <ion-slide button [routerLink]="['/user', user.id]" *ngFor="let user of (users | async | filter:searchTerm)" lines="none">
+      <ion-item>
+        <ion-card>
+            <ion-item lines="none">
+            <ion-avatar slot="start">
+              <img src="./assets/imgs/Beach.jpg">
+            </ion-avatar>
+                <ion-card-subtitle>
+                  <h1>{{ user.name }}</h1>
+                    Mutant Consultant
+                    <br>
+                    {{ user.email }} | (313) 777-9311
+                    <br>
+                    www.Xmen.com
+                </ion-card-subtitle>
+            </ion-item>
+          <div class="icon-format">
+          <ion-icon name="logo-instagram" size="large"></ion-icon>
+          <ion-icon name="logo-facebook" size="large"></ion-icon>
+          <ion-icon name="logo-linkedin" size="large"></ion-icon>
+          </div>
 
-  <ion-card>
+          <ion-card-content class="card-subtitle">
+            <p style="text-align:left">You choose to believe what you believe in because your soul when it’s unwhole is uneven.</p>
+              <p style="color:#0C62BB;">#RealityFromBelief #BeliefFromReality.</p>
+          </ion-card-content>
 
-    <ion-card-header>
-      <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
-      <ion-card-title>Card Title</ion-card-title>
-    </ion-card-header>
-
-    <ion-card-content>
-    </ion-card-content>
-  </ion-card>
-
-  <ion-card>
-    <ion-card-header>
-      <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
-      <ion-card-title>Card Title</ion-card-title>
-    </ion-card-header>
-
-    <ion-card-content>
-    </ion-card-content>
-
-  </ion-card>
-
-
-  <ion-card href="/contact">
-  <ion-card-header>
-    <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
-    <ion-card-title>Card Title</ion-card-title>
-  </ion-card-header>
-
-  <ion-card-content>
-  </ion-card-content>
-
-</ion-card>
-
-  <ion-card>
-    <ion-card-header>
-      <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
-      <ion-card-title>Card Title</ion-card-title>
-    </ion-card-header>
-
-    <ion-card-content>
-      <ion-buttons slot="start">
-        <ion-button (click)="goToContactPage(contactData.id)">
-          <ion-icon name="eye"></ion-icon>
-        </ion-button>
-        <ion-button (click)="deleteContact(contactData.id)">
-          <ion-icon name="trash"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-
-    </ion-card-content>
-  </ion-card>
+        </ion-card>
+      </ion-item>
+    </ion-slide>
 
 
-  <ion-list>
-    <ion-item *ngFor="let contactData of contactDataList" lines="none">
-      {{contactData.name}}
+
+    <ion-item *ngFor="let card of cards | async" lines="none">
+      <ion-card>
+
+        <ion-card-header>
+          <ion-card-title>
+            Name: {{card.name}}
+          </ion-card-title>
+          <ion-card-subtitle>
+            Id: {{card.id}}
+          </ion-card-subtitle>
+          Owner: {{card.owner}}
+        </ion-card-header>
+        <ion-card-content>
+          <ion-img [src]="card.frontImg"></ion-img>
+
+          <ion-buttons slot="start">
+            <ion-button (click)="goToContactPage(contactData.id)">
+              <ion-icon name="eye"></ion-icon>
+            </ion-button>
+            <ion-button (click)="deleteContact(contactData.id)">
+              <ion-icon name="trash"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-card-content>
+      </ion-card>
     </ion-item>
-  </ion-list>
+    <ion-item *ngFor="let staticCard of staticCards | async" lines="none">
+      <ion-card>
 
+        <ion-card-header>
+          <ion-card-title>
+            Name: {{staticCard.name}}
+          </ion-card-title>
+          <ion-card-subtitle>
+            Id: {{staticCard.id}}
+          </ion-card-subtitle>
+            Owner: {{staticCard.owner}}
+          </ion-card-header>
+        <ion-card-content>
+          <ion-img [src]="staticCard.frontImg"></ion-img>
+
+          <ion-buttons slot="start">
+            <ion-button (click)="goToContactPage(contactData.id)">
+              <ion-icon name="eye"></ion-icon>
+            </ion-button>
+            <ion-button (click)="deleteContact(contactData.id)">
+              <ion-icon name="trash"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-card-content>
+      </ion-card>
+    </ion-item>
+
+  </ion-slides>
 </ion-content>
 
 
