@@ -22,11 +22,16 @@ export class UserListPage implements OnInit {
 
   ngOnInit() {
     console.log("User List page started (init)");
+    this.userService.getStaticUsers((error, data) => {
+      if (error) {
+        console.log(error);
+      }
+      this.users = data;
+    });
     this.userService.getStaticUsers().pipe(
       tap(
         staticUsers => {
           this.users = staticUsers;
-          console.log(staticUsers);
         },
         error => {
           if (error) {

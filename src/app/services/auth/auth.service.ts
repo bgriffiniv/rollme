@@ -17,7 +17,7 @@ export class AuthService {
 
   // Returns true if user is logged in
   isAuthenticated(callback: (error, data?) => void) {
-    getCurrentUser((error, data) => {
+    this.getCurrentUser((error, data) => {
       if (error) {
         callback(error);
       } else {
