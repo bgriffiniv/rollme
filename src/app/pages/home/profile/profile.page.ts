@@ -24,8 +24,10 @@ export class ProfilePage implements OnInit {
   user;
   keys; // ???
 
+  /*
   frontImg: string; // ???
   backImg: string; // ???
+  */
 
   cameraOptions: CameraOptions = {
     // Some common settings are 20, 50, and 100
@@ -56,16 +58,19 @@ export class ProfilePage implements OnInit {
   ngOnInit() {
     console.trace('Profile Page Init');
 
-    // get any images from card import page
+    /*
+    // get any images from card import page... why???
     if (this.router.getCurrentNavigation().extras.state){
       console.info('Get image data from nav extras');
       this.card.frontImg = this.router.getCurrentNavigation().extras.state.cardDataFront;
       this.card.backImg = this.router.getCurrentNavigation().extras.state.cardDataBack;
     };
+    */
 
     // get only owned cards
-    console.log('Current User ID: ', this.authService.getCurrentUserId());
-    this.ownedCards = this.cardService.listCardsByOwner(this.authService.getCurrentUserId());
+    let uid = this.authService.getCurrentUserId();
+    console.log('Current User ID: ', uid);
+    this.ownedCards = this.cardService.listCardsByOwner(uid);
 
     this.ownedCards.pipe(isEmpty()).subscribe(
       next => {
@@ -73,10 +78,6 @@ export class ProfilePage implements OnInit {
         this.newCardAlert();
       }
     );
-  }
-
-  goToCardImportPage() {
-    this.router.navigateByUrl('/card-import');
   }
 
   async createCard() {

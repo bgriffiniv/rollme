@@ -4,6 +4,8 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 import { Observable } from 'rxjs';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { ToastController, AlertController } from '@ionic/angular';
+
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { CardService, Card } from 'src/app/services/card/card.service';
 
 @Component({
@@ -13,11 +15,9 @@ import { CardService, Card } from 'src/app/services/card/card.service';
   styleUrls: ['./card-import.page.scss'],
 })
 export class CardImportPage implements OnInit {
+
   id;
-  card: Card = {
-    frontImg: '',
-    backImg: ''
-  };
+  card: Card;
 
   isFrontCaptured;
   isBackCaptured;
@@ -37,168 +37,181 @@ export class CardImportPage implements OnInit {
     targetHeight: 374
   }
 
-  constructor(private route: ActivatedRoute, private router: Router, private camera: Camera, private toastCtrl: ToastController, public alertController: AlertController, private cardService: CardService) {
-
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private camera: Camera,
+    private toastCtrl: ToastController,
+    public alertController: AlertController,
+    public authService: AuthService,
+    private cardService: CardService
+  ) {
+    console.trace('Card Import Start');
   }
 
-   ngOnInit() {
-       this.id = this.route.snapshot.paramMap.get('id');
-       console.log(this.id)
+  ngOnInit() {
+    console.trace('Card Import Init');
 
-       if (this.id) {
-         console.log("current id: ", this.id);
-         this.cardService.getCard(this.id).subscribe(card => {
-           console.log("got card: ", card);
-           this.card = card;
-         });
-       } else {
-         this.frontImg = this.card.frontImg;
-         this.backImg = this.card.backImg;
-       };
-         this.importCardFront();
-   }
+    this.id = this.route.snapshot.paramMap.get('id');
 
-   async importCardFront() {
-         const alert = await this.alertController.create({
-           header: 'Great!',
-           subHeader: '',
-           message: 'To begin, tap on the first blank card to take a picture of the front side of your business card.',
-           buttons: ['OK']
-         });
+    if (this.id) {
+      console.log('Current card ID: ', this.id);
+      this.cardService.getCard(this.id).subscribe(card => {
+        console.log("got card: ", card);
+        this.card = card;
+        this.frontImg = this.card.frontImg;
+        this.backImg = this.card.backImg;
+      });
+    } else {
+      console.log('New card');
+      this.importCardFront();
+    }
+  }
 
-         await alert.present();
-   }
+  async importCardFront() {
+    const alert = await this.alertController.create({
+      header: 'Great!',
+      subHeader: '',
+      message: 'To begin, tap on the first blank card to take a picture of the front side of your business card.',
+      buttons: ['OK']
+    });
+    await alert.present();
+  }
 
   async openCameraFront() {
-        await this.camera.getPicture(this.cameraOptions).then((imageData) => {
-          // this.camera.DestinationType.FILE_URI gives file URI saved in local
-          // this.camera.DestinationType.DATA_URL gives base64 URI
+    await this.camera.getPicture(this.cameraOptions).then((imageData) => {
+      // this.camera.DestinationType.FILE_URI gives file URI saved in local
+      // this.camera.DestinationType.DATA_URL gives base64 URI
 
-          let base64Image = 'data:image/jpeg;base64,' + imageData;
-          this.card.frontImg = base64Image;
-        }, (err) => {
-          console.log("Unable to obtain picture: " + err);
-        });
-        this.isFrontCaptured = true;
-        this.importCardBack();
-
+      let base64Image = 'data:image/jpeg;base64,' + imageData;
+      this.frontImg = base64Image;
+    }, (err) => {
+      console.log("Unable to obtain picture: " + err);
+    });
+    this.importCardBack();
   }
 
   async importCardBack() {
-        const alert = await this.alertController.create({
-           header: 'Nice!',
-           subHeader: '',
-           message: "A picture of the front of your card has been imported. Would you like to take one of the back? If not, just click save and you're ready to roll!",
-           buttons: [
-           {
-             text: 'Yes',
-             handler: () => {
-             this.openCameraBack();
-             console.log('Camera launched');
-           }
-           }, {
-             text: 'No',
-             handler: () => {
-             console.log('Declined import');
-             }
-           },
-          ]
-        });
-        await alert.present();
+    const alert = await this.alertController.create({
+      header: 'Nice!',
+      subHeader: '',
+      message: "A picture of the front of your card has been imported. Would you like to take one of the back? If not, just click save and you're ready to roll!",
+      buttons: [
+        {
+          text: 'Yes',
+          handler: () => {
+          this.openCameraBack();
+          console.log('Camera launched');
+        }
+        }, {
+          text: 'No',
+          handler: () => {
+          console.log('Declined import');
+          }
+        },
+      ]
+    });
+    await alert.present();
   }
 
   async openCameraBack() {
-        await this.camera.getPicture(this.cameraOptions).then((imageData) => {
-          // this.camera.DestinationType.FILE_URI gives file URI saved in local
-          // this.camera.DestinationType.DATA_URL gives base64 URI
+    await this.camera.getPicture(this.cameraOptions).then((imageData) => {
+      // this.camera.DestinationType.FILE_URI gives file URI saved in local
+      // this.camera.DestinationType.DATA_URL gives base64 URI
 
-          let base64Image = 'data:image/jpeg;base64,' + imageData;
-          this.card.backImg = base64Image;
-        }, (err) => {
-          console.log("Unable to obtain picture: " + err);
-        });
+      let base64Image = 'data:image/jpeg;base64,' + imageData;
+      this.backImg = base64Image;
+    }, (err) => {
+      console.log("Unable to obtain picture: " + err);
+    });
   }
 
   saveCard() {
-      let navigationExtras: NavigationExtras = {
-            state: {
-              cardDataFront: this.card.frontImg,
-              cardDataBack: this.card.backImg
+    console.trace('Saving card');
+    this.card.frontImg = this.frontImg;
+    this.card.backImg = this.backImg;
+    this.card.owner = this.authService.getCurrentUserId();
 
-            }
-      };
+    console.log('New card');
+    this.cardService.addCard(this.card).then(saveCardSuccess, saveCardFailure);
 
-      this.cardService.addCard(this.card).then(() => {
-         this.router.navigate(["/profile"], navigationExtras);
-         this.showToast('Card saved!');
-      }, err => {
-          this.showToast('There was a problem adding your card :(');
-      });
+    var saveCardSuccess = (data) => {
+      console.log('Card save success');
+      this.router.navigate(["/profile"]);
+      this.showToast('Card saved!');
+    };
+
+    var saveCardFailure = (error) => {
+      console.error(error);
+      this.showToast('There was a problem adding your card :(');
+    }
   }
 
   deleteCard() {
-     this.cardService.deleteCard(this.card.id).then(() => {
-       this.router.navigateByUrl('/profile');
-       this.showToast('Card deleted');
-     }, err => {
-       this.showToast('There was a problem deleting your card :(');
-     });
+    console.trace('Deleting card');
+    console.log('Card ID: ', this.id);
+
+    this.cardService.deleteCard(this.id).then(() => {
+      this.router.navigateByUrl('/profile');
+      this.showToast('Card deleted');
+    }, err => {
+      this.showToast('There was a problem deleting your card :(');
+    });
   }
 
   async deleteCardAlert() {
-        const alert = await this.alertController.create({
-           header: '',
-           subHeader: '',
-           message: 'Are you sure you want to delete this card?',
-           buttons: [
-          {
-            text: 'Yes',
-            handler: () => {
-              this.deleteCard();
-              console.log('Card deleted');
-            }
-          }, {
-            text: 'No',
-            handler: () => {
-              console.log('Card kept');
-              }
-            },
-          ]
-        });
-        await alert.present();
+    const alert = await this.alertController.create({
+       header: '',
+       subHeader: '',
+       message: 'Are you sure you want to delete this card?',
+       buttons: [
+      {
+        text: 'Yes',
+        handler: () => {
+          this.deleteCard();
+          console.log('Card deleted');
+        }
+      }, {
+        text: 'No',
+        handler: () => {
+          console.log('Card kept');
+          }
+        },
+      ]
+    });
+    await alert.present();
   }
 
   updateCard() {
-      this.cardService.updateCard(this.card).then(() => {
-      this.router.navigateByUrl('/profile');
-        this.showToast('Card updated');
-      }, err => {
-        this.showToast('There was a problem updating your card :(');
-      });
+    this.cardService.updateCard(this.id, this.card).then(() => {
+    this.router.navigateByUrl('/profile');
+      this.showToast('Card updated');
+    }, err => {
+      this.showToast('There was a problem updating your card :(');
+    });
   }
 
   showToast(msg) {
-      this.toastCtrl.create({
-        message: msg,
-        duration: 2000,
-        color: 'success',
-        position: 'top',
-        buttons: [
-            {
-              side: 'start',
-              icon: 'checkmark-circle',
-              handler: () => {
-                console.log('Card saved');
-              }
-            },
-            {
-              role: 'cancel',
-              handler: () => {
-                console.log('Cancel clicked');
-              }
-            }
-        ]
-      }).then(toast => toast.present());
+    this.toastCtrl.create({
+      message: msg,
+      duration: 2000,
+      color: 'success',
+      position: 'top',
+      buttons: [
+        {
+          side: 'start',
+          icon: 'checkmark-circle',
+          handler: () => {
+            console.log('Card saved');
+          }
+        },
+        {
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }
+      ]
+    }).then(toast => toast.present());
   }
-
 }

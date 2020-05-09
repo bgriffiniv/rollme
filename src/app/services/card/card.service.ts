@@ -51,8 +51,8 @@ export class CardService {
     return this.staticCardCollection.doc<Card>(id).valueChanges();
   }
 
-  updateStaticCard(card: Card): Promise<void> {
-    return this.staticCardCollection.doc<Card>(card.id).update(card);
+  updateStaticCard(id: string, card: Card): Promise<void> {
+    return this.staticCardCollection.doc<Card>(id).update(card);
   }
 
   deleteStaticCard(id: string): Promise<void> {
@@ -79,8 +79,8 @@ export class CardService {
      return this.cardCollection.doc<Card>(id).valueChanges();
   }
 
-  updateCard(card: Card): Promise<void> {
-    return this.cardCollection.doc<Card>(card.id).update(card);
+  updateCard(id: string, card: Card): Promise<void> {
+    return this.cardCollection.doc<Card>(id).update(card);
   }
 
   deleteCard(id: string): Promise<void> {
