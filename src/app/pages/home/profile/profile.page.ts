@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 
-import { UserService, User } from './../../../services/user/user.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { CardService, Card } from 'src/app/services/card/card.service';
 
 import { ActionSheetController, AlertController, ToastController } from '@ionic/angular';
+
+import { Observable } from 'rxjs';
+import { isEmpty } from 'rxjs/operators';
 
 @Component({
   selector: 'app-profile',
@@ -16,7 +17,6 @@ import { ActionSheetController, AlertController, ToastController } from '@ionic/
 })
 export class ProfilePage implements OnInit {
 
-  private users: Observable<User[]>; // ???
   private ownedCards: Observable<Card[]>;
 
   id;
@@ -39,8 +39,8 @@ export class ProfilePage implements OnInit {
     targetHeight: 374
   }
 
-  constructor(private authService: AuthService,
-    private userService: UserService,
+  constructor(
+    private authService: AuthService,
     private cardService: CardService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -67,8 +67,12 @@ export class ProfilePage implements OnInit {
     console.log('Current User ID: ', this.authService.getCurrentUserId());
     this.ownedCards = this.cardService.listCardsByOwner(this.authService.getCurrentUserId());
 
-    console.log('Owned cards list size: ', this.ownedCards.get().size());
-    this.newCardAlert();
+    this.ownedCards.pipe(isEmpty()).subscribe(
+      next => {
+        console.log('No owned cards');
+        this.newCardAlert();
+      }
+    );
   }
 
   goToCardImportPage() {
