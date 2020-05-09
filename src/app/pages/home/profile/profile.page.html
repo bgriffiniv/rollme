@@ -2,7 +2,7 @@
 
   <ion-list>
 
-    <ion-card button style="height:auto;width:auto;" [routerLink]="['/card', card.id]" *ngFor="let card of (cards | async)" lines="none">
+    <ion-card button style="height:auto;width:auto;" [routerLink]="['/card', card.id]" *ngFor="let card of cards | async" lines="none">
         <img [src]="card.frontImg" alt=""/>
     </ion-card>
 
