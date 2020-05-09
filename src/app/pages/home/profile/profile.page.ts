@@ -66,6 +66,8 @@ export class ProfilePage implements OnInit {
     // get only owned cards
     console.log('Current User ID: ', this.authService.getCurrentUserId());
     this.ownedCards = this.cardService.listCardsByOwner(this.authService.getCurrentUserId());
+
+    console.log('Owned cards list size: ', this.ownedCards.get().size());
     this.newCardAlert();
   }
 
@@ -73,10 +75,11 @@ export class ProfilePage implements OnInit {
     this.router.navigateByUrl('/card-import');
   }
 
-  async createACard() {
-      const actionSheet = await this.actionSheetController.create({
-        header: 'Create from:',
-        buttons: [{
+  async createCard() {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Create from:',
+      buttons: [
+        {
           text: 'Photo',
           icon: 'images',
           handler: () => {
@@ -104,53 +107,53 @@ export class ProfilePage implements OnInit {
           handler: () => {
             console.log('Cancel clicked');
           }
-        }]
-      });
-      await actionSheet.present();
+        }
+      ]
+    });
+    await actionSheet.present();
   }
 
   async newCardAlert() {
-       const alert = await this.alertController.create({
-         header: 'Welcome!',
-         subHeader: '',
-         message: 'You currently have no cards saved. Click on the card template to create one now!',
-         buttons: ['OK']
-       });
-       await alert.present();
+    const alert = await this.alertController.create({
+      header: 'Welcome!',
+      subHeader: '',
+      message: 'You currently have no cards saved. Click on the card template to create one now!',
+      buttons: ['OK']
+    });
+    await alert.present();
   }
 
-   deleteCard() {
-         console.log('card id: ' + this.card.id);
-         this.cardService.deleteCard(this.card.id).then(() => {
-           this.router.navigateByUrl('/profile');
-           this.showToast('Card deleted');
-         }, err => {
-           this.showToast('There was a problem deleting your card :(');
-         });
-   }
+  deleteCard() {
+    console.log('Card ID: ' + this.card.id);
+    this.cardService.deleteCard(this.card.id).then(() => {
+      this.router.navigateByUrl('/profile');
+      this.showToast('Card deleted');
+    }, err => {
+      this.showToast('There was a problem deleting your card :(');
+    });
+  }
 
-   showToast(msg) {
-          this.toastCtrl.create({
-            message: msg,
-            duration: 2000,
-            color: 'success',
-            position: 'top',
-            buttons: [
-                {
-                  side: 'start',
-                  icon: 'checkmark-circle',
-                  handler: () => {
-                    console.log('Card saved');
-                  }
-                },
-                {
-                  role: 'cancel',
-                  handler: () => {
-                    console.log('Cancel clicked');
-                  }
-                }
-            ]
-          }).then(toast => toast.present());
-   }
-
+  showToast(msg) {
+    this.toastCtrl.create({
+      message: msg,
+      duration: 2000,
+      color: 'success',
+      position: 'top',
+      buttons: [
+        {
+          side: 'start',
+          icon: 'checkmark-circle',
+          handler: () => {
+            console.log('Card saved');
+          }
+        },
+        {
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }
+      ]
+    }).then(toast => toast.present());
+  }
 }
