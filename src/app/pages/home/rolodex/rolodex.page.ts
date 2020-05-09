@@ -18,12 +18,12 @@ export class RolodexPage implements OnInit {
   user;
   contactDataList;
   index;
-  staticCards: Observable<Card[]>;
-  cards: Observable<Card[]>;
+  staticCards;
+  cards;
   id;
 
-  users: Observable<User[]>;
-  filteredUsers: any[];
+  users;
+  filteredUsers;
   searchTerm = '';
 
   slideOpts = {
@@ -132,8 +132,33 @@ export class RolodexPage implements OnInit {
   ) {
     console.log("Rolodex Page (constructor)");
 
-    this.staticCards = this.cardService.listStaticCardsByHolder(this.authService.getCurrentUserId());
-    this.cards = this.cardService.listCardsByHolder(this.authService.getCurrentUserId());
+    this.authService.getCurrentUser((error, data) => {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log(data);
+        this.cardService.listCardsByHolder(data.uid, listCardsByHolderCallback);
+        this.cardService.listStaticCardsByHolder(data.uid, listStaticCardsByHolderCallback);
+      }
+    });
+
+    var listCardsByHolderCallback = (error, data) => {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log(data);
+        this.cards = data;
+      }
+    };
+
+    var listStaticCardsByHolderCallback = (error, data) => {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log(data);
+        this.staticCards = data;
+      }
+    };
   }
 
   ngOnInit() {

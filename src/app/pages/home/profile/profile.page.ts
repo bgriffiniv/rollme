@@ -65,7 +65,7 @@ export class ProfilePage implements OnInit {
       this.card.frontImg = this.router.getCurrentNavigation().extras.state.data;
     };
 
-    this.cardService.getCards((error, data) => {
+    this.cardService.listCards((error, data) => {
       if (error) {
         console.log(error);
       } else {
