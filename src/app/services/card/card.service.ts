@@ -31,8 +31,32 @@ export class CardService {
     //this.staticCards = this.staticCardCollection.valueChanges({idField: 'id'});
   }
 
-  getCards(callback: (error, data?) => void) {
+  listCards(callback: (error, data?) => void) {
     this.cardCollection.valueChanges({idField: 'id'}) // Observable<Card[]>
+    .pipe(
+      tap(
+        data => {callback(null, data)},
+        error => {callback(error)}
+      )
+    )
+    .subscribe();
+  }
+
+  listCardsByOwner(ownerId: string, callback: (error, data?) => void) {
+    this.afs.collection<Card>('cards', ref => ref.where('owner', '==', ownerId))
+    .valueChanges({idField:'id'}) // Observable<Card[]>
+    .pipe(
+      tap(
+        data => {callback(null, data)},
+        error => {callback(error)}
+      )
+    )
+    .subscribe();
+  }
+
+  listCardsByHolder(holderId: string, callback: (error, data?) => void) {
+    this.afs.collection<Card>('cards', ref => ref.where('holders', 'array-contains', holderId))
+    .valueChanges({idField:'id'}) // Observable<Card[]>
     .pipe(
       tap(
         data => {callback(null, data)},
@@ -77,8 +101,32 @@ export class CardService {
     );
   }
 
-  getStaticCards(callback: (error, data?) => void) {
+  listStaticCards(callback: (error, data?) => void) {
     this.staticCardCollection.valueChanges({idField: 'id'}) // Observable<Card[]>
+    .pipe(
+      tap(
+        data => {callback(null, data)},
+        error => {callback(error)}
+      )
+    )
+    .subscribe();
+  }
+
+  listStaticCardsByOwner(ownerId: string, callback: (error, data?) => void) {
+    this.afs.collection<Card>('static_cards', ref => ref.where('owner', '==', ownerId))
+    .valueChanges({idField: 'id'}) // Observable<Card[]>
+    .pipe(
+      tap(
+        data => {callback(null, data)},
+        error => {callback(error)}
+      )
+    )
+    .subscribe();
+  }
+
+  listStaticCardsByHolder(holderId: string, callback: (error, data?) => void) {
+    this.afs.collection<Card>('static_cards', ref => ref.where('holders', 'array-contains', holderId))
+    .valueChanges({idField: 'id'}) // Observable<Card[]>
     .pipe(
       tap(
         data => {callback(null, data)},
