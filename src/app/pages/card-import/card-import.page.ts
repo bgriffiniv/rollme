@@ -19,9 +19,6 @@ export class CardImportPage implements OnInit {
   id;
   card: Card;
 
-  isFrontCaptured;
-  isBackCaptured;
-
   frontImg: string;
   backImg: string;
 
@@ -46,18 +43,18 @@ export class CardImportPage implements OnInit {
     public authService: AuthService,
     private cardService: CardService
   ) {
-    console.trace('Card Import Start');
+    console.log('Card Import Start');
   }
 
   ngOnInit() {
-    console.trace('Card Import Init');
+    console.log('Card Import Init');
 
     this.id = this.route.snapshot.paramMap.get('id');
 
     if (this.id) {
       console.log('Current card ID: ', this.id);
       this.cardService.getCard(this.id).subscribe(card => {
-        console.log("got card: ", card);
+        console.log("Card: ", card);
         this.card = card;
         this.frontImg = this.card.frontImg;
         this.backImg = this.card.backImg;
