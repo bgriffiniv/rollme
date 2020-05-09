@@ -6,8 +6,6 @@ import { ToastController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { PasswordValidator } from '../../validators/password.validator';
 
-import { tap } from 'rxjs/operators'
-
 @Component({
   selector: 'app-create-account',
   templateUrl: './create-account.page.html',
