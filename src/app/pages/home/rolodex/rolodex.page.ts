@@ -7,7 +7,6 @@ import { CardService, Card } from 'src/app/services/card/card.service';
 
 import { Observable } from 'rxjs';
 
-
 @Component({
   selector: 'app-rolodex',
   templateUrl: './rolodex.page.html',
