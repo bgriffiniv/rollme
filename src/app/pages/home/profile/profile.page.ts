@@ -59,25 +59,30 @@ export class ProfilePage implements OnInit {
   }
 
   ngOnInit() {
-      console.log("User List page started (init)");
+    console.log("User List page started (init)");
 
-      if (this.router.getCurrentNavigation().extras.state){
-          this.card.frontImg = this.router.getCurrentNavigation().extras.state.data;
-      };
+    if (this.router.getCurrentNavigation().extras.state){
+      this.card.frontImg = this.router.getCurrentNavigation().extras.state.data;
+    };
 
-      this.cards = this.cardService.getCards();
-
-      this.isFrontCaptured = true;
-      this.newCardAlert();
+    this.cardService.getCards((error, data) => {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log(data);
+        this.cards = data;
+        this.isFrontCaptured = true;
+        this.newCardAlert();
+      }
+    });
   }
 
-
   goToCardImportPage() {
-      this.router.navigateByUrl('/card-import');
+    this.router.navigateByUrl('/card-import');
   }
 
   goToEditPage() {
-      let navigationExtras: NavigationExtras = {
+    let navigationExtras: NavigationExtras = {
       state: {
         data: this.user,
         parent: 'profile'
@@ -91,118 +96,123 @@ export class ProfilePage implements OnInit {
   }
 
   async createACard() {
-      const actionSheet = await this.actionSheetController.create({
-        header: 'Create from:',
-        buttons: [{
-          text: 'Photo',
-          icon: 'images',
-          handler: () => {
-            this.router.navigateByUrl('/card-import');
-            console.log('Card import page loaded');
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Create from:',
+      buttons: [{
+        text: 'Photo',
+        icon: 'images',
+        handler: () => {
+          this.router.navigateByUrl('/card-import');
+          console.log('Card import page loaded');
+        }
+      }, {
+        text: 'Template',
+        icon: 'easel',
+        handler: () => {
+          this.router.navigateByUrl('/edit');
+          console.log('Template card page loaded');
+        }
+      }, {
+        text: 'New',
+        icon: 'card',
+        handler: () => {
+          this.router.navigateByUrl('/user');
+          console.log('User list page loaded');
+        }
+      }, {
+        text: 'Cancel',
+        icon: 'close',
+        role: 'cancel',
+        handler: () => {
+          console.log('Cancel clicked');
+        }
+      }]
+    });
+    await actionSheet.present();
+  }
+
+  async newCardAlert() {
+    const alert = await this.alertController.create({
+      header: 'Welcome!',
+      subHeader: '',
+      message: 'You currently have no cards saved. Click on the card template to create one now!',
+      buttons: ['OK']
+    });
+    await alert.present();
+  }
+
+  async deleteCardAlert() {
+    const alert = await this.alertController.create({
+       header: '',
+       subHeader: '',
+       message: 'Do you want to delete this card?',
+       buttons: [
+      {
+        text: 'Yes',
+        handler: () => {
+          this.deleteCard();
+          console.log('Card deleted');
+        }
+      }, {
+        text: 'No',
+        handler: () => {
+          console.log('Card kept');
           }
-        }, {
-          text: 'Template',
-          icon: 'easel',
+        },
+      ]
+    });
+    await alert.present();
+
+    this.id = this.activatedRoute.snapshot.paramMap.get('id');
+
+    if (this.id) {
+      console.log("current id: ", this.id);
+      this.cardService.getCard(this.id, (error, data) => {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log("got card: ", data);
+          this.card = data;
+        }
+      });
+    } else {
+       this.frontImg = "New Card";
+    };
+  }
+
+  deleteCard() {
+    console.log('card id: ' + this.card.id);
+    this.cardService.deleteCard(this.card.id, (error, data) => {
+      if (error) {
+        this.showToast('There was a problem deleting your card :(');
+      } else {
+        this.router.navigateByUrl('/profile');
+        this.showToast('Card deleted');
+      }
+    });
+  }
+
+  showToast(msg) {
+    this.toastCtrl.create({
+      message: msg,
+      duration: 2000,
+      color: 'success',
+      position: 'top',
+      buttons: [
+        {
+          side: 'start',
+          icon: 'checkmark-circle',
           handler: () => {
-            this.router.navigateByUrl('/edit');
-            console.log('Template card page loaded');
+            console.log('Card saved');
           }
-        }, {
-          text: 'New',
-          icon: 'card',
-          handler: () => {
-            this.router.navigateByUrl('/user');
-            console.log('User list page loaded');
-          }
-        }, {
-          text: 'Cancel',
-          icon: 'close',
+        },
+        {
           role: 'cancel',
           handler: () => {
             console.log('Cancel clicked');
           }
-        }]
-      });
-      await actionSheet.present();
+        }
+      ]
+    }).then(toast => toast.present());
   }
-
-  async newCardAlert() {
-       const alert = await this.alertController.create({
-         header: 'Welcome!',
-         subHeader: '',
-         message: 'You currently have no cards saved. Click on the card template to create one now!',
-         buttons: ['OK']
-       });
-       await alert.present();
-  }
-
-  async deleteCardAlert() {
-      const alert = await this.alertController.create({
-         header: '',
-         subHeader: '',
-         message: 'Do you want to delete this card?',
-         buttons: [
-        {
-          text: 'Yes',
-          handler: () => {
-            this.deleteCard();
-            console.log('Card deleted');
-          }
-        }, {
-          text: 'No',
-          handler: () => {
-            console.log('Card kept');
-            }
-          },
-        ]
-      });
-      await alert.present();
-
-      this.id = this.activatedRoute.snapshot.paramMap.get('id');
-
-      if (this.id) {
-         console.log("current id: ", this.id);
-         this.cardService.getCard(this.id).subscribe(card => {
-           console.log("got card: ", card);
-         this.card = card;
-         });
-      } else {
-         this.frontImg = "New Card";
-      };
-  }
-
-   deleteCard() {
-         console.log('card id: ' + this.card.id);
-         this.cardService.deleteCard(this.card.id).then(() => {
-           this.router.navigateByUrl('/profile');
-           this.showToast('Card deleted');
-         }, err => {
-           this.showToast('There was a problem deleting your card :(');
-         });
-   }
-
-   showToast(msg) {
-          this.toastCtrl.create({
-            message: msg,
-            duration: 2000,
-            color: 'success',
-            position: 'top',
-            buttons: [
-                {
-                  side: 'start',
-                  icon: 'checkmark-circle',
-                  handler: () => {
-                    console.log('Card saved');
-                  }
-                },
-                {
-                  role: 'cancel',
-                  handler: () => {
-                    console.log('Cancel clicked');
-                  }
-                }
-            ]
-          }).then(toast => toast.present());
-   }
-
 }

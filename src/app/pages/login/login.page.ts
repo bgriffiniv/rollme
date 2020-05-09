@@ -43,15 +43,16 @@ export class LoginPage implements OnInit {
     } else {
       console.log(this.signInForm.value)
     };
-    this.authService.signIn(this.signInForm.value['username'], this.signInForm.value['password'])
-    .then(data => {
-      console.log('Login Page : Auth Success : navigating to Home Page');
-      this.router.navigateByUrl('/home');
-    })
-    .catch(error => {
-      console.log('Login Page : Sign In Failure : setting error control');
-      this.isSubmitted = false;
-      this.signInForm.setErrors( { 'signIn' : true } );
+
+    this.authService.signIn(this.signInForm.value['username'], this.signInForm.value['password'], (error, data) => {
+      if (error) {
+        console.log('Login Page : Sign In Failure : setting error control');
+        this.isSubmitted = false;
+        this.signInForm.setErrors( { 'signIn' : true } );
+      } else {
+        console.log('Login Page : Auth Success : navigating to Home Page');
+        this.router.navigateByUrl('/home');
+      }
     });
   }
 

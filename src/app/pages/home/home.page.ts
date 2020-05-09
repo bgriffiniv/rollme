@@ -4,8 +4,6 @@ import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { UserService } from 'src/app/services/user/user.service';
 
-import { tap, catchError } from 'rxjs/operators'
-
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -23,36 +21,38 @@ export class HomePage implements OnInit{
     let goToSuccessfulSignupPageIfNoData = false;
 
     // get the current user's uid
-    this.authService.getCurrentUser().pipe(
-      tap(currentUser => {
-        if (!currentUser) {
+    this.authService.getCurrentUser(getCurrentUserCallback);
+
+    var getCurrentUserCallback = (error, data) => {
+      if (error) {
+        console.log('get current user error: ', error);
+      } else {
+        if (!data) {
           console.log('Home Page : Currently logged out');
           this.router.navigateByUrl('/login');
         }
 
-        this.userService.getUser(currentUser.uid).pipe(
-          tap(
-            data => {
-              console.log(data);
-              // go to Successful Signup Page if no user exists
-              let navigationExtras: NavigationExtras = {
-                      state: {
-                        uid: currentUser.uid,
-                        firstName: '',
-                        lastName: '',
-                        email: '',
-                        mobile: ''
-                      }
-                    };
-              this.router.navigateByUrl('/successful-signup', navigationExtras);
-            },
-            error => {
-              console.log(error);
-            }
-          )
-        ).subscribe();
+        this.userService.getUser(data.uid, getUserCallback); // FIXME: why get this data again?
+      }
+    };
 
-      })
-    ).subscribe();
+    var getUserCallback = (error, data) => {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log(data);
+        // go to Successful Signup Page if no user exists
+        let navigationExtras: NavigationExtras = {
+                state: {
+                  uid: data.uid,
+                  firstName: '',
+                  lastName: '',
+                  email: '',
+                  mobile: ''
+                }
+              };
+        this.router.navigateByUrl('/successful-signup', navigationExtras);
+      }
+    };
   }
 }

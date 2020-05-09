@@ -3,8 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UserService, User } from 'src/app/services/user/user.service';
 import { ToastController } from '@ionic/angular';
 
-import { tap, catchError } from 'rxjs/operators'
-
 @Component({
   selector: 'app-user-details',
   templateUrl: './user-details.page.html',
@@ -27,20 +25,15 @@ export class UserDetailsPage implements OnInit {
     this.id = this.activatedRoute.snapshot.paramMap.get('id');
     if (this.id) {
       console.log("current id: ", this.id);
-      this.userService.getStaticUser(this.id).pipe(
-        tap(
-          user => {
-            console.log("got user: ", user);
-            this.user = user;
-          },
-          err => {
-            if (err) {
-              console.log(err);
-            }
-            return null;
-          }
-        )
-      ).subscribe();
+      this.userService.getStaticUser(this.id, (error, data) => {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log("got user: ", data);
+          this.user = data;
+        }
+      });
+
     } else {
       this.user.name = "New User";
     }
@@ -51,14 +44,11 @@ export class UserDetailsPage implements OnInit {
   }
 
   addUser() {
-    this.userService.addStaticUser(this.user)
-    .then(data => {
-      this.showToast('User added!');
-      this.router.navigateByUrl('/users');
-    })
-    .catch(error => {
+    this.userService.addStaticUser(this.user, (error, data) => {
       if (error) {
         this.showToast('There was a problem adding your user :(');
+      } else {
+        this.showToast('User added!');
       }
       this.router.navigateByUrl('/users');
     });
@@ -66,28 +56,23 @@ export class UserDetailsPage implements OnInit {
 
   deleteUser() {
     console.log('user id: ' + this.user.id);
-    this.userService.deleteStaticUser(this.user)
-    .then(data => {
-      this.showToast('User deleted');
-      this.router.navigateByUrl('/users');
-    })
-    .catch(error => {
+    this.userService.deleteStaticUser(this.user, (error, data) => {
       if (error) {
         this.showToast('There was a problem deleting your user :(');
+      } else {
+        this.showToast('User deleted');
       }
       this.router.navigateByUrl('/users');
+
     });
   }
 
   updateUser() {
-    this.userService.updateStaticUser(this.user)
-    .then(data => {
-      this.showToast('User updated!');
-      this.router.navigateByUrl('/users');
-    })
-    .catch(error => {
+    this.userService.updateStaticUser(this.user, (error, data) => {
       if (error) {
         this.showToast('There was a problem updating your user :(');
+      } else {
+        this.showToast('User updated!');
       }
       this.router.navigateByUrl('/users');
     });

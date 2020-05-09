@@ -5,8 +5,6 @@ import { Observable } from 'rxjs';
 import { DataService } from './../../services/data/data.service';
 import { UserService, User } from 'src/app/services/user/user.service';
 
-import { tap, catchError } from 'rxjs/operators'
-
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.page.html',
@@ -28,17 +26,5 @@ export class UserListPage implements OnInit {
       }
       this.users = data;
     });
-    this.userService.getStaticUsers().pipe(
-      tap(
-        staticUsers => {
-          this.users = staticUsers;
-        },
-        error => {
-          if (error) {
-            console.log(error);
-          }
-        }
-      )
-    ).subscribe();
   }
 }

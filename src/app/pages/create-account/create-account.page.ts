@@ -63,52 +63,60 @@ export class CreateAccountPage implements OnInit {
     } else {
       console.log(this.signupForm.value)
     }
-    this.authService.signUp(this.email, this.signupForm.value.password)
-    .then(data => {
-      console.log('Create Account Page : Sign Up Success : navigating to Successful Signup Page');
-      this.showToast('Account created!');
-      this.authService.getCurrentUser().pipe(
-        tap(currentUser => {
-          let navigationExtras: NavigationExtras = {
-            state: {
-              uid: currentUser.uid,
-              firstName: this.signupForm.value.firstName,
-              lastName: this.signupForm.value.lastName,
-              email: this.email,
-              mobile: this.mobile
-            }
-          };
-          this.router.navigateByUrl('/successful-signup', navigationExtras);
-        })
-      ).subscribe();
-    })
-    .catch(error => {
-      console.log('Create Account Page : Sign Up Failure : setting error control');
-      this.isSubmitted = false;
-      this.signupForm.setErrors( { 'signUp' : true } );
-    });
+
+    this.authService.signUp(this.email, this.signupForm.value.password, signUpCallback);
+
+    var signUpCallback = (error, data) => {
+      if (error) {
+        console.log('Create Account Page : Sign Up Failure : setting error control: ', error);
+        this.isSubmitted = false;
+        this.signupForm.setErrors( { 'signUp' : true } );
+      } else {
+        console.log('Create Account Page : Sign Up Success : navigating to Successful Signup Page');
+        this.showToast('Account created!');
+        this.authService.getCurrentUser(getCurrentUserCallback);
+      }
+    };
+
+    var getCurrentUserCallback = (error, data) => {
+      if (error) {
+        console.log('get current user error: ', error);
+      } else {
+        console.log('current user: ', data)
+        let navigationExtras: NavigationExtras = {
+          state: {
+            uid: data.uid,
+            firstName: this.signupForm.value.firstName,
+            lastName: this.signupForm.value.lastName,
+            email: this.email,
+            mobile: this.mobile
+          }
+        };
+        this.router.navigateByUrl('/successful-signup', navigationExtras);
+      }
+    };
   }
 
-   showToast(msg) {
+  showToast(msg) {
     this.toastCtrl.create({
       message: msg,
       duration: 2000,
       color: 'success',
       position: 'bottom',
       buttons: [
-          {
-            side: 'start',
-            icon: 'checkmark-circle',
-            handler: () => {
-              console.log('Account Created');
-            }
-          },
-          {
-            role: 'cancel',
-            handler: () => {
-              console.log('Cancel clicked');
-            }
+        {
+          side: 'start',
+          icon: 'checkmark-circle',
+          handler: () => {
+            console.log('Account Created');
           }
+        },
+        {
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }
       ]
     }).then(toast => toast.present());
   }
