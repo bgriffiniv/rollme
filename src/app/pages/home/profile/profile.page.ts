@@ -51,12 +51,11 @@ export class ProfilePage implements OnInit {
     public alertController: AlertController,
     private toastCtrl: ToastController
   ) {
-    console.trace('Profile Page Start');
-    console.log('Is authenticated: ', this.authService.isAuthenticated()); // FIXME: this should be handled by Home Page
+    console.log('Profile Page Start');
   }
 
   ngOnInit() {
-    console.trace('Profile Page Init');
+    console.log('Profile Page Init');
 
     /*
     // get any images from card import page... why???
