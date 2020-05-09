@@ -15,19 +15,17 @@ import { ActionSheetController, AlertController, ToastController } from '@ionic/
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
-  private users: Observable<User[]>;
-  private cards: Observable<Card[]>;
+
+  private users: Observable<User[]>; // ???
+  private ownedCards: Observable<Card[]>;
 
   id;
-  card: Card = {
-    frontImg: '',
-    backImg: ''
-  };
+  card: Card;
   user;
-  keys;
+  keys; // ???
 
-  frontImg: string;
-  isFrontCaptured = false;
+  frontImg: string; // ???
+  backImg: string; // ???
 
   cameraOptions: CameraOptions = {
     // Some common settings are 20, 50, and 100
@@ -41,57 +39,38 @@ export class ProfilePage implements OnInit {
     targetHeight: 374
   }
 
-  constructor(private authService: AuthService, private userService: UserService, private cardService: CardService, private activatedRoute: ActivatedRoute,
-                private router: Router, private camera: Camera, public actionSheetController: ActionSheetController, public alertController: AlertController, private toastCtrl: ToastController) {
-    console.log("Profile page started (constructor)");
-
-    console.log('Is authenticated:', this.authService.isAuthenticated());
-
-    //this.id = this.cardService.getCard();
-
-    //this.activatedRoute.data.subscribe((data) => {
-      //if (this.router.getCurrentNavigation().extras.state) {
-        //let updated = this.router.getCurrentNavigation().extras.state.data;
-        //this.cardService.setCard(this.id, updated);
-      //}
-
-      //this.card = this.cardService.getCard(this.id);
-      //this.keys = Object.keys(this.card);
-      //this.keys.splice(this.keys.indexOf("contacts"), 1);
-    //});
+  constructor(private authService: AuthService,
+    private userService: UserService,
+    private cardService: CardService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private camera: Camera,
+    public actionSheetController: ActionSheetController,
+    public alertController: AlertController,
+    private toastCtrl: ToastController
+  ) {
+    console.trace('Profile Page Start');
+    console.log('Is authenticated: ', this.authService.isAuthenticated()); // FIXME: this should be handled by Home Page
   }
 
   ngOnInit() {
-      console.log("User List page started (init)");
+    console.trace('Profile Page Init');
 
-      if (this.router.getCurrentNavigation().extras.state){
-          this.card.frontImg = this.router.getCurrentNavigation().extras.state.cardDataFront;
-          this.card.backImg = this.router.getCurrentNavigation().extras.state.cardDataBack;
-      };
+    // get any images from card import page
+    if (this.router.getCurrentNavigation().extras.state){
+      console.info('Get image data from nav extras');
+      this.card.frontImg = this.router.getCurrentNavigation().extras.state.cardDataFront;
+      this.card.backImg = this.router.getCurrentNavigation().extras.state.cardDataBack;
+    };
 
-      this.users = this.userService.listUsers();
-      this.cards = this.cardService.listCards();
-
-      this.isFrontCaptured = true;
-      this.newCardAlert();
+    // get only owned cards
+    console.log('Current User ID: ', this.authService.getCurrentUserId());
+    this.ownedCards = this.cardService.listCardsByOwner(this.authService.getCurrentUserId());
+    this.newCardAlert();
   }
 
   goToCardImportPage() {
-      this.router.navigateByUrl('/card-import');
-  }
-
-  goToEditPage() {
-      let navigationExtras: NavigationExtras = {
-      state: {
-        data: this.user,
-        parent: 'profile'
-      }
-    };
-    this.router.navigateByUrl('/edit');
-  }
-
-  goToUserListPage() {
-    this.router.navigateByUrl('/user-details');
+    this.router.navigateByUrl('/card-import');
   }
 
   async createACard() {
