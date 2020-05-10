@@ -5,8 +5,7 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { UserService, User } from './../../../services/user/user.service';
 import { CardService, Card } from 'src/app/services/card/card.service';
 
-import { Observable } from 'rxjs';
-
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-rolodex',
@@ -22,7 +21,6 @@ export class RolodexPage implements OnInit {
   cards: Card[];
   id;
 
-  users: Observable<User[]>;
   filteredUsers: any[];
   searchTerm = '';
 
@@ -143,7 +141,19 @@ export class RolodexPage implements OnInit {
     this.users = this.userService.listUsers();
 
     let uid = this.authService.getCurrentUserId();
-    this.staticCards = this.cardService.listStaticCardsByHolder(uid);
-    this.cards = this.cardService.listCardsByHolder(uid);
+
+    this.cardService.listStaticCardsByHolder(uid).pipe(
+      tap(data => {
+        console.log('Held static cards count: ', data.length);
+        this.staticCards = data;
+      })
+    ).subscribe();
+
+    this.cardService.listCardsByHolder(uid).pipe(
+      tap(data => {
+        console.log('Held cards count: ', data.length);
+        this.cards = data;
+      })
+    ).subscribe();
   }
 }
