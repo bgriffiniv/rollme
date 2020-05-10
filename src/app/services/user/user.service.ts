@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument, DocumentReference } from 'angularfire2/firestore';
-import { map, take, filter } from 'rxjs/operators';
+import { map, take, filter, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-
 
 export interface User {
   id?: string,
@@ -78,13 +77,10 @@ export class UserService {
     return this.users;
   }
 
-  getUser(id: any, callback) {
-    this.userCollection.doc<User>(id).get()
-    .subscribe(d => {
-      let user = d.data() as User;
-      user.id = d.id;
-      callback(null, user);
-    }, e => {callback(e);});
+  getUser(id: string, callback) {
+    this.userCollection.doc<User>(id).valueChanges().pipe(
+      tap(data => callback(null, data), error => callback(error))
+    ).subscribe();
   }
 
   addUser(user: User, callback) {
