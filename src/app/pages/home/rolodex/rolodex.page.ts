@@ -18,8 +18,8 @@ export class RolodexPage implements OnInit {
   user;
   contactDataList;
   index;
-  staticCards: Observable<Card[]>;
-  cards: Observable<Card[]>;
+  staticCards: Card[];
+  cards: Card[];
   id;
 
   users: Observable<User[]>;
@@ -144,6 +144,6 @@ export class RolodexPage implements OnInit {
 
     let uid = this.authService.getCurrentUserId();
     this.staticCards = this.cardService.listStaticCardsByHolder(uid);
-    this.cards = this.cardService.listCardsByHolder(this.authService.getCurrentUserId());
+    this.cards = this.cardService.listCardsByHolder(uid);
   }
 }
