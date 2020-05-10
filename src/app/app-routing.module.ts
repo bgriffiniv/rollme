@@ -24,6 +24,7 @@ const routes: Routes = [
   { path: 'password', loadChildren: './pages/menu/password/password.module#PasswordPageModule' },
   { path: 'link', loadChildren: './pages/menu/link/link.module#LinkPageModule' },
   { path: 'contact', loadChildren: './pages/menu/contact/contact.module#ContactPageModule' },
+  { path: 'contact/:id', loadChildren: './pages/menu/contact/contact.module#ContactPageModule' },
 
   // user management test features
   { path: 'users', loadChildren: './pages/menu/users/user-list/user-list.module#UserListPageModule'},
