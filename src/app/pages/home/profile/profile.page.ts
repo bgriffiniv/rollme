@@ -7,6 +7,8 @@ import { CardService, Card } from 'src/app/services/card/card.service';
 
 import { ActionSheetController, AlertController, ToastController } from '@ionic/angular';
 
+import { tap } from 'rxjs/operators';
+
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.page.html',
