@@ -138,9 +138,9 @@ export class RolodexPage implements OnInit {
 
   ngOnInit() {
     console.log("Rolodex Page Init");
-    this.users = this.userService.listUsers();
 
     let uid = this.authService.getCurrentUserId();
+    console.log('Current user ID: ', uid);
 
     this.cardService.listStaticCardsByHolder(uid).pipe(
       tap(data => {
@@ -148,7 +148,6 @@ export class RolodexPage implements OnInit {
         this.staticCards = data;
       })
     ).subscribe();
-
     this.cardService.listCardsByHolder(uid).pipe(
       tap(data => {
         console.log('Held cards count: ', data.length);

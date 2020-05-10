@@ -19,41 +19,19 @@ export interface User {
   providedIn: 'root'
 })
 export class UserService {
-  private users: Observable<User[]>;
-  private userCollection: AngularFirestoreCollection<User>;
   private staticUserCollection: AngularFirestoreCollection<User>;
-
-  subscription: any;
+  private userCollection: AngularFirestoreCollection<User>;
+  private staticUsers: Observable<User[]>;
+  private users: Observable<User[]>;
 
   filteredUsers: Observable<User[]>;
 
   constructor(private afs: AngularFirestore) {
-    console.log('Auth Service constructor');
+    console.log('User Service Start');
+    this.staticUserCollection = this.afs.collection<User>('static_users');
     this.userCollection = this.afs.collection<User>('users');
-    this.users = this.userCollection.snapshotChanges().pipe(
-          map(actions => {
-            return actions.map(a => {
-              const data = a.payload.doc.data();
-              const id = a.payload.doc.id;
-              return { id, ...data };
-            });
-          })
-
-    );
-    this.staticUserCollection = this.afs.collection<User>('users');
-  }
-
-  ngOnInit() {
-    console.log('Auth Service init');
-    this.afs.collection('users').valueChanges()
-        .subscribe(users => {
-          this.users = this.filteredUsers;
-      });
-
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.staticUsers = this.staticUserCollection.valueChanges({idField: 'id'});
+    this.users = this.userCollection.valueChanges({idField: 'id'});
   }
 
   listStaticUsers(callback) {
