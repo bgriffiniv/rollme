@@ -1,10 +1,17 @@
 <ion-header>
-  <ion-chip padding color="danger" class="chip-btn">
+  <ion-chip color="danger" class="chip-btn ion-padding">
       <ion-label (click)="dismissModal()">Cancel</ion-label>
   </ion-chip>
 </ion-header>
 
+
 <ion-content>
+  <div class="roll-gesture">
+    <ion-img src="./assets/imgs/Swipefinger.gif"></ion-img>
+  </div>
+  <div class="roll-header ld ld-jump">
+    <ion-img src="./assets/imgs/SwipeUp.gif"></ion-img>
+  </div>
   <div class="card-position">
   <ion-slides pager="false" [options]="slideOpts">
       <ion-slide>

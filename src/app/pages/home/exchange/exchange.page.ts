@@ -8,7 +8,7 @@ import { CardService, Card } from 'src/app/services/card/card.service';
 
 import { ActionSheetController, AlertController, ToastController, ModalController } from '@ionic/angular';
 import { CardRollPage } from 'src/app/pages/card-roll/card-roll/card-roll.page';
-import { IonRouterOutlet } from '@ionic/angular';
+import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 
 
 @Component({
@@ -135,7 +135,7 @@ export class ExchangePage implements OnInit {
 
   constructor(private authService: AuthService, private userService: UserService, private cardService: CardService, private route: ActivatedRoute, private router: Router,
               public actionSheetController: ActionSheetController, public alertController: AlertController, private toastCtrl: ToastController, public modalController: ModalController,
-              private routerOutlet: IonRouterOutlet) {
+              private screenOrientation: ScreenOrientation) {
     console.log("Exchange page started (constructor)");
 
     console.log('Is authenticated:', this.authService.isAuthenticated());

@@ -2,7 +2,10 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NavParams, ActionSheetController, AlertController, ToastController, ModalController } from '@ionic/angular';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
+
+import { Platform } from '@ionic/angular';
 import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
+import { Gyroscope, GyroscopeOrientation, GyroscopeOptions } from '@ionic-native/gyroscope/ngx';
 
 import { UserService, User } from './../../../services/user/user.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
@@ -32,6 +35,8 @@ export class CardRollPage implements OnInit {
   keys;
 
   showBlankCard;
+  mobileOrientation: string;
+  portraitCardView = true;
 
 slideOpts = {
     effect: 'flip',
@@ -128,14 +133,15 @@ slideOpts = {
 }
 
   constructor(private route: ActivatedRoute, private router: Router, private authService: AuthService, private userService: UserService,
-              private cardService: CardService, public modalController: ModalController, public navParams: NavParams,
-              private screenOrientation: ScreenOrientation) {
+              private cardService: CardService, public modalController: ModalController, public navParams: NavParams, platform: Platform,
+              private screenOrientation: ScreenOrientation, private gyroscope: Gyroscope) {
 
-              window.screen.orientation.onchange = function() {
-                    console.log('Orientation is' + window.screen.orientation.type);
-
-              };
-
+    platform.ready().then(() => {
+    this.getScreenOrientation();
+    }).catch(err => {
+     console.log('Error while loading platform', err);
+    });
+    this.getGyroscopeData();
 
   }
 
@@ -152,9 +158,42 @@ slideOpts = {
    });
   }
 
+  getScreenOrientation(){
+      this.mobileOrientation = this.screenOrientation.type;
+      console.log('Orientation is ' + this.mobileOrientation);
 
+      this.screenOrientation.onChange().subscribe(() => {
+      this.mobileOrientation = this.screenOrientation.type;
+           if (this.mobileOrientation == "portrait-primary") {
+               this.portraitCardView = true;
+                console.log('Orientation is ' + this.mobileOrientation);
 
+           } else if (this.mobileOrientation == "landscape-primary") {
+               this.portraitCardView = false;
+               console.log('Orientation is ' + this.mobileOrientation);
+           };
+      });
+  }
 
+  getGyroscopeData() {
+     let options: GyroscopeOptions = {
+         frequency: 1000
+     }
 
+     this.gyroscope.getCurrent(options)
+          .then((orientation: GyroscopeOrientation) => {
+             console.log(orientation.x, orientation.y, orientation.z, orientation.timestamp);
+          })
+     .catch()
+
+     this.gyroscope.watch()
+           .subscribe((orientation: GyroscopeOrientation) => {
+              console.log(orientation.x, orientation.y, orientation.z, orientation.timestamp);
+           if (orientation.z > 0) {
+                  this.mobileOrientation == "landscape-primary";
+                  this.portraitCardView = false;
+           }
+     });
+  }
 
 }

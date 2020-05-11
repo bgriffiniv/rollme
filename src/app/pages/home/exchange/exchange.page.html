@@ -1,3 +1,9 @@
+<ion-toolbar class="header">
+  <ion-buttons slot="primary">
+    <ion-menu-button></ion-menu-button>
+  </ion-buttons>
+</ion-toolbar>
+
 <ion-content>
 
   <div *ngIf="!card.frontImg || cancelRoll">
@@ -11,7 +17,7 @@
     </div>
   </div>
 
-    <div *ngIf="card.frontImg && !cancelRoll" class="msg" padding>
+    <div *ngIf="card.frontImg && !cancelRoll" class="msg ion-padding">
     <ion-text color="tertiary">
       <h5>
         Is this the card you wish to send?

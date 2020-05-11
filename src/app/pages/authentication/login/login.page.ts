@@ -44,7 +44,7 @@ export class LoginPage implements OnInit {
         this.signInForm.setErrors( { 'signIn' : true } );
       } else {
         console.log('Login Page : Auth Success : navigating to Home Page');
-        this.router.navigateByUrl('/home/home/rolodex');
+        this.router.navigateByUrl('/home');
       }
     });
   }

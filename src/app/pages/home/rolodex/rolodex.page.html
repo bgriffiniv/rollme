@@ -1,8 +1,10 @@
-
-<ion-toolbar>
-    <ion-searchbar animated="false" placeholder="Search cards" [(ngModel)]="searchTerm"></ion-searchbar>
+<ion-toolbar class="header">
+  <ion-buttons slot="primary">
+    <ion-menu-button></ion-menu-button>
+  </ion-buttons>
+  <ion-searchbar animated="false" placeholder="Search cards" [(ngModel)]="searchTerm" *ngIf="!portraitCardView"></ion-searchbar>
 </ion-toolbar>
-
+<ion-searchbar animated="false" placeholder="Search cards" [(ngModel)]="searchTerm" *ngIf="portraitCardView"></ion-searchbar>
 
 <ion-content class="card-background-page">
   <ion-slides pager="false" [options]="slideOpts" class="rolodex-container">

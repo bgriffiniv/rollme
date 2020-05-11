@@ -29,7 +29,7 @@
   </ion-card>
 
 
-  <ion-button *ngIf="!card.id" size="small" (click)="saveCard()" shape="round" color="primary" class="save-btn" [disabled]="!isFrontCaptured" padding>
+  <ion-button *ngIf="!card.id" size="small" (click)="saveCard()" shape="round" color="primary" class="save-btn ion-padding" [disabled]="!isFrontCaptured">
     Save
   </ion-button>
 </ion-content>
@@ -37,7 +37,7 @@
 
 <ion-footer *ngIf="card.id">
   <ion-toolbar>
-  <ion-row no-padding text-center>
+  <ion-row class="ion-text-center">
     <ion-col size="6">
       <ion-button expand="block" fill="solid" color="danger" (click)="deleteCardAlert()">
         <ion-icon name="trash" slot="start"></ion-icon>

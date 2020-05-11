@@ -24,42 +24,12 @@ export class HomePage implements OnInit{
     console.log("Home page started (constructor)");
 
     platform.ready().then(() => {
-     this.mobileOrientation = this.screenOrientation.type;
-     console.log('Orientation is ' + this.mobileOrientation);
+    this.getScreenOrientation();
+    }).catch(err => {
+      console.log('Error while loading platform', err);
+    });
+    this.getGyroscopeData();
 
-     let options: GyroscopeOptions = {
-        frequency: 1000
-     }
-
-     this.gyroscope.getCurrent(options)
-       .then((orientation: GyroscopeOrientation) => {
-          console.log(orientation.x, orientation.y, orientation.z, orientation.timestamp);
-        })
-       .catch()
-
-     this.gyroscope.watch()
-        .subscribe((orientation: GyroscopeOrientation) => {
-           console.log(orientation.x, orientation.y, orientation.z, orientation.timestamp);
-           if (orientation.z > 0) {
-               this.mobileOrientation == "landscape-primary";
-               this.portraitCardView = false;
-           }
-        });
-
-     this.screenOrientation.onChange().subscribe(() => {
-      this.mobileOrientation = this.screenOrientation.type;
-         if (this.mobileOrientation == "portrait-primary") {
-             this.portraitCardView = true;
-             console.log('Orientation is ' + this.mobileOrientation);
-
-         } else if (this.mobileOrientation == "landscape-primary") {
-             this.portraitCardView = false;
-             console.log('Orientation is ' + this.mobileOrientation);
-         };
-     });
-   }).catch(err => {
-        console.log('Error while loading platform', err);
-   });
   }
 
   ngOnInit() {
@@ -92,6 +62,45 @@ export class HomePage implements OnInit{
           this.router.navigateByUrl('/successful-signup', navigationExtras);
         }
       });
+    });
+  }
+
+
+  getScreenOrientation(){
+     this.mobileOrientation = this.screenOrientation.type;
+     console.log('Orientation is ' + this.mobileOrientation);
+
+     this.screenOrientation.onChange().subscribe(() => {
+     this.mobileOrientation = this.screenOrientation.type;
+          if (this.mobileOrientation == "portrait-primary") {
+              this.portraitCardView = true;
+              console.log('Orientation is ' + this.mobileOrientation);
+
+          } else if (this.mobileOrientation == "landscape-primary") {
+              this.portraitCardView = false;
+              console.log('Orientation is ' + this.mobileOrientation);
+          };
+     });
+  }
+
+  getGyroscopeData() {
+     let options: GyroscopeOptions = {
+         frequency: 1000
+     }
+
+     this.gyroscope.getCurrent(options)
+          .then((orientation: GyroscopeOrientation) => {
+             console.log(orientation.x, orientation.y, orientation.z, orientation.timestamp);
+          })
+     .catch()
+
+     this.gyroscope.watch()
+           .subscribe((orientation: GyroscopeOrientation) => {
+              console.log(orientation.x, orientation.y, orientation.z, orientation.timestamp);
+           if (orientation.z > 0) {
+                this.mobileOrientation == "landscape-primary";
+                this.portraitCardView = false;
+           }
     });
   }
 }

@@ -135,6 +135,8 @@ export class RolodexPage implements OnInit {
   constructor(private authService: AuthService, private userService: UserService, private cardService: CardService,
               private route: ActivatedRoute, private router: Router, platform: Platform, private screenOrientation: ScreenOrientation,
               private gyroscope: Gyroscope) {
+
+
     console.log("Rolodex Page (constructor)");
 
     this.staticCards = this.cardService.listStaticCardsByHolder(this.authService.getCurrentUserId());
@@ -142,47 +144,55 @@ export class RolodexPage implements OnInit {
     this.users = this.userService.listUsers();
 
     platform.ready().then(() => {
-      this.mobileOrientation = this.screenOrientation.type;
-      console.log('Orientation is ' + this.mobileOrientation);
-
-      let options: GyroscopeOptions = {
-         frequency: 1000
-      }
-
-      this.gyroscope.getCurrent(options)
-        .then((orientation: GyroscopeOrientation) => {
-           console.log(orientation.x, orientation.y, orientation.z, orientation.timestamp);
-         })
-        .catch()
-
-      this.gyroscope.watch()
-         .subscribe((orientation: GyroscopeOrientation) => {
-            console.log(orientation.x, orientation.y, orientation.z, orientation.timestamp);
-            if (orientation.z > 0) {
-                this.mobileOrientation == "landscape-primary";
-                this.portraitCardView = false;
-            }
-         });
-
-      this.screenOrientation.onChange().subscribe(() => {
-       this.mobileOrientation = this.screenOrientation.type;
-          if (this.mobileOrientation == "portrait-primary") {
-              this.portraitCardView = true;
-              console.log('Orientation is ' + this.mobileOrientation);
-
-          } else if (this.mobileOrientation == "landscape-primary") {
-              this.portraitCardView = false;
-              console.log('Orientation is ' + this.mobileOrientation);
-          };
-      });
+    this.getScreenOrientation();
     }).catch(err => {
          console.log('Error while loading platform', err);
     });
+    this.getGyroscopeData();
   }
 
   ngOnInit() {
     console.log("Rolodex Page (init)");
   }
+
+  getScreenOrientation(){
+    this.mobileOrientation = this.screenOrientation.type;
+    console.log('Orientation is ' + this.mobileOrientation);
+
+    this.screenOrientation.onChange().subscribe(() => {
+    this.mobileOrientation = this.screenOrientation.type;
+         if (this.mobileOrientation == "portrait-primary") {
+             this.portraitCardView = true;
+              console.log('Orientation is ' + this.mobileOrientation);
+
+         } else if (this.mobileOrientation == "landscape-primary") {
+             this.portraitCardView = false;
+             console.log('Orientation is ' + this.mobileOrientation);
+         };
+    });
+  }
+
+  getGyroscopeData() {
+     let options: GyroscopeOptions = {
+         frequency: 1000
+     }
+
+     this.gyroscope.getCurrent(options)
+          .then((orientation: GyroscopeOrientation) => {
+             console.log(orientation.x, orientation.y, orientation.z, orientation.timestamp);
+          })
+     .catch()
+
+     this.gyroscope.watch()
+           .subscribe((orientation: GyroscopeOrientation) => {
+              console.log(orientation.x, orientation.y, orientation.z, orientation.timestamp);
+           if (orientation.z > 0) {
+                  this.mobileOrientation == "landscape-primary";
+                  this.portraitCardView = false;
+           }
+     });
+  }
+
 
   deleteContact(index) {
     //this.dataService.setContact(this.id, index, false);

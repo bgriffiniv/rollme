@@ -28,6 +28,7 @@ export class ProfilePage implements OnInit {
 
   frontImg: string;
   isFrontCaptured = false;
+  portraitCardView;
 
   cameraOptions: CameraOptions = {
     // Some common settings are 20, 50, and 100
