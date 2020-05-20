@@ -7,7 +7,7 @@ import { HomePage } from './home.page';
 const routes: Routes = [
 
 {
-    path:'home',
+    path:'',
     component: HomePage,
     children: [
       {
@@ -33,7 +33,8 @@ const routes: Routes = [
       },
 
       {
-        path: '', redirectTo: 'rolodex',
+        path: '',
+        redirectTo: 'rolodex',
         pathMatch: 'full'
       }
     ]
