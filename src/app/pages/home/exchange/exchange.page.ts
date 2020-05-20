@@ -146,6 +146,7 @@ export class ExchangePage implements OnInit {
                 this.cancelRoll = false;
                 this.card.frontImg = this.router.getCurrentNavigation().extras.state.cardDataFront;
                 this.card.backImg = this.router.getCurrentNavigation().extras.state.cardDataBack;
+
         };
 
      });

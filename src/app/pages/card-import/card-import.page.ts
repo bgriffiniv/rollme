@@ -42,13 +42,18 @@ export class CardImportPage implements OnInit {
     targetHeight: 374
   }
 
-  constructor(private route: ActivatedRoute, private router: Router, private camera: Camera, private toastCtrl: ToastController, public alertController: AlertController, private cardService: CardService) {
+  constructor(private route: ActivatedRoute,
+              private router: Router,
+              private camera: Camera,
+              private toastCtrl: ToastController,
+              public alertController: AlertController,
+              private cardService: CardService) {
 
   }
 
    ngOnInit() {
        this.id = this.route.snapshot.paramMap.get('id');
-       console.log(this.id)
+       console.log(this.id);
 
        if (this.id) {
          console.log("current id: ", this.id);
@@ -56,12 +61,11 @@ export class CardImportPage implements OnInit {
            console.log("got card: ", card);
            this.card = card;
          });
-       } else if (this.id) {
+       } else {
          this.frontImg = this.card.frontImg;
          this.backImg = this.card.backImg;
-       } else {
-         this.importCardFront();
-       }
+       };
+       this.importCardFront();
 
    }
 
@@ -136,7 +140,7 @@ export class CardImportPage implements OnInit {
       };
 
       this.cardService.addCard(this.card).then(() => {
-         this.router.navigate(["/home/home/profile"], navigationExtras);
+         this.router.navigate(["/home/profile"], navigationExtras);
          this.showToast('Card saved!');
       }, err => {
           this.showToast('There was a problem adding your card :(');

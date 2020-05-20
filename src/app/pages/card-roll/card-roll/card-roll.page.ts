@@ -1,11 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { NavParams, ActionSheetController, AlertController, ToastController, ModalController } from '@ionic/angular';
+import { NavParams, Platform, ActionSheetController, AlertController, ToastController, ModalController } from '@ionic/angular';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 
-import { Platform } from '@ionic/angular';
 import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 import { Gyroscope, GyroscopeOrientation, GyroscopeOptions } from '@ionic-native/gyroscope/ngx';
+import { NFC, Ndef } from '@ionic-native/nfc/ngx';
 
 import { UserService, User } from './../../../services/user/user.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
@@ -132,16 +132,27 @@ slideOpts = {
   }
 }
 
-  constructor(private route: ActivatedRoute, private router: Router, private authService: AuthService, private userService: UserService,
-              private cardService: CardService, public modalController: ModalController, public navParams: NavParams, platform: Platform,
-              private screenOrientation: ScreenOrientation, private gyroscope: Gyroscope) {
+  constructor(private route: ActivatedRoute,
+              private router: Router,
+              private authService: AuthService,
+              private userService: UserService,
+              private cardService: CardService,
+              public modalController: ModalController,
+              public navParams: NavParams,
+              platform: Platform,
+              private screenOrientation: ScreenOrientation,
+              private gyroscope: Gyroscope,
+              private toastCtrl: ToastController,
+              private nfc: NFC,
+              private ndef: Ndef) {
 
     platform.ready().then(() => {
     this.getScreenOrientation();
+    this.getGyroscopeData();
+    this.launchNFC();
     }).catch(err => {
      console.log('Error while loading platform', err);
     });
-    this.getGyroscopeData();
 
   }
 
@@ -150,6 +161,7 @@ slideOpts = {
     if (!this.cardDataBack) {
         this.showBlankCard;
     };
+
   }
 
   dismissModal() {
@@ -194,6 +206,71 @@ slideOpts = {
                   this.portraitCardView = false;
            }
      });
+  }
+
+  launchNFC(){
+    console.log('begin launchNFC');
+
+    this.nfc.addNdefListener(() => {
+      console.log('successfully attached ndef listener');
+    }, (err) => {
+      console.log('error attaching ndef listener', err);
+
+      let toast = this.toastCtrl.create({
+        message: err,
+        duration: 1000,
+        position: 'top'
+      }).then(toast => toast.present());
+
+    }).subscribe((event) => {
+
+      console.log('received ndef message. the tag contains: ', event.tag);
+      console.log('decoded tag id', this.nfc.bytesToHexString(event.tag.id));
+
+      let toast = this.toastCtrl.create({
+        message: this.nfc.bytesToHexString(event.tag.id),
+        duration: 1000,
+        position: 'top'
+      }).then(toast => toast.present());
+
+      let message = [
+            this.ndef.textRecord( 'Hello world')
+      ];
+      this.nfc.share([message]).then().catch(err =>
+      console.log('Error while sharing message', err));
+
+      this.cardService.getCard(this.card.id);
+      let cardFields = [];
+      this.nfc.handover(cardFields);
+      this.showToast('Got card');
+      }, err => {
+      this.showToast('There was a problem getting cards :(');
+    });
+
+  }
+
+  showToast(msg) {
+       this.toastCtrl.create({
+         message: msg,
+         duration: 2000,
+         color: 'success',
+         position: 'top',
+         buttons: [
+             {
+               side: 'start',
+               icon: 'checkmark-circle',
+               handler: () => {
+                 console.log('Got card');
+               }
+             },
+             {
+               role: 'cancel',
+               handler: () => {
+                 console.log('Cancel clicked');
+               }
+             }
+         ]
+       }).then(toast => toast.present());
   }
 
 }

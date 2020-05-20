@@ -149,31 +149,17 @@ export class ProfilePage implements OnInit {
     console.log("Profile page started (constructor)");
 
     console.log('Is authenticated:', this.authService.isAuthenticated());
-
-    //this.id = this.cardService.getCard();
-
-    //this.activatedRoute.data.subscribe((data) => {
-      //if (this.router.getCurrentNavigation().extras.state) {
-        //let updated = this.router.getCurrentNavigation().extras.state.data;
-        //this.cardService.setCard(this.id, updated);
-      //}
-
-      //this.card = this.cardService.getCard(this.id);
-      //this.keys = Object.keys(this.card);
-      //this.keys.splice(this.keys.indexOf("contacts"), 1);
-    //});
   }
 
   ngOnInit() {
       console.log("Profile page (init)");
+      this.users = this.userService.listUsers();
+      this.cards = this.cardService.listCards();
 
       if (this.router.getCurrentNavigation().extras.state){
           this.card.frontImg = this.router.getCurrentNavigation().extras.state.cardDataFront;
           this.card.backImg = this.router.getCurrentNavigation().extras.state.cardDataBack;
-      } else if (this.isFrontCaptured = true){
-          this.users = this.userService.listUsers();
-          this.cards = this.cardService.listCards();
-      } else {
+      } else if (this.card.frontImg = !this.router.getCurrentNavigation().extras.state.cardDataFront){
           this.newCardAlert();
       }
 

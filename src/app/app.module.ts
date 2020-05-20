@@ -19,6 +19,7 @@ import { environment } from '../environments/environment';
 import { Camera } from '@ionic-native/camera/ngx';
 import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 import { Gyroscope, GyroscopeOrientation, GyroscopeOptions } from '@ionic-native/gyroscope/ngx';
+import { NFC, Ndef } from '@ionic-native/nfc/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -39,6 +40,8 @@ import { Gyroscope, GyroscopeOrientation, GyroscopeOptions } from '@ionic-native
     Camera,
     ScreenOrientation,
     Gyroscope,
+    NFC,
+    Ndef,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: FirestoreSettingsToken, useValue: {} }
   ],
