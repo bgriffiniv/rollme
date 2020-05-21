@@ -36,15 +36,15 @@
   </ion-card>
 
 
-  <ion-button *ngIf="!id" size="small" (click)="saveCard()" shape="round" color="primary" class="save-btn"
-              [disabled]="!(frontImg || backImg)" padding>
+  <ion-button *ngIf="!id" size="small" (click)="saveCard()" shape="round" color="primary" class="save-btn ion-padding"
+              [disabled]="!(frontImg || backImg)">
     Save
   </ion-button>
 </ion-content>
 
 
 <ion-footer *ngIf="id!==null">
-  <ion-row no-padding text-center>
+  <ion-row class="ion-text-center">
     <ion-col size="6">
       <ion-button expand="block" fill="outline" color="danger" (click)="deleteCardAlert()">
         <ion-icon name="trash" slot="start"></ion-icon>
