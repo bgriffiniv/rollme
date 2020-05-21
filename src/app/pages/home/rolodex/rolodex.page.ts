@@ -35,13 +35,13 @@ export class RolodexPage implements OnInit {
       slidesPerView: 3,
       coverflowEffect: {
         rotate: 25,
-        stretch: 450,
+        stretch: 350,
         depth: 225,
         modifier: 1,
         slideShadows: false
       },
       freeMode: true,
-      freeModeSticky: false,
+      freeModeSticky: true,
       freeModeMomentum: true,
       freeModeMomentumRatio: 1,
       freeModeMomentumVelocityRatio: 1,
