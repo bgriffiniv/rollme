@@ -1,17 +1,31 @@
- <ion-toolbar>
-    <ion-title>Exchange</ion-title>
-   <ion-buttons slot="end">
-     <ion-button (click)="addContact()">
-       <ion-icon name="person-add"></ion-icon>
-     </ion-button>
-   </ion-buttons>
-  </ion-toolbar>
-
-
 <ion-content>
-      <video width="300" height="320" controls>
-        <source src="./assets/imgs/exchange.mp4" type="video/mp4">
-      </video>
+  <div *ngIf="noCardFound">
+    <img src="./assets/imgs/NothingToShow.png" class="ld ld-breath no-card-img"/>
+    <div class="msg ion-padding">
+      <ion-text>
+        <p>No card has been selected to send. You must first create and save a card.
+          Then when you're ready, select a card to send and you will be redirected back here.
+        </p>
+      </ion-text>
+    </div>
+  </div>
+
+  <div *ngIf="!noCardFound" class="msg ion-padding">
+    <ion-text color="tertiary">
+      <h5>
+        Is this the card you wish to send?
+      </h5>
+    </ion-text>
+    <br>
+    <br>
+    <ion-card class="ld ld-swim">
+      <img [src]="" alt=""/>
+    </ion-card>
+  </div>
 </ion-content>
 
+<ion-footer *ngIf="!noCardFound" class="ion-no-border">
+  <ion-button expand="full" fill="outline" color="success" (click)="cardModal()">Yes</ion-button>
+  <ion-button routerDirection="back" expand="full" fill="outline" color="danger" (click)="goToProfilePage()">No</ion-button>
+</ion-footer>
 
