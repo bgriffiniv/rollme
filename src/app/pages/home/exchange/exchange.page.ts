@@ -20,6 +20,7 @@ export class ExchangePage implements OnInit {
   cards: Card[];
   id;
 
+
   noCardFound = false;
   subscription;
 
@@ -148,9 +149,7 @@ export class ExchangePage implements OnInit {
       console.log('Current card ID: ', this.id);
       this.cardService.getCard(this.id).subscribe(card => {
         console.log("Card: ", card);
-        this.card = card;
-        this.frontImg = this.card.frontImg;
-        this.backImg = this.card.backImg;
+
       });
     }
   }
