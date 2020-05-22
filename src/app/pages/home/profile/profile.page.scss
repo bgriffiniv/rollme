@@ -1,3 +1,13 @@
+@import '~@loadingio/loading.css/dist/loading.css';
+
+.card-background-page {
+
+  .card-container {
+      height: 100%;
+      width: 100%;
+  }
+}
+
 .image {
   height: 75px;
   width: 75px;
@@ -7,15 +17,13 @@
 
 .floating-fab-btn {
   position: relative;
-  right: 30px;
-  bottom: 5px;
+  bottom: 40px;
 }
 
-hr {
-height: 2px;
-background-color: gray;
-margin-left: 100px;
-margin-top: 5px;
-margin-bottom: 5px;
-
+ hr {
+  height: 2px;
+  background-color: gray;
+  margin-left: 100px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }

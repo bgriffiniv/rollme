@@ -1,38 +1,25 @@
-<ion-content>
-
-  <ion-list>
-
-    <ion-card button style="height:auto;width:auto;" [routerLink]="['/card', card.id]" *ngFor="let card of cards" lines="none">
-        <img [src]="card.frontImg" alt=""/>
-    </ion-card>
-
-    <div class="floating-fab-btn">
-      <ion-fab vertical="top" horizontal="start" edge slot="fixed" padding>
-        <ion-fab-button size="small" (click)="createCard()">
-          <ion-icon name="add" size="small"></ion-icon>
-        </ion-fab-button>
-      </ion-fab>
-    </div>
-      <ion-card padding>
-          <ion-avatar slot="start">
-            <img src="./assets/imgs/avatar.svg">
-          </ion-avatar>
-        <div style="position:relative;right:20px;bottom:43px;height:1px;">
-          <hr width="25%">
-          <hr width="35%">
-          <hr width="30%">
-        </div>
-        <ion-label>
-          <hr width="55%">
-          <hr width="50%">
-          <hr width="25%">
-          <hr width="15">
-        </ion-label>
-        <ion-icon name="square-outline" size="large"></ion-icon><ion-icon name="square-outline" size="large"></ion-icon><ion-icon name="square-outline" size="large"></ion-icon>
-      </ion-card>
-  </ion-list>
+<ion-toolbar>
+  <ion-title slot="start">Cards</ion-title>
+  <div class="floating-fab-btn">
+    <ion-fab vertical="top" horizontal="end">
+      <ion-fab-button size="small" (click)="createCard()">
+        <ion-icon name="add" size="small"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+  </div>
+</ion-toolbar>
 
 
+<ion-content class="card-background-page">
+  <ion-slides pager="false" [options]="slideOpts" class="card-container">
+    <ion-item button [routerLink]="['/card', card.id]" *ngFor="let card of cards" lines="none">
+      <ion-slide>
+        <ion-card>
+          <img [src]="card.frontImg" alt=""/>
+        </ion-card>
+      </ion-slide>
+    </ion-item>
+  </ion-slides>
 </ion-content>
 
 
