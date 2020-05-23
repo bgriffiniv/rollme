@@ -21,7 +21,7 @@ export class ExchangePage implements OnInit {
   id;
 
 
-  noCardFound = false;
+  isCardFound;
   subscription;
 
   slideOpts = {
@@ -142,7 +142,7 @@ export class ExchangePage implements OnInit {
 
   ngOnInit() {
     console.log('Exchange Page Init');
-    this.noCardFound = true;
+    this.isCardFound = false;
     this.id = this.route.snapshot.paramMap.get('id');
 
     if (this.id) {

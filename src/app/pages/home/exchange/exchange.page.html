@@ -1,5 +1,5 @@
 <ion-content>
-  <div *ngIf="noCardFound">
+  <div *ngIf="!isCardFound">
     <img src="./assets/imgs/NothingToShow.png" class="ld ld-breath no-card-img"/>
     <div class="msg ion-padding">
       <ion-text>
@@ -10,7 +10,7 @@
     </div>
   </div>
 
-  <div *ngIf="!noCardFound" class="msg ion-padding">
+  <div *ngIf="isCardFound" class="msg ion-padding">
     <ion-text color="tertiary">
       <h5>
         Is this the card you wish to send?
@@ -24,7 +24,7 @@
   </div>
 </ion-content>
 
-<ion-footer *ngIf="!noCardFound" class="ion-no-border">
+<ion-footer *ngIf="isCardFound" class="ion-no-border">
   <ion-button expand="full" fill="outline" color="success" (click)="cardModal()">Yes</ion-button>
   <ion-button routerDirection="back" expand="full" fill="outline" color="danger" (click)="goToProfilePage()">No</ion-button>
 </ion-footer>
