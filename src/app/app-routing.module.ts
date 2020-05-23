@@ -31,7 +31,7 @@ const routes: Routes = [
   { path: 'user', loadChildren: './pages/menu/users/user-details/user-details.module#UserDetailsPageModule' },
   { path: 'user/:id', loadChildren: './pages/menu/users/user-details/user-details.module#UserDetailsPageModule' },
 
-  { path: '', loadChildren: './pages/home/home.module#HomePageModule' },
+  { path: 'home', loadChildren: './pages/home/home.module#HomePageModule' },
   { path: 'rolodex', loadChildren: './pages/home/rolodex/rolodex.module#RolodexPageModule' },
   { path: 'exchange', loadChildren: './pages/home/exchange/exchange.module#ExchangePageModule' },
   { path: 'profile', loadChildren: './pages/home/profile/profile.module#ProfilePageModule' },
