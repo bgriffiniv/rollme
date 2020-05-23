@@ -19,17 +19,7 @@ const routes: Routes = [
       },
 
       {
-        path:'profile',
-        children: [
-          {
-            path:'',
-            loadChildren:'./profile/profile.module#ProfilePageModule'
-          },
-          {
-            path:'card-import',
-            loadChildren: '../card-import/card-import.module#CardImportPageModule'
-          }
-        ]
+        path:'profile', loadChildren:'./profile/profile.module#ProfilePageModule'
       },
 
       {
@@ -39,11 +29,11 @@ const routes: Routes = [
       }
     ]
 },
-  {
-    path: '',
-    redirectTo: 'home/rolodex',
-    pathMatch: 'full'
-  }
+    {
+      path: '',
+      redirectTo: 'home/rolodex',
+      pathMatch: 'full'
+    }
 ];
 
 @NgModule({
