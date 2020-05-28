@@ -1,8 +1,15 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="primary">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 
 <ion-content class="card-image">
     <ion-card button (click)="openCameraFront()" style="height:auto;weight:auto;">
-      <img ng-show="isFrontCaptured" [src]="card.frontImg" alt=""/>
-      <div *ngIf="!card.id" [hidden]="isFrontCaptured" >
+      <img *ngIf="frontImg!==null" [src]="frontImg" alt=""/>
+      <div *ngIf="!frontImg" >
         <br>
         <br>
         <br>
@@ -15,8 +22,8 @@
     </ion-card>
 
   <ion-card button (click)="openCameraBack()" style="height:auto;weight:auto;">
-    <img *ngIf="!isBackCaptured || card.backImg" [src]="card.backImg" alt=""/>
-    <div *ngIf="!card.backImg">
+    <img *ngIf="backImg!==null" [src]="backImg" alt=""/>
+    <div *ngIf="!backImg">
       <br>
       <br>
       <br>
@@ -29,14 +36,15 @@
   </ion-card>
 
 
-  <ion-button *ngIf="!card.id" size="small" (click)="saveCard()" shape="round" color="primary" class="save-btn" [disabled]="!isFrontCaptured" padding>
+  <ion-button *ngIf="!id" size="small" (click)="saveCard()" shape="round" color="primary" class="save-btn ion-padding"
+              [disabled]="!(frontImg || backImg)">
     Save
   </ion-button>
 </ion-content>
 
 
-<ion-footer *ngIf="card.id">
-  <ion-row no-padding text-center>
+<ion-footer *ngIf="id!==null">
+  <ion-row class="ion-text-center">
     <ion-col size="6">
       <ion-button expand="block" fill="outline" color="danger" (click)="deleteCardAlert()">
         <ion-icon name="trash" slot="start"></ion-icon>

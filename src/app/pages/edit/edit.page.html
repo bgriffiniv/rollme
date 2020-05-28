@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-card padding>
+  <ion-card class="ion-padding">
     <ion-item>
       <ion-avatar slot="start">
         <img src="./assets/imgs/avatar.png">
@@ -35,7 +35,7 @@
 
       </ion-item>
     </ion-list>
-    <div padding>
+    <div class="ion-padding">
       <ion-button [disabled]="!dataForm.valid" (click)="saveChanges()" shape="round" >
         Save
       </ion-button>

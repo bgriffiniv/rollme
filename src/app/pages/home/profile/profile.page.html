@@ -2,18 +2,18 @@
 
   <ion-list>
 
-    <ion-card button style="height:auto;width:auto;" [routerLink]="['/card', card.id]" *ngFor="let card of (cards | async)" lines="none">
-        <img ng-show="isFrontCaptured" [src]="card.frontImg" alt=""/>
+    <ion-card button style="height:auto;width:auto;" [routerLink]="['/card', card.id]" *ngFor="let card of cards" lines="none">
+        <img [src]="card.frontImg" alt=""/>
     </ion-card>
 
     <div class="floating-fab-btn">
-      <ion-fab vertical="top" horizontal="start" edge slot="fixed" padding>
-        <ion-fab-button size="small" (click)="createACard()">
+      <ion-fab vertical="top" horizontal="start" edge slot="fixed" class="ion-padding">
+        <ion-fab-button size="small" (click)="createCard()">
           <ion-icon name="add" size="small"></ion-icon>
         </ion-fab-button>
       </ion-fab>
     </div>
-      <ion-card padding>
+      <ion-card class="ion-padding">
           <ion-avatar slot="start">
             <img src="./assets/imgs/avatar.svg">
           </ion-avatar>

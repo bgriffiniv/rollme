@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument, DocumentReference } from 'angularfire2/firestore';
-import { map, take, filter } from 'rxjs/operators';
+import { map, take, filter, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-
 
 export interface User {
   id?: string,
@@ -19,41 +18,19 @@ export interface User {
   providedIn: 'root'
 })
 export class UserService {
-  private users: Observable<User[]>;
-  private userCollection: AngularFirestoreCollection<User>;
   private staticUserCollection: AngularFirestoreCollection<User>;
-
-  subscription: any;
+  private userCollection: AngularFirestoreCollection<User>;
+  private staticUsers: Observable<User[]>;
+  private users: Observable<User[]>;
 
   filteredUsers: Observable<User[]>;
 
   constructor(private afs: AngularFirestore) {
-    console.log('Auth Service constructor');
+    console.log('User Service Start');
+    this.staticUserCollection = this.afs.collection<User>('static_users');
     this.userCollection = this.afs.collection<User>('users');
-    this.users = this.userCollection.snapshotChanges().pipe(
-          map(actions => {
-            return actions.map(a => {
-              const data = a.payload.doc.data();
-              const id = a.payload.doc.id;
-              return { id, ...data };
-            });
-          })
-
-    );
-    this.staticUserCollection = this.afs.collection<User>('users');
-  }
-
-  ngOnInit() {
-    console.log('Auth Service init');
-    this.afs.collection('users').valueChanges()
-        .subscribe(users => {
-          this.users = this.filteredUsers;
-      });
-
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.staticUsers = this.staticUserCollection.valueChanges({idField: 'id'});
+    this.users = this.userCollection.valueChanges({idField: 'id'});
   }
 
   listStaticUsers(callback) {
@@ -100,13 +77,10 @@ export class UserService {
     return this.users;
   }
 
-  getUser(id: any, callback) {
-    this.userCollection.doc<User>(id).get()
-    .subscribe(d => {
-      let user = d.data() as User;
-      user.id = d.id;
-      callback(null, user);
-    }, e => {callback(e);});
+  getUser(id: string, callback) {
+    this.userCollection.doc<User>(id).valueChanges().pipe(
+      tap(data => callback(null, data), error => callback(error))
+    ).subscribe();
   }
 
   addUser(user: User, callback) {

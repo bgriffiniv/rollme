@@ -41,18 +41,18 @@ export class CardService {
     return this.afs.collection<Card>('static_cards', ref => ref.where('holders', 'array-contains', holderId)).valueChanges({idField:'id'});
   }
 
-  addStaticCard(card: Card): Promise<void> {
+  addStaticCard(card: Card): Promise<DocumentReference> {
     //let newCardId = this.afs.createId();
     //card.id = newCardId;
-    return this.staticCardCollection.doc<Card>().set(card);
+    return this.staticCardCollection.add(card);
   }
 
   getStaticCards(id: string): Observable<Card> {
     return this.staticCardCollection.doc<Card>(id).valueChanges();
   }
 
-  updateStaticCard(card: Card): Promise<void> {
-    return this.staticCardCollection.doc<Card>(card.id).update(card);
+  updateStaticCard(id: string, card: Card): Promise<void> {
+    return this.staticCardCollection.doc<Card>(id).update(card);
   }
 
   deleteStaticCard(id: string): Promise<void> {
@@ -71,18 +71,16 @@ export class CardService {
     return this.afs.collection<Card>('cards', ref => ref.where('holders', 'array-contains', holderId)).valueChanges({idField:'id'});
   }
 
-  addCard(card: Card): Promise<void> {
-    let newCardId = this.afs.createId();
-    card.id = newCardId;
-     return this.cardCollection.doc<Card>(card.id).set(card);
+  addCard(card: Card): Promise<DocumentReference> {
+     return this.cardCollection.add(card);
   }
 
   getCard(id: string): Observable<Card> {
      return this.cardCollection.doc<Card>(id).valueChanges();
   }
 
-  updateCard(card: Card): Promise<void> {
-    return this.cardCollection.doc<Card>(card.id).update(card);
+  updateCard(id: string, card: Card): Promise<void> {
+    return this.cardCollection.doc<Card>(id).update(card);
   }
 
   deleteCard(id: string): Promise<void> {

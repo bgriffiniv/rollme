@@ -5,8 +5,7 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { UserService, User } from './../../../services/user/user.service';
 import { CardService, Card } from 'src/app/services/card/card.service';
 
-import { Observable } from 'rxjs';
-
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-rolodex',
@@ -18,11 +17,10 @@ export class RolodexPage implements OnInit {
   user;
   contactDataList;
   index;
-  staticCards: Observable<Card[]>;
-  cards: Observable<Card[]>;
+  staticCards: Card[];
+  cards: Card[];
   id;
 
-  users: Observable<User[]>;
   filteredUsers: any[];
   searchTerm = '';
 
@@ -37,13 +35,13 @@ export class RolodexPage implements OnInit {
       slidesPerView: 3,
       coverflowEffect: {
         rotate: 25,
-        stretch: 450,
+        stretch: 350,
         depth: 225,
         modifier: 1,
         slideShadows: false
       },
       freeMode: true,
-      freeModeSticky: false,
+      freeModeSticky: true,
       freeModeMomentum: true,
       freeModeMomentumRatio: 1,
       freeModeMomentumVelocityRatio: 1,
@@ -127,47 +125,34 @@ export class RolodexPage implements OnInit {
     }
   }
 
-  constructor(private authService: AuthService, private userService: UserService, private cardService: CardService,
-    private route: ActivatedRoute, private router: Router
+  constructor(
+    private authService: AuthService,
+    private userService: UserService,
+    private cardService: CardService,
+    private route: ActivatedRoute,
+    private router: Router
   ) {
-    console.log("Rolodex Page (constructor)");
+    console.log("Rolodex Page Start");
 
-    this.staticCards = this.cardService.listStaticCardsByHolder(this.authService.getCurrentUserId());
-    this.cards = this.cardService.listCardsByHolder(this.authService.getCurrentUserId());
   }
 
   ngOnInit() {
-    console.log("Rolodex Page (init)");
-    this.users = this.userService.listUsers();
-  }
+    console.log("Rolodex Page Init");
 
-  deleteContact(index) {
-    //this.dataService.setContact(this.id, index, false);
-    this.refresh();
-  }
+    let uid = this.authService.getCurrentUserId();
+    console.log('Current user ID: ', uid);
 
-  goToContactPage(index) {
-    this.index = index;
-    let navigationExtras: NavigationExtras = {
-      state: {
-        data: index,
-        parent: 'rolodex'
-      }
-    };
-    this.router.navigate(['contact'], navigationExtras);
-  }
-
-  refresh() {
-    //this.user = this.dataService.getUser(this.id);
-
-    // TODO: Page over this data when too large!
-    this.contactDataList = [];
-    for (let contactId in this.user.contacts) {
-      let contactData = {
-        id: contactId,
-        //name: this.dataService.getUser(contactId).name
-      };
-      this.contactDataList.push(contactData);
-    }
+    this.cardService.listStaticCardsByHolder(uid).pipe(
+      tap(data => {
+        console.log('Held static cards count: ', data.length);
+        this.staticCards = data;
+      })
+    ).subscribe();
+    this.cardService.listCardsByHolder(uid).pipe(
+      tap(data => {
+        console.log('Held cards count: ', data.length);
+        this.cards = data;
+      })
+    ).subscribe();
   }
 }
