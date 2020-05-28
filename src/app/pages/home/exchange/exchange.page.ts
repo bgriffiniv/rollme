@@ -142,7 +142,7 @@ export class ExchangePage implements OnInit {
 
   ngOnInit() {
     console.log('Exchange Page Init');
-    this.isCardFound = false;
+    this.isCardFound;
     this.id = this.route.snapshot.paramMap.get('id');
 
     if (this.id) {
