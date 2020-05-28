@@ -2,6 +2,7 @@
 
   ion-card {
     position: relative;
+    text-align: center;
   }
 
   .card-title {
@@ -20,16 +21,21 @@
     width: 50%;
   }
 
-   .icon-format {
+  .icon-format {
       position: relative;
       bottom: -100px;
       right: -40px;
       width: 50%;
-    }
+  }
 
   .rolodex-container {
     height: 100%;
     width: 100%;
+  }
+
+  .card-size {
+      height: auto;
+      width: auto;
   }
 
 }
