@@ -41,8 +41,6 @@ export class CardService {
   }
 
   addCard(card: Card): Promise<DocumentReference> {
-    //let newCardId = this.afs.createId();
-    //card.id = newCardId;
     return this.cardCollection.add(card);
   }
 
@@ -71,8 +69,6 @@ export class CardService {
   }
 
   addStaticCard(card: Card): Promise<DocumentReference> {
-    //let newCardId = this.afs.createId();
-    //card.id = newCardId;
     return this.staticCardCollection.add(card);
   }
 
