@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 
+import { UserService, User } from 'src/app/services/user/user.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { CardService, Card } from 'src/app/services/card/card.service';
 
@@ -14,8 +16,8 @@ import { tap } from 'rxjs/operators';
   templateUrl: './profile.page.html',
   styleUrls: ['./profile.page.scss'],
 })
-export class ProfilePage implements OnInit {
 
+export class ProfilePage implements OnInit {
   private cards: Card[];
 
   cameraOptions: CameraOptions = {
@@ -135,5 +137,5 @@ export class ProfilePage implements OnInit {
         }
       ]
     }).then(toast => toast.present());
-  }
+   }
 }

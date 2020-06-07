@@ -11,28 +11,33 @@ import { UserService } from 'src/app/services/user/user.service';
 })
 export class HomePage implements OnInit{
 
-  constructor(private route: ActivatedRoute, private router: Router, private authService: AuthService, private userService: UserService) {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private authService: AuthService,
+    private userService: UserService
+  ) {
     console.log("Home page started (constructor)");
   }
 
   ngOnInit() {
     console.log("Home page started (init)");
     // check for a user entry by the uid
-    let goToSuccessfulSignupPageIfNoData =
-
     // get the current user's uid
     this.authService.getCurrentUser((error, currentUser) => {
       if (!currentUser) {
         console.log('Home Page : Currently logged out');
-        return;
+        this.router.navigateByUrl('login');
       }
       this.userService.getUser(currentUser.uid, (err, data) => {
         if (err) {
           console.log(err);
+          this.router.navigateByUrl('login');
         }
         console.log(data);
         if (!data) {
-          // go to Successful Signup Page if no user exists
+          // go to Successful Signup Page if no user data exists for this uid
+          // let user fill in missing data in settings page later
           let navigationExtras: NavigationExtras = {
                   state: {
                     uid: currentUser.uid,

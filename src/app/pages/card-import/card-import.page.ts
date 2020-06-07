@@ -19,6 +19,9 @@ export class CardImportPage implements OnInit {
   id;
   card: Card;
 
+  isFrontCaptured = false;
+  isBackCaptured = false;
+
   frontImg: string;
   backImg: string;
 
@@ -44,11 +47,12 @@ export class CardImportPage implements OnInit {
     private cardService: CardService
   ) {
     console.log('Card Import Start');
+    console.log('Who am I? ', this.authService.getCurrentUserId());
+    console.log('What is card?', this.card);
   }
 
   ngOnInit() {
     console.log('Card Import Init');
-
     this.id = this.route.snapshot.paramMap.get('id');
 
     if (this.id) {
@@ -82,10 +86,11 @@ export class CardImportPage implements OnInit {
 
       let base64Image = 'data:image/jpeg;base64,' + imageData;
       this.frontImg = base64Image;
+      this.isFrontCaptured = true;
+      this.importCardBack();
     }, (err) => {
       console.log("Unable to obtain picture: " + err);
     });
-    this.importCardBack();
   }
 
   async importCardBack() {
@@ -118,6 +123,7 @@ export class CardImportPage implements OnInit {
 
       let base64Image = 'data:image/jpeg;base64,' + imageData;
       this.backImg = base64Image;
+      this.isBackCaptured = true;
     }, (err) => {
       console.log("Unable to obtain picture: " + err);
     });
@@ -125,53 +131,49 @@ export class CardImportPage implements OnInit {
 
   saveCard() {
     console.trace('Saving card');
-    this.card.frontImg = this.frontImg;
-    this.card.backImg = this.backImg;
-    this.card.owner = this.authService.getCurrentUserId();
-
-    console.log('New card');
-    this.cardService.addCard(this.card).then(saveCardSuccess, saveCardFailure);
-
-    var saveCardSuccess = (data) => {
-      console.log('Card save success');
-      this.router.navigate(["/profile"]);
-      this.showToast('Card saved!');
+    this.card = {
+      frontImg: this.frontImg,
+      backImg: this.backImg,
+      owner: this.authService.getCurrentUserId(),
+      holders: [],
     };
 
-    var saveCardFailure = (error) => {
-      console.error(error);
+    this.cardService.addCard(this.card).then(data => {
+      this.router.navigateByUrl('/home/profile');
+      this.showToast('Card saved!');
+    }).catch(error => {
       this.showToast('There was a problem adding your card :(');
-    }
+    });
   }
 
   deleteCard() {
     console.trace('Deleting card');
     console.log('Card ID: ', this.id);
 
-    this.cardService.deleteCard(this.id).then(() => {
+    this.cardService.deleteCard(this.id).then(data => {
       this.router.navigateByUrl('/profile');
       this.showToast('Card deleted');
-    }, err => {
+    }).catch(error => {
       this.showToast('There was a problem deleting your card :(');
     });
   }
 
   async deleteCardAlert() {
     const alert = await this.alertController.create({
-       header: '',
-       subHeader: '',
-       message: 'Are you sure you want to delete this card?',
-       buttons: [
-      {
-        text: 'Yes',
-        handler: () => {
-          this.deleteCard();
-          console.log('Card deleted');
-        }
-      }, {
-        text: 'No',
-        handler: () => {
-          console.log('Card kept');
+      header: '',
+      subHeader: '',
+      message: 'Are you sure you want to delete this card?',
+      buttons: [
+        {
+          text: 'Yes',
+          handler: () => {
+            this.deleteCard();
+            console.log('Card deleted');
+          }
+        }, {
+          text: 'No',
+          handler: () => {
+            console.log('Card kept');
           }
         },
       ]
@@ -180,10 +182,10 @@ export class CardImportPage implements OnInit {
   }
 
   updateCard() {
-    this.cardService.updateCard(this.id, this.card).then(() => {
-    this.router.navigateByUrl('/profile');
+    this.cardService.updateCard(this.id, this.card).then(data => {
+      this.router.navigateByUrl('/profile');
       this.showToast('Card updated');
-    }, err => {
+    }).catch(error => {
       this.showToast('There was a problem updating your card :(');
     });
   }

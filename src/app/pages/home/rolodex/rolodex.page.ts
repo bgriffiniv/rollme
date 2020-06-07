@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 
 import { AuthService } from 'src/app/services/auth/auth.service';
-import { UserService, User } from './../../../services/user/user.service';
+import { UserService, User } from 'src/app/services/user/user.service';
 import { CardService, Card } from 'src/app/services/card/card.service';
 
+import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 @Component({
@@ -21,6 +22,7 @@ export class RolodexPage implements OnInit {
   cards: Card[];
   id;
 
+  users: Observable<User[]>;
   filteredUsers: any[];
   searchTerm = '';
 
@@ -35,13 +37,13 @@ export class RolodexPage implements OnInit {
       slidesPerView: 3,
       coverflowEffect: {
         rotate: 25,
-        stretch: 350,
+        stretch: 450,
         depth: 225,
         modifier: 1,
         slideShadows: false
       },
       freeMode: true,
-      freeModeSticky: true,
+      freeModeSticky: false,
       freeModeMomentum: true,
       freeModeMomentumRatio: 1,
       freeModeMomentumVelocityRatio: 1,
@@ -133,7 +135,6 @@ export class RolodexPage implements OnInit {
     private router: Router
   ) {
     console.log("Rolodex Page Start");
-
   }
 
   ngOnInit() {
