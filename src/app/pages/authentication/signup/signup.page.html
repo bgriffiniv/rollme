@@ -11,7 +11,7 @@
 <ion-content class="auth-form">
   <ion-grid>
     <ion-row>
-      <ion-col align-self-center>
+      <ion-col class="ion-align-self-center">
           <ion-button class="google-icon" fill="clear" (click)="googleAuthService.SigninWithGoogle()">
             <ion-img src="./assets/imgs/googlelogo.svg" class="google-logo"></ion-img>
             <div class="google-btn-txt">Sign In with Google</div>
@@ -20,7 +20,7 @@
             <ion-img src="./assets/imgs/facebooklogo.svg" class="fb-logo"></ion-img>
             <div class="fb-btn-txt">Sign In with Facebook</div>
           </ion-button>
-          <ion-button class="linkedin-icon" href="https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=78mvuuw5w4j74y&redirect_uri=http://localhost:8100/home/home/rolodex&state=arigatou&scope=r_emailaddress">
+          <ion-button class="linkedin-icon" href="https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=78mvuuw5w4j74y&redirect_uri=http://localhost:8100/home/rolodex&state=arigatou&scope=r_emailaddress">
             <ion-img src="./assets/imgs/linkedinlogo.png" class="linkedin-logo"></ion-img>
             <div class="linkedin-btn-txt">Sign In with LinkedIn</div>
           </ion-button>
@@ -64,10 +64,9 @@
           <ion-slide></ion-slide>
           <ion-slide></ion-slide>
         </ion-slides>
-        <ion-button (click)="submitForm()" expand="block" shape="round" color="primary" class="nxt-btn"
+        <ion-button (click)="submitForm()" expand="block" shape="round" color="primary" class="nxt-btn ion-padding"
         [disabled]="(signupMethod=='Mobile' && !errorControl.mobile.errors?.minLength) &&
-        (signupMethod=='Email' && !errorControl.email.errors?.pattern)"
-        padding>
+        (signupMethod=='Email' && !errorControl.email.errors?.pattern)">
           Next
         </ion-button>
 

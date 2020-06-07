@@ -4,6 +4,8 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 import { Observable } from 'rxjs';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { ToastController, AlertController } from '@ionic/angular';
+
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { CardService, Card } from 'src/app/services/card/card.service';
 
 @Component({
@@ -13,6 +15,7 @@ import { CardService, Card } from 'src/app/services/card/card.service';
   styleUrls: ['./card-import.page.scss'],
 })
 export class CardImportPage implements OnInit {
+
   id;
   card: Card;
 
@@ -40,25 +43,28 @@ export class CardImportPage implements OnInit {
     private camera: Camera,
     private toastCtrl: ToastController,
     public alertController: AlertController,
+    public authService: AuthService,
     private cardService: CardService
   ) {
-
+    console.log('Card Import Start');
   }
 
   ngOnInit() {
+    console.log('Card Import Init');
     this.id = this.route.snapshot.paramMap.get('id');
-    console.log(this.id);
 
     if (this.id) {
-      console.log("current id: ", this.id);
+      console.log('Current card ID: ', this.id);
       this.cardService.getCard(this.id).subscribe(card => {
-        console.log("got card: ", card);
+        console.log("Card: ", card);
         this.card = card;
         this.frontImg = this.card.frontImg;
         this.backImg = this.card.backImg;
       });
+    } else {
+      console.log('New card');
+      this.importCardFront();
     }
-    this.importCardFront();
   }
 
   async importCardFront() {
@@ -68,7 +74,6 @@ export class CardImportPage implements OnInit {
       message: 'To begin, tap on the first blank card to take a picture of the front side of your business card.',
       buttons: ['OK']
     });
-
     await alert.present();
   }
 
@@ -95,13 +100,13 @@ export class CardImportPage implements OnInit {
         {
           text: 'Yes',
           handler: () => {
-            this.openCameraBack();
-            console.log('Camera launched');
-          }
+          this.openCameraBack();
+          console.log('Camera launched');
+        }
         }, {
           text: 'No',
           handler: () => {
-            console.log('Declined import');
+          console.log('Declined import');
           }
         },
       ]
@@ -123,23 +128,32 @@ export class CardImportPage implements OnInit {
   }
 
   saveCard() {
+    console.trace('Saving card');
     this.card.frontImg = this.frontImg;
     this.card.backImg = this.backImg;
+    this.card.owner = this.authService.getCurrentUserId();
 
-    this.cardService.addCard(this.card).then(() => {
+    this.cardService.addCard(this.card, (error, data) => {
+      if (error) {
+        this.showToast('There was a problem adding your card :(');
+        return;
+      }
       this.router.navigateByUrl('/profile');
       this.showToast('Card saved!');
-    }, err => {
-      this.showToast('There was a problem adding your card :(');
     });
   }
 
   deleteCard() {
-    this.cardService.deleteCard(this.card.id).then(() => {
+    console.trace('Deleting card');
+    console.log('Card ID: ', this.id);
+
+    this.cardService.deleteCard(this.id, (error, data) => {
+      if (error) {
+        this.showToast('There was a problem deleting your card :(');
+        return;
+      }
       this.router.navigateByUrl('/profile');
       this.showToast('Card deleted');
-    }, err => {
-      this.showToast('There was a problem deleting your card :(');
     });
   }
 
@@ -167,11 +181,12 @@ export class CardImportPage implements OnInit {
   }
 
   updateCard() {
-    this.cardService.updateCard(this.card).then(() => {
-    this.router.navigateByUrl('/profile');
-      this.showToast('Card updated');
-    }, err => {
+    this.cardService.updateCard(this.id, this.card, (error, data) => {
+    if (error) {
       this.showToast('There was a problem updating your card :(');
+    }
+      this.router.navigateByUrl('/profile');
+      this.showToast('Card updated');
     });
   }
 

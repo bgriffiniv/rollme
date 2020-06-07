@@ -40,7 +40,7 @@ export class CardService {
     return this.afs.collection<Card>('cards', ref => ref.where('holders', 'array-contains', holderId)).valueChanges({idField:'id'});
   }
 
-  addCard(card: Card): Promise<void> {
+  addCard(card: Card): Promise<DocumentReference> {
     //let newCardId = this.afs.createId();
     //card.id = newCardId;
     return this.cardCollection.add(card);
@@ -70,7 +70,7 @@ export class CardService {
     return this.afs.collection<Card>('static_cards', ref => ref.where('holders', 'array-contains', holderId)).valueChanges({idField:'id'});
   }
 
-  addStaticCard(card: Card): Promise<void> {
+  addStaticCard(card: Card): Promise<DocumentReference> {
     //let newCardId = this.afs.createId();
     //card.id = newCardId;
     return this.staticCardCollection.add(card);

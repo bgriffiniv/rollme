@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument, DocumentReference } from 'angularfire2/firestore';
-import { map, take, filter } from 'rxjs/operators';
+import { map, take, filter, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 export interface User {
@@ -24,7 +24,8 @@ export class UserService {
   private staticUserCollection: AngularFirestoreCollection<User>;
 
   constructor(private afs: AngularFirestore) {
-    console.log('Auth Service constructor');
+    console.log('User Service Start');
+    this.staticUserCollection = this.afs.collection<User>('static_users');
     this.userCollection = this.afs.collection<User>('users');
     this.staticUserCollection = this.afs.collection<User>('static_users');    console.log(this.afs);
     this.users = this.userCollection.valueChanges({idField: 'id'});

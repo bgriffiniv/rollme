@@ -24,6 +24,7 @@ const routes: Routes = [
   { path: 'password', loadChildren: './pages/menu/password/password.module#PasswordPageModule' },
   { path: 'link', loadChildren: './pages/menu/link/link.module#LinkPageModule' },
   { path: 'contact', loadChildren: './pages/menu/contact/contact.module#ContactPageModule' },
+  { path: 'contact/:id', loadChildren: './pages/menu/contact/contact.module#ContactPageModule' },
 
   // user management test features
   { path: 'users', loadChildren: './pages/menu/users/user-list/user-list.module#UserListPageModule'},
@@ -31,9 +32,6 @@ const routes: Routes = [
   { path: 'user/:id', loadChildren: './pages/menu/users/user-details/user-details.module#UserDetailsPageModule' },
 
   { path: 'home', loadChildren: './pages/home/home.module#HomePageModule' },
-  { path: 'rolodex', loadChildren: './pages/home/rolodex/rolodex.module#RolodexPageModule' },
-  { path: 'exchange', loadChildren: './pages/home/exchange/exchange.module#ExchangePageModule' },
-  { path: 'profile', loadChildren: './pages/home/profile/profile.module#ProfilePageModule' },
   { path: 'edit', loadChildren: './pages/edit/edit.module#EditPageModule'},
 
   { path: 'card-import', loadChildren: './pages/card-import/card-import.module#CardImportPageModule' },
