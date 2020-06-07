@@ -20,6 +20,11 @@ export class ExchangePage implements OnInit {
   cards: Card[];
   id;
 
+  card: Card;
+
+  frontImg;
+  backImg;
+
   slideOpts = {
       scrollbar: {el: ''},
       effect: 'coverflow',
