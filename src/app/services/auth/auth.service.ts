@@ -24,7 +24,7 @@ export class AuthService {
 
   // Returns current user data
   getCurrentUser(callback) {
-    this.subscription = this.afAuth.authState
+    this.afAuth.authState
     .subscribe(d => {
       console.log('Successfully got auth state', d);
       callback(null, d);
@@ -68,10 +68,6 @@ export class AuthService {
       console.log('Something is wrong:',err.message);
       callback(err)
     });
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
   }
 
 /*

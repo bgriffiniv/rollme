@@ -50,7 +50,7 @@ export class UserService {
     .catch(e => callback(e));
   }
 
-  updateUser(id: string, user: User callback) {
+  updateUser(id: string, user: User, callback) {
     this.userCollection.doc<User>(id).update(user)
     .then(d => callback(null,d))
     .catch(e => callback(e));
@@ -63,7 +63,7 @@ export class UserService {
   }
 
   listStaticUsers(): Observable<User[]> {
-    this.staticUsers;
+    return this.staticUsers;
   }
 
   getStaticUser(id: string, callback) {

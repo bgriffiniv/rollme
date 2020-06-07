@@ -58,8 +58,7 @@ export class UserDetailsPage implements OnInit {
   }
 
   deleteUser() {
-    console.log('user id: ' + this.user.id);
-    this.userService.deleteUser(this.user, (error, data) => {
+    this.userService.deleteUser(this.id, (error, data) => {
       if (error) {
         this.showToast('There was a problem deleting your user :(');
       } else {
@@ -70,7 +69,7 @@ export class UserDetailsPage implements OnInit {
   }
 
   updateUser() {
-    this.userService.updateUser(this.user, (error, data) => {
+    this.userService.updateUser(this.id, this.user, (error, data) => {
       if (error) {
         this.showToast('There was a problem updating your user :(');
       } else {

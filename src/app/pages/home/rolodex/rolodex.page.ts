@@ -18,8 +18,8 @@ export class RolodexPage implements OnInit {
   user;
   contactDataList;
   index;
-  staticCards: Observable<Card[]>;
-  cards: Observable<Card[]>;
+  staticCards: Card[];
+  cards: Card[];
   id;
 
   users: Observable<User[]>;
@@ -135,9 +135,6 @@ export class RolodexPage implements OnInit {
     private router: Router
   ) {
     console.log("Rolodex Page Start");
-
-    this.staticCards = this.cardService.listStaticCardsByHolder(this.authService.getCurrentUserId());
-    this.cards = this.cardService.listCardsByHolder(this.authService.getCurrentUserId());
   }
 
   ngOnInit() {
@@ -146,8 +143,6 @@ export class RolodexPage implements OnInit {
     let uid = this.authService.getCurrentUserId();
     console.log('Current user ID: ', uid);
 
-    // not strictly necessary but useful to separate the data read
-    // from the processing of the data
     this.cardService.listStaticCardsByHolder(uid).pipe(
       tap(data => {
         console.log('Held static cards count: ', data.length);

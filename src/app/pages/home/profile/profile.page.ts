@@ -115,39 +115,6 @@ export class ProfilePage implements OnInit {
     await alert.present();
   }
 
-  async deleteCardAlert() {
-    const alert = await this.alertController.create({
-      header: '',
-      subHeader: '',
-      message: 'Do you want to delete this card?',
-      buttons: [
-        {
-          text: 'Yes',
-          handler: () => {
-            this.deleteCard();
-            console.log('Card deleted');
-          }
-        }, {
-          text: 'No',
-          handler: () => {
-            console.log('Card kept');
-          }
-        }
-      ]
-    });
-    await alert.present();
-  }
-
-  deleteCard() {
-    console.log('card id: ' + this.card.id);
-    this.cardService.deleteCard(this.card.id).then(() => {
-      this.router.navigateByUrl('/profile');
-      this.showToast('Card deleted');
-    }, err => {
-      this.showToast('There was a problem deleting your card :(');
-    });
-  }
-
   showToast(msg) {
     this.toastCtrl.create({
       message: msg,
