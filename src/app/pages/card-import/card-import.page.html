@@ -8,8 +8,8 @@
 
 <ion-content class="card-image">
     <ion-card button (click)="openCameraFront()" style="height:auto;weight:auto;">
-      <img *ngIf="frontImg!==null" [src]="frontImg" alt=""/>
-      <div *ngIf="!frontImg" >
+      <img *ngIf="card.frontImg" [src]="card.frontImg" alt=""/>
+      <div *ngIf="!card.frontImg" >
         <br>
         <br>
         <br>
@@ -22,8 +22,8 @@
     </ion-card>
 
   <ion-card button (click)="openCameraBack()" style="height:auto;weight:auto;">
-    <img *ngIf="backImg!==null" [src]="backImg" alt=""/>
-    <div *ngIf="!backImg">
+    <img *ngIf="card.backImg" [src]="card.backImg" alt=""/>
+    <div *ngIf="!card.backImg">
       <br>
       <br>
       <br>
@@ -34,17 +34,18 @@
       <br>
     </div>
   </ion-card>
-
-
-  <ion-button *ngIf="!id" size="small" (click)="saveCard()" shape="round" color="primary" class="save-btn ion-padding"
-              [disabled]="!(frontImg || backImg)">
-    Save
-  </ion-button>
 </ion-content>
 
 
-<ion-footer *ngIf="id!==null">
-  <ion-row class="ion-text-center">
+<ion-footer>
+  <ion-row class="ion-text-center" *ngIf="!id">
+    <ion-col>
+    <ion-button *ngIf="!id" expand="block" fill="solid" color="secondary" (click)="saveCard()" [disabled]="!card.frontImg">
+      Save
+    </ion-button>
+    </ion-col>
+  </ion-row>
+  <ion-row class="ion-text-center" *ngIf="id!==null">
     <ion-col size="6">
       <ion-button expand="block" fill="outline" color="danger" (click)="deleteCardAlert()">
         <ion-icon name="trash" slot="start"></ion-icon>
