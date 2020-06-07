@@ -8,8 +8,8 @@
 
 <ion-content class="card-image">
     <ion-card button (click)="openCameraFront()" style="height:auto;weight:auto;">
-      <img *ngIf="card.frontImg" [src]="card.frontImg" alt=""/>
-      <div *ngIf="!card.frontImg" >
+      <img *ngIf="frontImg!==null" [src]="frontImg" alt=""/>
+      <div *ngIf="!frontImg" >
         <br>
         <br>
         <br>
@@ -22,8 +22,8 @@
     </ion-card>
 
   <ion-card button (click)="openCameraBack()" style="height:auto;weight:auto;">
-    <img *ngIf="card.backImg" [src]="card.backImg" alt=""/>
-    <div *ngIf="!card.backImg">
+    <img *ngIf="backImg!==null" [src]="backImg" alt=""/>
+    <div *ngIf="!backImg">
       <br>
       <br>
       <br>
@@ -40,7 +40,7 @@
 <ion-footer>
   <ion-row class="ion-text-center" *ngIf="!id">
     <ion-col>
-    <ion-button *ngIf="!id" expand="block" fill="solid" color="secondary" (click)="saveCard()" [disabled]="!card.frontImg">
+    <ion-button expand="block" fill="solid" color="secondary" (click)="saveCard()" [disabled]="!frontImg">
       Save
     </ion-button>
     </ion-col>
