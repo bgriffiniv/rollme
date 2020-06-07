@@ -131,7 +131,7 @@ export class CardImportPage implements OnInit {
     console.trace('Saving card');
     this.card = {
       frontImg: this.frontImg,
-      backImg: this.backImg,
+      backImg: this.backImg || null,
       owner: this.authService.getCurrentUserId(),
       holders: [],
     };
