@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from "angularfire2/auth";
 import { Observable } from 'rxjs';
-import * as firebase from 'firebase/app';
 
 @Injectable({
   providedIn: 'root'
@@ -15,11 +14,11 @@ export class AuthService {
   // Returns true if user is logged in
   isAuthenticated(): boolean {
     //console.log('Current user:', firebase.auth().currentUser);
-    return firebase.auth().currentUser !== null;
+    return this.afAuth.auth.currentUser !== null;
   }
 
   getCurrentUserId(): string {
-    return firebase.auth().currentUser.uid;
+    return this.afAuth.auth.currentUser.uid;
   }
 
   // Returns current user data

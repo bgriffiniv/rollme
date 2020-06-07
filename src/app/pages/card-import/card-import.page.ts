@@ -47,6 +47,8 @@ export class CardImportPage implements OnInit {
     private cardService: CardService
   ) {
     console.log('Card Import Start');
+    console.log('Who am I? ', this.authService.getCurrentUserId());
+    console.log('What is card?', this.card);
   }
 
   ngOnInit() {
@@ -129,12 +131,15 @@ export class CardImportPage implements OnInit {
 
   saveCard() {
     console.trace('Saving card');
-    this.card.frontImg = this.frontImg;
-    this.card.backImg = this.backImg;
-    this.card.owner = this.authService.getCurrentUserId();
+    this.card = {
+      frontImg: this.frontImg,
+      backImg: this.backImg,
+      owner: this.authService.getCurrentUserId(),
+      holders: [],
+    };
 
     this.cardService.addCard(this.card).then(data => {
-      this.router.navigateByUrl('/profile');
+      this.router.navigateByUrl('/home/profile');
       this.showToast('Card saved!');
     }).catch(error => {
       this.showToast('There was a problem adding your card :(');
