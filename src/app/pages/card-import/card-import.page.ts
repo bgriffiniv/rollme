@@ -15,6 +15,7 @@ import { CardService, Card } from 'src/app/services/card/card.service';
   styleUrls: ['./card-import.page.scss'],
 })
 export class CardImportPage implements OnInit {
+
   id;
   card: Card;
 
@@ -46,8 +47,6 @@ export class CardImportPage implements OnInit {
     private cardService: CardService
   ) {
     console.log('Card Import Start');
-    console.log('Who am I? ', this.authService.getCurrentUserId());
-    console.log('What is card?', this.card);
   }
 
   ngOnInit() {
