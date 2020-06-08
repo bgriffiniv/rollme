@@ -21,7 +21,7 @@ parent;
     }
 
     this.id = this.authService.getCurrentUserId();
-    this.userDataList = this.userService.listUsers((error, data) => {});
+    this.userService.listUsers((error, data) => {});
 
   }
 
