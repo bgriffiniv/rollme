@@ -21,7 +21,7 @@ export class CardService {
   private staticCardCollection: AngularFirestoreCollection<Card>;
 
   constructor(private afs: AngularFirestore) {
-    console.log("Card Service (constructor)");
+    console.log("Card Service Start");
     this.staticCardCollection = this.afs.collection<Card>('static_cards');
     this.cardCollection = this.afs.collection<Card>('cards');
     this.staticCards = this.staticCardCollection.valueChanges({idField: 'id'});

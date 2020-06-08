@@ -27,13 +27,21 @@ export class UserService {
     console.log('User Service Start');
     this.staticUserCollection = this.afs.collection<User>('static_users');
     this.userCollection = this.afs.collection<User>('users');
-    this.staticUserCollection = this.afs.collection<User>('static_users');    console.log(this.afs);
-    this.users = this.userCollection.valueChanges({idField: 'id'});
     this.staticUsers = this.staticUserCollection.valueChanges({idField: 'id'});
+    this.users = this.userCollection.valueChanges({idField: 'id'});
   }
 
+  // @deprecated
   listUsers(): Observable<User[]> {
     return this.users;
+  }
+
+  listUsers(callback) {
+    this.users
+    .subscribe(
+      d => callback(null, d),
+      e =>  callback(e)
+    );
   }
 
   getUser(id: string, callback) {
@@ -46,24 +54,39 @@ export class UserService {
 
   addUser(user: User, callback) {
     this.userCollection.add(user)
-    .then(d => callback(null,d))
-    .catch(e => callback(e));
+    .then(
+      d => callback(null, d),
+      e => callback(e)
+    );
   }
 
   updateUser(id: string, user: User, callback) {
     this.userCollection.doc<User>(id).update(user)
-    .then(d => callback(null,d))
-    .catch(e => callback(e));
+    .then(
+      d => callback(null, d),
+      e => callback(e)
+    );
   }
 
   deleteUser(id: string, callback) {
     this.userCollection.doc(id).delete()
-    .then(d => callback(null,d))
-    .catch(e => callback(e));
+    .then(
+      d => callback(null, d),
+      e => callback(e)
+    );
   }
 
+  // @deprecated
   listStaticUsers(): Observable<User[]> {
     return this.staticUsers;
+  }
+
+  listStaticUsers(callback) {
+    this.staticUsers
+    .subscribe(
+      d => callback(null, d),
+      e => callback(e)
+    );
   }
 
   getStaticUser(id: string, callback) {
@@ -76,19 +99,25 @@ export class UserService {
 
   addStaticUser(user: User, callback) {
     this.staticUserCollection.add(user)
-    .then(d => callback(null,d))
-    .catch(e => callback(e));
+    .then(
+      d => callback(null, d),
+      e => callback(e)
+    );
   }
 
   updateStaticUser(id: string, user: User, callback) {
     this.staticUserCollection.doc<User>(id).update(user)
-    .then(d => callback(null,d))
-    .catch(e => callback(e));
+    .then(
+      d => callback(null, d),
+      e => callback(e)
+    );
   }
 
-  deleteStaticUser(id:string, callback) {
+  deleteStaticUser(id: string, callback) {
     this.staticUserCollection.doc(id).delete()
-    .then(d => callback(null,d))
-    .catch(e => callback(e));
+    .then(
+      d => callback(null, d),
+      e => callback(e)
+    );
   }
 }
