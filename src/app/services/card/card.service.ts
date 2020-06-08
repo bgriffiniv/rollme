@@ -56,7 +56,7 @@ export class CardService {
 
   getCard(id: string, callback) {
      return this.cardCollection.doc<Card>(id)
-     .valueChanges()
+     .get()
      .subscribe(
        data => callback(null, data),
        error => callback(error)
@@ -114,8 +114,9 @@ export class CardService {
   }
 
   getStaticCard(id: string, callback) {
-    this.staticCardCollection.doc<Card>(id).valueChanges()
-    .then(
+    this.staticCardCollection.doc<Card>(id)
+    .get()
+    .subscribe(
       data => callback(null, data),
       error => callback(error)
     );
@@ -123,7 +124,7 @@ export class CardService {
 
   addStaticCard(card: Card, callback) {
     this.staticCardCollection.add(card)
-    .subscribe(
+    .then(
       data => callback(null, data),
       error => callback(error)
     );
@@ -131,7 +132,7 @@ export class CardService {
 
   updateStaticCard(id: string, card: Card, callback) {
     this.staticCardCollection.doc<Card>(id).update(card)
-    .subscribe(
+    .then(
       data => callback(null, data),
       error => callback(error)
     );
@@ -139,7 +140,7 @@ export class CardService {
 
   deleteStaticCard(id: string, callback) {
     this.staticCardCollection.doc<Card>(id).delete()
-    .subscribe(
+    .then(
       data => callback(null, data),
       error => callback(error)
     );

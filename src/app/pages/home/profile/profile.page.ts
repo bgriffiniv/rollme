@@ -51,20 +51,21 @@ export class ProfilePage implements OnInit {
     let uid = this.authService.getCurrentUserId();
     console.log('Current User ID: ', uid);
 
-    this.cardService.listCardsByOwner(uid).pipe(
-      tap(data => {
+    this.cardService.listCardsByOwner(uid, (error, data) => {
+      if (error) {
+
+      } else {
         let count = data.length;
         if (count === 0) {
           // alert if owned card list is empty
           console.log('No owned cards');
           this.newCardAlert();
         } else {
-          // get an observable card list for the view
           console.log('Owned cards count: ', count);
           this.cards = data;
         }
-      })
-    ).subscribe();
+      }
+    });
   }
 
   async createCard() {

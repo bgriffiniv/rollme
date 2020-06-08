@@ -31,11 +31,6 @@ export class UserService {
     this.users = this.userCollection.valueChanges({idField: 'id'});
   }
 
-  // @deprecated
-  listUsers(): Observable<User[]> {
-    return this.users;
-  }
-
   listUsers(callback) {
     this.users
     .subscribe(
@@ -45,7 +40,8 @@ export class UserService {
   }
 
   getUser(id: string, callback) {
-    this.userCollection.doc<User>(id).get()
+    this.userCollection.doc<User>(id)
+    .get()
     .subscribe(
       d => callback(null, d),
       e => callback(e)
@@ -76,11 +72,6 @@ export class UserService {
     );
   }
 
-  // @deprecated
-  listStaticUsers(): Observable<User[]> {
-    return this.staticUsers;
-  }
-
   listStaticUsers(callback) {
     this.staticUsers
     .subscribe(
@@ -90,7 +81,8 @@ export class UserService {
   }
 
   getStaticUser(id: string, callback) {
-    this.staticUserCollection.doc<User>(id).get()
+    this.staticUserCollection.doc<User>(id)
+    .get()
     .subscribe(
       d => callback(null, d),
       e => callback(e)

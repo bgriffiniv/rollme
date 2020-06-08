@@ -57,11 +57,15 @@ export class CardImportPage implements OnInit {
 
     if (this.id) {
       console.log('Current card ID: ', this.id);
-      this.cardService.getCard(this.id).subscribe(card => {
-        console.log("Card: ", card);
-        this.card = card;
-        this.frontImg = this.card.frontImg;
-        this.backImg = this.card.backImg;
+      this.cardService.getCard(this.id, (error, data) => {
+        if (error) {
+
+        } else {
+          console.log("Card: ", data);
+          this.card = data;
+          this.frontImg = this.card.frontImg;
+          this.backImg = this.card.backImg;
+        }
       });
     } else {
       console.log('New card');
@@ -138,11 +142,13 @@ export class CardImportPage implements OnInit {
       holders: [],
     };
 
-    this.cardService.addCard(this.card).then(data => {
-      this.router.navigateByUrl('/home/profile');
-      this.showToast('Card saved!');
-    }).catch(error => {
-      this.showToast('There was a problem adding your card :(');
+    this.cardService.addCard(this.card, (error, data) => {
+      if (error) {
+        this.showToast('There was a problem adding your card :(');
+      } else {
+        this.router.navigateByUrl('/home/profile');
+        this.showToast('Card saved!');
+      }
     });
   }
 
@@ -150,11 +156,13 @@ export class CardImportPage implements OnInit {
     console.trace('Deleting card');
     console.log('Card ID: ', this.id);
 
-    this.cardService.deleteCard(this.id).then(data => {
-      this.router.navigateByUrl('/profile');
-      this.showToast('Card deleted');
-    }).catch(error => {
-      this.showToast('There was a problem deleting your card :(');
+    this.cardService.deleteCard(this.id, (error, data) => {
+      if (error) {
+        this.showToast('There was a problem deleting your card :(');
+      } else {
+        this.router.navigateByUrl('/profile');
+        this.showToast('Card deleted');
+      }
     });
   }
 
@@ -182,11 +190,13 @@ export class CardImportPage implements OnInit {
   }
 
   updateCard() {
-    this.cardService.updateCard(this.id, this.card).then(data => {
-      this.router.navigateByUrl('/profile');
-      this.showToast('Card updated');
-    }).catch(error => {
-      this.showToast('There was a problem updating your card :(');
+    this.cardService.updateCard(this.id, this.card, (error, data) => {
+      if (error) {
+        this.showToast('There was a problem updating your card :(');
+      } else {
+        this.router.navigateByUrl('/profile');
+        this.showToast('Card updated');
+      }
     });
   }
 
