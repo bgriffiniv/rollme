@@ -55,7 +55,7 @@ export class CardService {
   }
 
   getCard(id: string, callback) {
-    return this.cardCollection.doc<Card>(id)
+    this.cardCollection.doc<Card>(id)
     .valueChanges()
     .subscribe(
       data => callback(null, data),
