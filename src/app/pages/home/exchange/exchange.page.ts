@@ -147,11 +147,15 @@ export class ExchangePage implements OnInit {
 
     if (this.id) {
       console.log('Current card ID: ', this.id);
-      this.cardService.getCard(this.id).subscribe(card => {
-        console.log("Card: ", card);
-        this.card = card;
-        this.frontImg = this.card.frontImg;
-        this.backImg = this.card.backImg;
+      this.cardService.getCard(this.id, (error, data) => {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log("Card: ", data)
+          this.card = data;
+          this.frontImg = this.card.frontImg;
+          this.backImg = this.card.backImg;
+        }
       });
     }
   }
