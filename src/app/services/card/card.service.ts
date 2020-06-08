@@ -28,43 +28,6 @@ export class CardService {
     this.cards = this.cardCollection.valueChanges({idField: 'id'});
   }
 
-  // @deprecated
-  listCards(): Observable<Card[]> {
-    return this.cards;
-  }
-
-  // @deprecated
-  listCardsByOwner(ownerId: string): Observable<Card[]> {
-    return this.afs.collection<Card>('cards', ref => ref.where('owner', '==', ownerId)).valueChanges({idField:'id'});
-  }
-
-  // @deprecated
-  listCardsByHolder(holderId: string): Observable<Card[]> {
-    return this.afs.collection<Card>('cards', ref => ref.where('holders', 'array-contains', holderId)).valueChanges({idField:'id'});
-  }
-
-  // @deprecated
-  addCard(card: Card): Promise<DocumentReference> {
-    //let newCardId = this.afs.createId();
-    //card.id = newCardId;
-    return this.cardCollection.add(card);
-  }
-
-  // @deprecated
-  getCard(id: string): Observable<Card> {
-     return this.cardCollection.doc<Card>(id).valueChanges();
-  }
-
-  // @deprecated
-  updateCard(id: string, card: Card): Promise<void> {
-    return this.cardCollection.doc<Card>(id).update(card);
-  }
-
-  // @deprecated
-  deleteCard(id: string): Promise<void> {
-    return this.cardCollection.doc<Card>(id).delete();
-  }
-
   listCards(callback) {
     this.cards
     .subscribe(
@@ -122,43 +85,6 @@ export class CardService {
       data => callback(null, data),
       error => callback(error)
     );
-  }
-
-  // @deprecated
-  listStaticCards(): Observable<Card[]> {
-    return this.staticCards;
-  }
-
-  // @deprecated
-  listStaticCardsByOwner(ownerId: string): Observable<Card[]> {
-    return this.afs.collection<Card>('static_cards', ref => ref.where('owner', '==', ownerId)).valueChanges({idField:'id'});
-  }
-
-  // @deprecated
-  listStaticCardsByHolder(holderId: string): Observable<Card[]> {
-    return this.afs.collection<Card>('static_cards', ref => ref.where('holders', 'array-contains', holderId)).valueChanges({idField:'id'});
-  }
-
-  // @deprecated
-  addStaticCard(card: Card): Promise<DocumentReference> {
-    //let newCardId = this.afs.createId();
-    //card.id = newCardId;
-    return this.staticCardCollection.add(card);
-  }
-
-  // @deprecated
-  getStaticCard(id: string): Observable<Card> {
-    return this.staticCardCollection.doc<Card>(id).valueChanges();
-  }
-
-  // @deprecated
-  updateStaticCard(id: string, card: Card): Promise<void> {
-    return this.staticCardCollection.doc<Card>(id).update(card);
-  }
-
-  // @deprecated
-  deleteStaticCard(id: string): Promise<void> {
-    return this.staticCardCollection.doc<Card>(id).delete();
   }
 
   listStaticCards(callback) {
