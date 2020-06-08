@@ -59,7 +59,7 @@ export class CardImportPage implements OnInit {
       console.log('Current card ID: ', this.id);
       this.cardService.getCard(this.id, (error, data) => {
         if (error) {
-
+          console.log(error);
         } else {
           console.log("Card: ", data);
           this.card = data;

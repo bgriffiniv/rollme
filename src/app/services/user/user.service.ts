@@ -41,7 +41,7 @@ export class UserService {
 
   getUser(id: string, callback) {
     this.userCollection.doc<User>(id)
-    .get()
+    .valueChanges()
     .subscribe(
       d => callback(null, d),
       e => callback(e)
@@ -82,7 +82,7 @@ export class UserService {
 
   getStaticUser(id: string, callback) {
     this.staticUserCollection.doc<User>(id)
-    .get()
+    .valueChanges()
     .subscribe(
       d => callback(null, d),
       e => callback(e)
