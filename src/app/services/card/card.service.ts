@@ -55,12 +55,12 @@ export class CardService {
   }
 
   getCard(id: string, callback) {
-     return this.cardCollection.doc<Card>(id)
-     .valueChanges()
-     .subscribe(
-       data => callback(null, data),
-       error => callback(error)
-     );
+    return this.cardCollection.doc<Card>(id)
+    .valueChanges()
+    .subscribe(
+      data => callback(null, data),
+      error => callback(error)
+    );
   }
 
   addCard(card: Card, callback) {

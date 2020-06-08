@@ -47,8 +47,6 @@ export class CardImportPage implements OnInit {
     private cardService: CardService
   ) {
     console.log('Card Import Start');
-    console.log('Who am I? ', this.authService.getCurrentUserId());
-    console.log('What is card?', this.card);
   }
 
   ngOnInit() {
@@ -137,7 +135,7 @@ export class CardImportPage implements OnInit {
     console.trace('Saving card');
     this.card = {
       frontImg: this.frontImg,
-      backImg: this.backImg,
+      backImg: this.backImg || null,
       owner: this.authService.getCurrentUserId(),
       holders: [],
     };
