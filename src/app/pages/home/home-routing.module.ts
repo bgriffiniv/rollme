@@ -18,6 +18,10 @@ const routes: Routes = [
       },
 
       {
+        path:'exchange/:id', loadChildren:'./exchange/exchange.module#ExchangePageModule'
+      },
+
+      {
         path:'profile', loadChildren:'./profile/profile.module#ProfilePageModule'
       },
 

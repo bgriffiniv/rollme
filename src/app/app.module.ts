@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { CardSelectPageModule } from 'src/app/pages/card-select/card-select.module';
 
 import { AngularFireAuthModule } from "angularfire2/auth";
 import { AngularFireModule } from 'angularfire2';
@@ -25,6 +26,7 @@ import { environment } from '../environments/environment';
     HttpClientModule,
     IonicModule.forRoot(),
     AppRoutingModule,
+    CardSelectPageModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFirestoreModule,

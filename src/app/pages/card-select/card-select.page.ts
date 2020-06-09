@@ -1,30 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
 
-import { AuthService } from 'src/app/services/auth/auth.service';
 import { UserService, User } from 'src/app/services/user/user.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { CardService, Card } from 'src/app/services/card/card.service';
 
 import { ActionSheetController, AlertController, ToastController, ModalController } from '@ionic/angular';
-import { CardSelectPage } from 'src/app/pages/card-select/card-select.page';
 
 @Component({
-  selector: 'app-exchange',
-  templateUrl: './exchange.page.html',
-  styleUrls: ['./exchange.page.scss'],
+  selector: 'app-card-select',
+  templateUrl: './card-select.page.html',
+  styleUrls: ['./card-select.page.scss'],
 })
-export class ExchangePage implements OnInit {
-  user;
-  contactDataList;
-  index;
-  staticCards: Card[];
-  cards: Card[];
+export class CardSelectPage implements OnInit {
+
+  private cards: Card[];
 
   id;
   card: Card;
 
-  frontImg;
-  backImg;
+  frontImg: string;
+  backImg: string;
 
   isCardFound = false;
 
@@ -130,52 +127,45 @@ export class ExchangePage implements OnInit {
   }
 
   constructor(
+    private route: ActivatedRoute,
+    private router: Router,
     private authService: AuthService,
     private userService: UserService,
     private cardService: CardService,
-    private route: ActivatedRoute,
-    private router: Router,
-    public actionSheetController: ActionSheetController,
-    public alertController: AlertController,
-    private toastCtrl: ToastController,
-    public modalController: ModalController
+    public modalController: ModalController,
+    private toastCtrl: ToastController
   ) {
-    console.log("Exchange page Start");
-    console.log('Is authenticated:', this.authService.isAuthenticated());
+    console.log("Card Select Modal Start");
   }
 
   ngOnInit() {
-    console.log('Exchange Page Init');
+    console.log('Card Select Modal Init');
 
-    this.id = this.route.snapshot.paramMap.get('id');
+    let uid = this.authService.getCurrentUserId();
+    console.log('Current User ID: ', uid);
 
-    if (this.id) {
-      console.log('Current card ID: ', this.id);
-      this.cardService.getCard(this.id, (error, data) => {
-        if (error) {
-          console.log(error);
+    this.cardService.listCardsByOwner(uid, (error, data) => {
+      if (error) {
+
+      } else {
+        let count = data.length;
+        if (count === 0) {
+          // alert if owned card list is empty
+
+          console.log('No owned cards');
         } else {
-          console.log("Card: ", data)
-          this.card = data;
-          this.frontImg = this.card.frontImg;
-          this.backImg = this.card.backImg;
+          console.log('Owned cards count: ', count);
+          this.cards = data;
         }
-      });
-    } else {
-       !this.isCardFound;
-    }
+      }
+    });
   }
 
-  async selectCard() {
-    const modal = await this.modalController.create({
-      component: CardSelectPage
+  dismissModal() {
+    this.modalController.dismiss({
+     'dismissed': true,
+     'isCardFound': true
     });
-
-    modal.onWillDismiss().then(data => {
-      this.isCardFound = true;
-      console.log(data);
-    });
-    return await modal.present();
   }
 
 }
