@@ -143,17 +143,21 @@ export class RolodexPage implements OnInit {
     let uid = this.authService.getCurrentUserId();
     console.log('Current user ID: ', uid);
 
-    this.cardService.listStaticCardsByHolder(uid).pipe(
-      tap(data => {
+    this.cardService.listStaticCardsByHolder(uid, (error, data) => {
+      if (error) {
+
+      } else {
         console.log('Held static cards count: ', data.length);
         this.staticCards = data;
-      })
-    ).subscribe();
-    this.cardService.listCardsByHolder(uid).pipe(
-      tap(data => {
+      }
+    });
+    this.cardService.listCardsByHolder(uid, (error, data) => {
+      if (error) {
+
+      } else {
         console.log('Held cards count: ', data.length);
         this.cards = data;
-      })
-    ).subscribe();
+      }
+    });
   }
 }

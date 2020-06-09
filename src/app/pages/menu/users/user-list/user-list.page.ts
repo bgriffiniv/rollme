@@ -10,7 +10,7 @@ import { UserService, User } from 'src/app/services/user/user.service';
   styleUrls: ['./user-list.page.scss'],
 })
 export class UserListPage implements OnInit {
-  private users: Observable<User[]>;
+  private users: User[];
 
   constructor(private userService: UserService, private route: ActivatedRoute, private router: Router) {
     console.log("User List page started (constructor)");
@@ -18,7 +18,9 @@ export class UserListPage implements OnInit {
 
   ngOnInit() {
     console.log("User List page started (init)");
-    this.users = this.userService.listUsers();
+    this.userService.listUsers((error, data) => {
+      this.users = data;
+    });
   }
 
 }
