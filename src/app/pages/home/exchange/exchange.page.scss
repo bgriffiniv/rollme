@@ -12,3 +12,58 @@
   text-align: center;
   font-size: 13px;
 }
+
+.swiper-container {
+   width: 100%;
+   height: 100%;
+}
+
+.card-position {
+  position: absolute;
+  margin-top: -25px;
+  height: 100%;
+}
+
+.blank-card {
+   height:155px;
+   width:350px;
+   margin-right:-33px;
+}
+
+ .no-data-msg {
+    font-size: 1.0em;
+    position: absolute;
+    top: 45%;
+    width: 100%;
+    color: #black;
+ }
+
+  .chip-btn {
+    position: absolute;
+    right: 15px;
+
+  }
+
+  .roll-btn {
+    position: absolute;
+    right: 265px;
+  }
+
+  .roll-gesture {
+    position: absolute;
+    top: 350px;
+    right: 65px;
+    width: 80%;
+  }
+
+  .roll-header {
+    position: absolute;
+    bottom: 315px;
+    right: 50px;
+    width: 70%;
+  }
+
+
+  ion-header {
+    color: transparent;
+  }

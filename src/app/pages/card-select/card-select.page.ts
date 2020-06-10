@@ -23,7 +23,7 @@ export class CardSelectPage implements OnInit {
   frontImg: string;
   backImg: string;
 
-  isCardFound = false;
+  isCardFound;
 
   slideOpts = {
       scrollbar: {el: ''},
@@ -140,6 +140,7 @@ export class CardSelectPage implements OnInit {
 
   ngOnInit() {
     console.log('Card Select Modal Init');
+    this.isCardFound;
 
     let uid = this.authService.getCurrentUserId();
     console.log('Current User ID: ', uid);
@@ -161,11 +162,26 @@ export class CardSelectPage implements OnInit {
     });
   }
 
+  cardSelected() {
+    this.isCardFound;
+    this.dismissModal();
+  }
+
+  cancel() {
+    !this.isCardFound;
+    this.dismissModal();
+     if (!this.id) {
+        this.router.navigate(['/home/exchange']);
+     };
+  }
+
   dismissModal() {
     this.modalController.dismiss({
      'dismissed': true,
-     'isCardFound': true
     });
   }
+
+
+
 
 }

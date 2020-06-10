@@ -1,3 +1,15 @@
+<div *ngIf="isCardFound">
+<ion-header>
+  <ion-chip color="danger" class="chip-btn ion-padding">
+    <ion-label (click)="cancel()">Cancel</ion-label>
+  </ion-chip>
+
+  <ion-chip color="secondary" class="roll-btn ion-padding">
+    <ion-label (click)="launchNFC()">Roll</ion-label>
+  </ion-chip>
+</ion-header>
+</div>
+
 <ion-content>
   <div *ngIf="!isCardFound">
     <img src="./assets/imgs/NothingToShow.png" class="ld ld-breath no-card-img" (click)="selectCard()"/>
@@ -10,22 +22,37 @@
     </div>
   </div>
 
-  <div *ngIf="isCardFound" class="msg ion-padding">
-    <ion-text color="tertiary">
-      <h5>
-        Is this the card you wish to send?
-      </h5>
-    </ion-text>
-    <br>
-    <br>
-    <ion-card class="ld ld-swim">
-      <img [src]="frontImg" alt=""/>
-    </ion-card>
-  </div>
-</ion-content>
+  <div *ngIf="isCardFound">
+    <div class="roll-gesture">
+      <ion-img src="./assets/imgs/Swipefinger.gif"></ion-img>
+    </div>
+    <div class="roll-header ld ld-jump">
+     <ion-img src="./assets/imgs/SwipeUp.gif"></ion-img>
+    </div>
+    <div class="card-position">
+      <ion-slides pager="false" [options]="slideOpts">
+        <ion-slide>
+          <ion-card>
+            <img [src]="frontImg" alt=""/>
+          </ion-card>
+        </ion-slide>
 
-<ion-footer *ngIf="isCardFound" class="ion-no-border">
-  <ion-button expand="full" fill="outline" color="success" (click)="cardModal()">Yes</ion-button>
-  <ion-button routerDirection="back" expand="full" fill="outline" color="danger" (click)="selectCard()">No</ion-button>
-</ion-footer>
+        <ion-slide *ngIf="cardDataBack">
+          <ion-card>
+            <img [src]="cardDataBack" alt=""/>
+          </ion-card>
+        </ion-slide>
+
+        <ion-slide *ngIf="!cardDataBack">
+          <ion-card>
+            <img src="./assets/imgs/blankBackground.jpg" class="blank-card" alt=""/>
+            <div class="no-data-msg">No image saved</div>
+          </ion-card>
+        </ion-slide>
+
+      </ion-slides>
+    </div>
+  </div>
+
+</ion-content>
 
