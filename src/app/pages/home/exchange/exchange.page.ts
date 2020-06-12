@@ -5,8 +5,10 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { UserService, User } from 'src/app/services/user/user.service';
 import { CardService, Card } from 'src/app/services/card/card.service';
 
-import { ActionSheetController, AlertController, ToastController, ModalController } from '@ionic/angular';
+import { Platform, ActionSheetController, AlertController, ToastController, ModalController } from '@ionic/angular';
+import { NFC, Ndef } from '@ionic-native/nfc/ngx';
 import { CardSelectPage } from 'src/app/pages/card-select/card-select.page';
+
 
 @Component({
   selector: 'app-exchange',
@@ -129,11 +131,21 @@ export class ExchangePage implements OnInit {
     private cardService: CardService,
     private route: ActivatedRoute,
     private router: Router,
+    platform: Platform,
     public actionSheetController: ActionSheetController,
     public alertController: AlertController,
     private toastCtrl: ToastController,
-    public modalController: ModalController
+    public modalController: ModalController,
+    private nfc: NFC,
+    private ndef: Ndef
   ) {
+     platform.ready().then(() => {
+     this.startNFCListener();
+      console.log('launch NFC listener');
+     }).catch(err => {
+      console.log('Error while loading platform', err);
+     });
+
     console.log("Exchange page Start");
     console.log('Is authenticated:', this.authService.isAuthenticated());
   }
@@ -175,4 +187,138 @@ export class ExchangePage implements OnInit {
     this.router.navigate(['/home/exchange']);
   }
 
+  startNFCListener() {
+    let ownerId = this.authService.getCurrentUserId();
+    console.log('OwnerId: ', ownerId);
+
+    this.nfc.addNdefListener(() => {
+      console.log('successfully attached ndef listener');
+
+      let toast = this.toastCtrl.create({
+       message: 'Connected',
+       duration: 1000,
+       position: 'top'
+      }).then(toast => toast.present());
+
+    }, (err) => {
+      console.log('error attaching ndef listener', err);
+
+      let toast = this.toastCtrl.create({
+        message: err,
+        duration: 1000,
+        position: 'top'
+      }).then(toast => toast.present());
+
+     }).subscribe(() => {
+
+      if (this.nfc.addTagDiscoveredListener()) {
+          this.acceptCardAlert();
+      }
+
+
+    });
+
+
+  }
+
+  launchNFC(){
+    console.log('begin launchNFC');
+
+    this.nfc.addTagDiscoveredListener(() => {
+      console.log('tag discovered listener');
+    }, (err) => {
+      console.log('error discovering tag listener', err);
+
+      let toast = this.toastCtrl.create({
+      message: err,
+      duration: 1000,
+      position: 'top'
+    }).then(toast => toast.present());
+
+   }).subscribe((event) => {
+
+     console.log('received ndef message. the tag contains: ', event.tag);
+     console.log('decoded tag id', this.nfc.bytesToHexString(event.tag.id));
+
+     let toast = this.toastCtrl.create({
+       message: this.nfc.bytesToHexString(event.tag.id),
+       duration: 1000,
+       position: 'top'
+     }).then(toast => toast.present());
+
+
+   }, err => {
+     this.showToast('There was a problem getting cards :(');
+   });
+  }
+
+   showToast(msg) {
+     this.toastCtrl.create({
+       message: msg,
+       duration: 2000,
+       color: 'success',
+       position: 'top',
+       buttons: [
+           {
+             side: 'start',
+             icon: 'checkmark-circle',
+             handler: () => {
+               console.log('Got card');
+             }
+           },
+           {
+             role: 'cancel',
+             handler: () => {
+               console.log('Cancel clicked');
+             }
+           }
+       ]
+     }).then(toast => toast.present());
+   }
+
+   async acceptCardAlert() {
+     const alert = await this.alertController.create({
+      header: '',
+      subHeader: '',
+      message: 'User X wants to send you their card. Do you wish to accept it?',
+      buttons: [
+        {
+          text: 'Accept',
+          handler: () => {
+            console.log('Card accepted');
+          }
+        }, {
+          text: 'Decline',
+          handler: () => {
+            console.log('Card declined');
+          }
+        },
+      ]
+    });
+    await alert.present();
+   }
+
+   sendOwnerId() {
+     var ownerField = this.authService.getCurrentUserId();
+     this.nfc.handover([ownerField]);
+     this.updateCard();
+
+
+   }
+
+   updateCard() {
+     console.trace('Updating card holders');
+     this.card = {
+       holders: [this.id],
+     };
+
+     this.cardService.updateCard(this.id, this.card, (error, data) => {
+       if (error) {
+         this.showToast('There was a problem updating your card :(');
+       } else {
+         this.router.navigateByUrl('/profile');
+         this.showToast('Card updated');
+       }
+     });
+   }
 }
