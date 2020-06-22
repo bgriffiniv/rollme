@@ -199,6 +199,8 @@ export class ExchangePage implements OnInit {
   }
 
   startNFCListener() {
+    this.ownerId = this.authService.getCurrentUserId();
+    console.log('Current owner ID: ', this.ownerId);
 
     this.nfc.addNdefListener(() => {
       console.log('successfully attached ndef listener');
@@ -219,10 +221,11 @@ export class ExchangePage implements OnInit {
       }).then(toast => toast.present());
 
      }).subscribe(async (event) => {
+       let ndefMessage = [
+           this.ndef.textRecord(this.ownerId)
+       ];
 
-
-
-       console.log('received ndef message. the tag contains: ', event.tag);
+       console.log('received ndefMessage. the tag contains: ', event.tag);
        console.log('decoded tag id', this.nfc.bytesToHexString(event.tag.id));
 
        this.tagId = "";
@@ -230,20 +233,21 @@ export class ExchangePage implements OnInit {
 
        let tagIdInfo = await this.nfc.bytesToHexString(event.tag.id);
        this.tagId = tagIdInfo;
+
        if (event.tag.ndefMessage) {
          let payload = event.tag.ndefMessage[0].payload;
          let tagContent = await this.nfc.bytesToString(payload).substring(3);
          this.tagDesc = tagContent;
+         if (this.nfc.share(ndefMessage)) {
+             this.acceptCardAlert();
+         }
        }
 
        let toast = this.toastCtrl.create({
-         message: this.tagDesc,
+         message:  this.tagDesc,
          duration: 1000,
          position: 'top'
        }).then(toast => toast.present());
-
-       this.acceptCardAlert();
-
     });
 
 
@@ -275,9 +279,9 @@ export class ExchangePage implements OnInit {
 
   async acceptCardAlert() {
     const alert = await this.alertController.create({
-     header: this.ownerId,
+     header: this.tagDesc,
      subHeader: this.id,
-     message: 'User X wants to send you their card. Do you wish to accept it?',
+     message: 'You are about to send your card to User X. Do you wish to continue with this action?',
      buttons: [
        {
          text: 'Accept',
@@ -288,6 +292,7 @@ export class ExchangePage implements OnInit {
        }, {
          text: 'Decline',
          handler: () => {
+          this.router.navigateByUrl('/home/exchange');
            console.log('Card declined');
          }
        },
@@ -299,17 +304,11 @@ export class ExchangePage implements OnInit {
   launchNFC(){
     console.log('begin launchNFC');
 
-    let receptorId = [
-      this.ndef.textRecord("Here is my card ID so that I may be a holder of your own: ", this.ownerId)
-    ];
-    this.holderId = receptorId;
-    this.nfc.share(receptorId);
-
     console.trace('Updating card holders');
-    this.holderId = this.ownerId;
+    this.holderId = this.tagDesc;
     this.card = {
        holders: [this.holderId]
-     };
+    };
     this.cardService.updateCard(this.id, this.card, (error, data) => {
       if (error) {
           this.showToast('There was a problem updating your card :(');
@@ -317,7 +316,7 @@ export class ExchangePage implements OnInit {
          this.showToast('Card updated');
       }
     });
-    this.nfc.unshare();
+
     this.router.navigateByUrl('/home/rolodex');
   }
 }
