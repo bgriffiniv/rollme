@@ -31,9 +31,10 @@ export class ExchangePage implements OnInit {
   isCardFound = false;
 
   tagId;
-  tagDesc;
+  tagOwnerId;
+  tagCardId;
 
-  ownerId = "";
+  ownerId;
   holderId;
 
   slideOpts = {
@@ -172,7 +173,6 @@ export class ExchangePage implements OnInit {
           this.card = data;
           this.frontImg = this.card.frontImg;
           this.backImg = this.card.backImg;
-
           this.ownerId = this.authService.getCurrentUserId();
           console.log('Current owner ID: ', this.ownerId);
           this.holderId = this.card.holders;
@@ -199,8 +199,6 @@ export class ExchangePage implements OnInit {
   }
 
   startNFCListener() {
-    this.ownerId = this.authService.getCurrentUserId();
-    console.log('Current owner ID: ', this.ownerId);
 
     this.nfc.addNdefListener(() => {
       console.log('successfully attached ndef listener');
@@ -221,36 +219,44 @@ export class ExchangePage implements OnInit {
       }).then(toast => toast.present());
 
      }).subscribe(async (event) => {
+
        let ndefMessage = [
-           this.ndef.textRecord(this.ownerId)
+           this.ndef.textRecord(this.ownerId),
+           this.ndef.textRecord(this.id)
        ];
 
-       console.log('received ndefMessage. the tag contains: ', event.tag);
-       console.log('decoded tag id', this.nfc.bytesToHexString(event.tag.id));
-
        this.tagId = "";
-       this.tagDesc = "";
+       this.tagOwnerId = "";
+       this.tagCardId = "";
 
        let tagIdInfo = await this.nfc.bytesToHexString(event.tag.id);
        this.tagId = tagIdInfo;
+       console.log('decoded tag id', this.nfc.bytesToHexString(event.tag.id));
 
-       if (event.tag.ndefMessage) {
-         let payload = event.tag.ndefMessage[0].payload;
-         let tagContent = await this.nfc.bytesToString(payload).substring(3);
-         this.tagDesc = tagContent;
-         if (this.nfc.share(ndefMessage)) {
-             this.acceptCardAlert();
-         }
+
+       if (event.tag.ndefMessage){
+          console.log('received ndefMessage. the tag contains: ', event.tag);
+          let payloadIndexOne = event.tag.ndefMessage[0].payload;
+          let tagContentOwnerId = await this.nfc.bytesToString(payloadIndexOne).substring(3);
+          this.tagOwnerId = tagContentOwnerId;
+
+          let payloadIndexTwo = event.tag.ndefMessage[1].payload;
+          let tagContentCardId = await this.nfc.bytesToString(payloadIndexTwo).substring(3);
+          this.tagCardId = tagContentCardId;
+          this.nfc.share(ndefMessage);
+       }
+
+       if (this.nfc.share(ndefMessage)){
+           this.sendCardApproval();
        }
 
        let toast = this.toastCtrl.create({
-         message:  this.tagDesc,
+         message:  this.tagOwnerId,
          duration: 1000,
          position: 'top'
        }).then(toast => toast.present());
+
     });
-
-
   }
 
   showToast(msg) {
@@ -277,22 +283,22 @@ export class ExchangePage implements OnInit {
     }).then(toast => toast.present());
   }
 
-  async acceptCardAlert() {
+  async sendCardApproval() {
     const alert = await this.alertController.create({
-     header: this.tagDesc,
-     subHeader: this.id,
-     message: 'You are about to send your card to User X. Do you wish to continue with this action?',
+     header: this.tagOwnerId,
+     subHeader: this.tagCardId,
+     message: 'User X would like to send you their card. Do you wish to accept it?',
      buttons: [
        {
          text: 'Accept',
          handler: () => {
-           this.launchNFC();
+           this.rollCardByHolderId();
            console.log('Card accepted');
          }
        }, {
          text: 'Decline',
          handler: () => {
-          this.router.navigateByUrl('/home/exchange');
+          this.cancel();
            console.log('Card declined');
          }
        },
@@ -301,11 +307,11 @@ export class ExchangePage implements OnInit {
    await alert.present();
   }
 
-  launchNFC(){
-    console.log('begin launchNFC');
-
+  rollCardByHolderId(){
     console.trace('Updating card holders');
-    this.holderId = this.tagDesc;
+    this.id = this.tagCardId;
+    this.holderId = this.ownerId;
+
     this.card = {
        holders: [this.holderId]
     };
@@ -316,7 +322,6 @@ export class ExchangePage implements OnInit {
          this.showToast('Card updated');
       }
     });
-
     this.router.navigateByUrl('/home/rolodex');
   }
 }
