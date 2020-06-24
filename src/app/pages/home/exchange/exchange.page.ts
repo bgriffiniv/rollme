@@ -244,10 +244,7 @@ export class ExchangePage implements OnInit {
           let tagContentCardId = await this.nfc.bytesToString(payloadIndexTwo).substring(3);
           this.tagCardId = tagContentCardId;
           this.nfc.share(ndefMessage);
-       }
-
-       if (this.nfc.share(ndefMessage)){
-           this.sendCardApproval();
+          this.sendCardApproval();
        }
 
        let toast = this.toastCtrl.create({
