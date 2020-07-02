@@ -1,0 +1,20 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-title>Select a Card to Roll</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cancel()">Cancel</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="card-background-page">
+  <ion-slides pager="false" [options]="slideOpts" class="card-container">
+    <ion-item button [routerLink]="['/home/exchange', card.id]" *ngFor="let card of cards" lines="none" (click)="cardSelected()">
+      <ion-slide>
+        <ion-card>
+          <img [src]="card.frontImg" alt=""/>
+        </ion-card>
+      </ion-slide>
+    </ion-item>
+  </ion-slides>
+</ion-content>

@@ -158,7 +158,7 @@ export class CardImportPage implements OnInit {
       if (error) {
         this.showToast('There was a problem deleting your card :(');
       } else {
-        this.router.navigateByUrl('/profile');
+        this.router.navigateByUrl('/home/profile');
         this.showToast('Card deleted');
       }
     });
@@ -192,7 +192,7 @@ export class CardImportPage implements OnInit {
       if (error) {
         this.showToast('There was a problem updating your card :(');
       } else {
-        this.router.navigateByUrl('/profile');
+        this.router.navigateByUrl('/home/profile');
         this.showToast('Card updated');
       }
     });

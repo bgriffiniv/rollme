@@ -1,31 +1,50 @@
+<div *ngIf="isCardFound">
+
+</div>
+
 <ion-content>
   <div *ngIf="!isCardFound">
-    <img src="./assets/imgs/NothingToShow.png" class="ld ld-breath no-card-img"/>
+    <img src="./assets/imgs/NothingToShow.png" class="ld ld-breath no-card-img" (click)="selectCard()"/>
     <div class="msg ion-padding">
       <ion-text>
         <p>No card has been selected to send. You must first create and save a card.
-          Then when you're ready, select a card to send and you will be redirected back here.
+          Then when you're ready, tap here to select a card to send.
         </p>
       </ion-text>
     </div>
   </div>
 
-  <div *ngIf="isCardFound" class="msg ion-padding">
-    <ion-text color="tertiary">
-      <h5>
-        Is this the card you wish to send?
-      </h5>
-    </ion-text>
-    <br>
-    <br>
-    <ion-card class="ld ld-swim">
-      <img [src]="" alt=""/>
-    </ion-card>
-  </div>
-</ion-content>
+  <div *ngIf="isCardFound">
+    <div class="roll-gesture">
+      <ion-img src="./assets/imgs/Swipefinger.gif"></ion-img>
+    </div>
+    <div class="roll-header ld ld-jump">
+     <ion-img src="./assets/imgs/SwipeUp.gif"></ion-img>
+    </div>
+    <div class="card-position">
+      <ion-slides pager="false" [options]="slideOpts">
+        <ion-slide>
+          <ion-card>
+            <img [src]="frontImg" alt=""/>
+          </ion-card>
+        </ion-slide>
 
-<ion-footer *ngIf="isCardFound" class="ion-no-border">
-  <ion-button expand="full" fill="outline" color="success" (click)="cardModal()">Yes</ion-button>
-  <ion-button routerDirection="back" expand="full" fill="outline" color="danger" (click)="goToProfilePage()">No</ion-button>
-</ion-footer>
+        <ion-slide *ngIf="cardDataBack">
+          <ion-card>
+            <img [src]="cardDataBack" alt=""/>
+          </ion-card>
+        </ion-slide>
+
+        <ion-slide *ngIf="!cardDataBack">
+          <ion-card>
+            <img src="./assets/imgs/blankBackground.jpg" class="blank-card" alt=""/>
+            <div class="no-data-msg">No image saved</div>
+          </ion-card>
+        </ion-slide>
+
+      </ion-slides>
+    </div>
+  </div>
+
+</ion-content>
 

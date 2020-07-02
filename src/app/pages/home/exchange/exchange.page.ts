@@ -5,7 +5,10 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { UserService, User } from 'src/app/services/user/user.service';
 import { CardService, Card } from 'src/app/services/card/card.service';
 
-import { ActionSheetController, AlertController, ToastController, ModalController } from '@ionic/angular';
+import { Platform, ActionSheetController, AlertController, ToastController, ModalController } from '@ionic/angular';
+import { NFC, Ndef } from '@ionic-native/nfc/ngx';
+import { CardSelectPage } from 'src/app/pages/card-select/card-select.page';
+
 
 @Component({
   selector: 'app-exchange',
@@ -18,113 +21,116 @@ export class ExchangePage implements OnInit {
   index;
   staticCards: Card[];
   cards: Card[];
-  id;
 
+  id;
   card: Card;
 
   frontImg;
   backImg;
 
+  isCardFound = false;
+
+  tagId;
+  tagOwnerId;
+  tagCardId;
+
+  ownerId;
+  holderId;
+
   slideOpts = {
-      scrollbar: {el: ''},
-      effect: 'coverflow',
+      effect: 'flip',
       direction: 'vertical',
-      setWrapperSize: true,
-      loop: true,
-      loopedSlides: 1,
-      centeredSlides: true,
-      slidesPerView: 3,
-      coverflowEffect: {
-        rotate: 25,
-        stretch: 450,
-        depth: 225,
-        modifier: 1,
-        slideShadows: false
+      flipEffect: {
+        rotate: 0,
+        slideShadows: false,
       },
-      freeMode: true,
-      freeModeSticky: false,
-      freeModeMomentum: true,
-      freeModeMomentumRatio: 1,
-      freeModeMomentumVelocityRatio: 1,
     on: {
       beforeInit() {
         const swiper = this;
-
-        swiper.classNames.push(`${swiper.params.containerModifierClass}coverflow`);
+        swiper.classNames.push(`${swiper.params.containerModifierClass}flip`);
         swiper.classNames.push(`${swiper.params.containerModifierClass}3d`);
-
-        swiper.params.watchSlidesProgress = true;
-        swiper.originalParams.watchSlidesProgress = true;
+        const overwriteParams = {
+          slidesPerView: 1,
+          slidesPerColumn: 1,
+          slidesPerGroup: 1,
+          watchSlidesProgress: true,
+          spaceBetween: 0,
+          virtualTranslate: true,
+        };
+        swiper.params = Object.assign(swiper.params, overwriteParams);
+        swiper.originalParams = Object.assign(swiper.originalParams, overwriteParams);
       },
       setTranslate() {
         const swiper = this;
-        const {
-          width: swiperWidth, height: swiperHeight, slides, $wrapperEl, slidesSizesGrid, $
-        } = swiper;
-        const params = swiper.params.coverflowEffect;
-        const isHorizontal = swiper.isHorizontal();
-        const transform$$1 = swiper.translate;
-        const center = isHorizontal ? -transform$$1 + (swiperWidth / 2) : -transform$$1 + (swiperHeight / 2);
-        const rotate = isHorizontal ? params.rotate : -params.rotate;
-        const translate = params.depth;
-        // Each slide offset from center
-        for (let i = 0, length = slides.length; i < length; i += 1) {
+        const { $, slides, rtlTranslate: rtl } = swiper;
+        for (let i = 0; i < slides.length; i += 1) {
           const $slideEl = slides.eq(i);
-          const slideSize = slidesSizesGrid[i];
-          const slideOffset = $slideEl[0].swiperSlideOffset;
-          const offsetMultiplier = ((center - slideOffset - (slideSize / 2)) / slideSize) * params.modifier;
-
-          let rotateY = isHorizontal ? rotate * offsetMultiplier : 0;
-          let rotateX = isHorizontal ? 0 : rotate * offsetMultiplier;
-          // var rotateZ = 0
-          let translateZ = -translate * Math.abs(offsetMultiplier);
-
-          let translateY = isHorizontal ? 0 : params.stretch * (offsetMultiplier);
-          let translateX = isHorizontal ? params.stretch * (offsetMultiplier) : 0;
-
-          // Fix for ultra small values
-          if (Math.abs(translateX) < 0.001) translateX = 0;
-          if (Math.abs(translateY) < 0.001) translateY = 0;
-          if (Math.abs(translateZ) < 0.001) translateZ = 0;
-          if (Math.abs(rotateY) < 0.001) rotateY = 0;
-          if (Math.abs(rotateX) < 0.001) rotateX = 0;
-
-          const slideTransform = `translate3d(${translateX}px,${translateY}px,${translateZ}px)  rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-
-          $slideEl.transform(slideTransform);
-          $slideEl[0].style.zIndex = -Math.abs(Math.round(offsetMultiplier)) + 1;
-          if (params.slideShadows) {
-          // Set shadows
-          let $shadowBeforeEl = isHorizontal ? $slideEl.find('.swiper-slide-shadow-left') : $slideEl.find('.swiper-slide-shadow-top');
-          let $shadowAfterEl = isHorizontal ? $slideEl.find('.swiper-slide-shadow-right') : $slideEl.find('.swiper-slide-shadow-bottom');
-          if ($shadowBeforeEl.length === 0) {
-              $shadowBeforeEl = swiper.$(`<div class="swiper-slide-shadow-${isHorizontal ? 'left' : 'top'}"></div>`);
-              $slideEl.append($shadowBeforeEl);
+          let progress = $slideEl[0].progress;
+          if (swiper.params.flipEffect.limitRotation) {
+            progress = Math.max(Math.min($slideEl[0].progress, 1), -1);
           }
-          if ($shadowAfterEl.length === 0) {
-              $shadowAfterEl = swiper.$(`<div class="swiper-slide-shadow-${isHorizontal ? 'right' : 'bottom'}"></div>`);
-              $slideEl.append($shadowAfterEl);
+          const offset$$1 = $slideEl[0].swiperSlideOffset;
+          const rotate = -180 * progress;
+          let rotateY = rotate;
+          let rotateX = 0;
+          let tx = -offset$$1;
+          let ty = 0;
+          if (!swiper.isHorizontal()) {
+            ty = tx;
+            tx = 0;
+            rotateX = -rotateY;
+            rotateY = 0;
+          } else if (rtl) {
+            rotateY = -rotateY;
           }
-          if ($shadowBeforeEl.length) $shadowBeforeEl[0].style.opacity = offsetMultiplier > 0 ? offsetMultiplier : 0;
-          if ($shadowAfterEl.length) $shadowAfterEl[0].style.opacity = (-offsetMultiplier) > 0 ? -offsetMultiplier : 0;
-          }
-        }
 
-        // Set correct perspective for IE10
-        if (swiper.support.pointerEvents || swiper.support.prefixedPointerEvents) {
-           const ws = $wrapperEl[0].style;
-           ws.perspectiveOrigin = `${center}px 50%`;
+           $slideEl[0].style.zIndex = -Math.abs(Math.round(progress)) + slides.length;
+
+           if (swiper.params.flipEffect.slideShadows) {
+            // Set shadows
+            let shadowBefore = swiper.isHorizontal() ? $slideEl.find('.swiper-slide-shadow-left') : $slideEl.find('.swiper-slide-shadow-top');
+            let shadowAfter = swiper.isHorizontal() ? $slideEl.find('.swiper-slide-shadow-right') : $slideEl.find('.swiper-slide-shadow-bottom');
+            if (shadowBefore.length === 0) {
+              shadowBefore = swiper.$(`<div class="swiper-slide-shadow-${swiper.isHorizontal() ? 'left' : 'top'}"></div>`);
+              $slideEl.append(shadowBefore);
+            }
+            if (shadowAfter.length === 0) {
+              shadowAfter = swiper.$(`<div class="swiper-slide-shadow-${swiper.isHorizontal() ? 'right' : 'bottom'}"></div>`);
+              $slideEl.append(shadowAfter);
+            }
+            if (shadowBefore.length) shadowBefore[0].style.opacity = Math.max(-progress, 0);
+            if (shadowAfter.length) shadowAfter[0].style.opacity = Math.max(progress, 0);
+          }
+          $slideEl
+            .transform(`translate3d(${tx}px, ${ty}px, 0px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`);
         }
       },
       setTransition(duration) {
         const swiper = this;
-        swiper.slides
+        const { slides, activeIndex, $wrapperEl } = swiper;
+        slides
           .transition(duration)
           .find('.swiper-slide-shadow-top, .swiper-slide-shadow-right, .swiper-slide-shadow-bottom, .swiper-slide-shadow-left')
           .transition(duration);
+        if (swiper.params.virtualTranslate && duration !== 0) {
+          let eventTriggered = false;
+          // eslint-disable-next-line
+          slides.eq(activeIndex).transitionEnd(function onTransitionEnd() {
+            if (eventTriggered) return;
+            if (!swiper || swiper.destroyed) return;
+
+            eventTriggered = true;
+            swiper.animating = false;
+            const triggerEvents = ['webkitTransitionEnd', 'transitionend'];
+            for (let i = 0; i < triggerEvents.length; i += 1) {
+              $wrapperEl.trigger(triggerEvents[i]);
+            }
+          });
+        }
       }
     }
   }
+
 
   constructor(
     private authService: AuthService,
@@ -132,17 +138,28 @@ export class ExchangePage implements OnInit {
     private cardService: CardService,
     private route: ActivatedRoute,
     private router: Router,
+    platform: Platform,
     public actionSheetController: ActionSheetController,
     public alertController: AlertController,
     private toastCtrl: ToastController,
-    public modalController: ModalController
+    public modalController: ModalController,
+    private nfc: NFC,
+    private ndef: Ndef
   ) {
+     platform.ready().then(() => {
+     this.startNFCListener();
+      console.log('launch NFC listener');
+     }).catch(err => {
+      console.log('Error while loading platform', err);
+     });
+
     console.log("Exchange page Start");
     console.log('Is authenticated:', this.authService.isAuthenticated());
   }
 
   ngOnInit() {
     console.log('Exchange Page Init');
+
     this.id = this.route.snapshot.paramMap.get('id');
 
     if (this.id) {
@@ -152,11 +169,156 @@ export class ExchangePage implements OnInit {
           console.log(error);
         } else {
           console.log("Card: ", data)
+          this.isCardFound = true;
           this.card = data;
           this.frontImg = this.card.frontImg;
           this.backImg = this.card.backImg;
+          this.ownerId = this.authService.getCurrentUserId();
+          console.log('Current owner ID: ', this.ownerId);
+          this.holderId = this.card.holders;
+          console.log('Current holder ID: ', this.holderId);
         }
       });
     }
+  }
+
+  async selectCard() {
+    const modal = await this.modalController.create({
+      component: CardSelectPage
+    });
+
+    modal.onWillDismiss().then(data => {
+       console.log(data);
+    });
+    return await modal.present();
+  }
+
+  cancel() {
+    !this.isCardFound;
+    this.router.navigate(['/home/exchange']);
+  }
+
+  startNFCListener() {
+
+    this.nfc.addNdefListener(() => {
+      console.log('successfully attached ndef listener');
+
+      let toast = this.toastCtrl.create({
+        message: 'Connected',
+        duration: 1000,
+        position: 'top'
+      }).then(toast => toast.present());
+
+    }, (err) => {
+      console.log('error attaching ndef listener', err);
+
+      let toast = this.toastCtrl.create({
+        message: err,
+        duration: 1000,
+        position: 'top'
+      }).then(toast => toast.present());
+
+     }).subscribe(async (event) => {
+
+       let ndefMessage = [
+           this.ndef.textRecord(this.ownerId),
+           this.ndef.textRecord(this.id)
+       ];
+
+       this.tagId = "";
+       this.tagOwnerId = "";
+       this.tagCardId = "";
+
+       let tagIdInfo = await this.nfc.bytesToHexString(event.tag.id);
+       this.tagId = tagIdInfo;
+       console.log('decoded tag id', this.nfc.bytesToHexString(event.tag.id));
+
+
+       if (event.tag.ndefMessage){
+          console.log('received ndefMessage. the tag contains: ', event.tag);
+          let payloadIndexOne = event.tag.ndefMessage[0].payload;
+          let tagContentOwnerId = await this.nfc.bytesToString(payloadIndexOne).substring(3);
+          this.tagOwnerId = tagContentOwnerId;
+
+          let payloadIndexTwo = event.tag.ndefMessage[1].payload;
+          let tagContentCardId = await this.nfc.bytesToString(payloadIndexTwo).substring(3);
+          this.tagCardId = tagContentCardId;
+          this.nfc.share(ndefMessage);
+          this.sendCardApproval();
+       }
+
+       let toast = this.toastCtrl.create({
+         message:  this.tagOwnerId,
+         duration: 1000,
+         position: 'top'
+       }).then(toast => toast.present());
+
+    });
+  }
+
+  showToast(msg) {
+    this.toastCtrl.create({
+      message: msg,
+      duration: 2000,
+      color: 'success',
+      position: 'top',
+      buttons: [
+          {
+            side: 'start',
+            icon: 'checkmark-circle',
+            handler: () => {
+              console.log('Got card');
+            }
+          },
+          {
+            role: 'cancel',
+            handler: () => {
+              console.log('Cancel clicked');
+            }
+          }
+      ]
+    }).then(toast => toast.present());
+  }
+
+  async sendCardApproval() {
+    const alert = await this.alertController.create({
+     header: this.tagOwnerId,
+     subHeader: this.tagCardId,
+     message: 'User X would like to send you their card. Do you wish to accept it?',
+     buttons: [
+       {
+         text: 'Accept',
+         handler: () => {
+           this.rollCardByHolderId();
+           console.log('Card accepted');
+         }
+       }, {
+         text: 'Decline',
+         handler: () => {
+          this.cancel();
+           console.log('Card declined');
+         }
+       },
+     ]
+   });
+   await alert.present();
+  }
+
+  rollCardByHolderId(){
+    console.trace('Updating card holders');
+    this.id = this.tagCardId;
+    this.holderId = this.ownerId;
+
+    this.card = {
+       holders: [this.holderId]
+    };
+    this.cardService.updateCard(this.id, this.card, (error, data) => {
+      if (error) {
+          this.showToast('There was a problem updating your card :(');
+      } else {
+         this.showToast('Card updated');
+      }
+    });
+    this.router.navigateByUrl('/home/rolodex');
   }
 }

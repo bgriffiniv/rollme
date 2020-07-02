@@ -6,10 +6,12 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Camera } from '@ionic-native/camera/ngx';
+import { NFC, Ndef } from '@ionic-native/nfc/ngx';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { CardSelectPageModule } from 'src/app/pages/card-select/card-select.module';
 
 import { AngularFireAuthModule } from "angularfire2/auth";
 import { AngularFireModule } from 'angularfire2';
@@ -25,6 +27,7 @@ import { environment } from '../environments/environment';
     HttpClientModule,
     IonicModule.forRoot(),
     AppRoutingModule,
+    CardSelectPageModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFirestoreModule,
@@ -33,6 +36,8 @@ import { environment } from '../environments/environment';
     StatusBar,
     SplashScreen,
     Camera,
+    NFC,
+    Ndef,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: FirestoreSettingsToken, useValue: {} }
   ],
