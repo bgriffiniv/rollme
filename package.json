@@ -61,7 +61,7 @@
     "passport-strategy": "^1.0.0",
     "rxjs": "^6.5.4",
     "rxjs-compat": "^6.5.4",
-    "serialize-javascript": "^2.1.2",
+    "serialize-javascript": "^3.1.0",
     "tslib": "^1.9.0",
     "uid2": "0.0.3",
     "utils-merge": "^1.0.1",
