@@ -33,7 +33,7 @@
     "@loadingio/loading.css": "^2.0.0",
     "angularfire2": "^5.4.2",
     "base64url": "^3.0.1",
-    "copy-webpack-plugin": "^5.1.0",
+    "copy-webpack-plugin": "^11.0.0",
     "cordova": "^9.0.0",
     "cordova-android": "^8.1.0",
     "cordova-ios": "5.0.1",
@@ -69,7 +69,7 @@
   },
   "devDependencies": {
     "@angular-devkit/architect": "^0.803.25",
-    "@angular-devkit/build-angular": "^0.803.23",
+    "@angular-devkit/build-angular": "^15.0.4",
     "@angular-devkit/core": "^8.3.25",
     "@angular-devkit/schematics": "^8.3.25",
     "@angular/cli": "^8.3.25",
